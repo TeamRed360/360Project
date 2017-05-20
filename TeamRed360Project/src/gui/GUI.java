@@ -10,6 +10,7 @@ import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -43,7 +44,7 @@ public class GUI extends JFrame {
     /**
      * The default frame size.
      */
-	private static Dimension FRAME_SIZE = new Dimension(600, 400);
+	private static Dimension FRAME_SIZE = new Dimension(800, 600);
 
 	/** Login tab text. */
 	private final static String LOGIN_TAB = "Login";
@@ -53,6 +54,9 @@ public class GUI extends JFrame {
 
 	/** About tab text. */
 	private final static String ABOUT_TAB = "About";
+
+	/** Home tab text. */
+	private final static String HOME_TAB = "Home";
 	
 	/** Textbox width. */
 	private static final int TEXT_WIDTH = 20;
@@ -73,9 +77,12 @@ public class GUI extends JFrame {
         setLocationRelativeTo(null);
         
         JTabbedPane tabbedPane = new JTabbedPane();
-
+        JPanel homeTab = new JPanel();
+        JTabbedPane homePane = new JTabbedPane(); 
         JPanel loginTab = new JPanel();
+
         JPanel signUpTab = new JPanel();
+        signUpTab.setLayout(new BoxLayout(signUpTab, BoxLayout.Y_AXIS));
         JPanel aboutTab = new JPanel();
 
         JButton about = new JButton("About");
@@ -222,9 +229,14 @@ public class GUI extends JFrame {
         });
 
         signUpTab.add(submit);
-         
-        tabbedPane.addTab(LOGIN_TAB, loginTab);
-        tabbedPane.addTab(SIGN_UP_TAB, signUpTab);
+        
+        // Add "sub tabs" to the homepage tab that can be hidden once the 
+        // user logs in successfully.
+        homePane.addTab(LOGIN_TAB, loginTab);
+        homePane.addTab(SIGN_UP_TAB, signUpTab);
+        homeTab.add(homePane);
+        
+        tabbedPane.addTab(HOME_TAB, homeTab);
         tabbedPane.addTab(ABOUT_TAB, aboutTab);
 
         add(tabbedPane, BorderLayout.CENTER);
