@@ -1,25 +1,16 @@
 package gui;  
-
  
-import java.awt.event.ActionListener;
-
-import javax.swing.JOptionPane;
-import javax.swing.JPasswordField;
-import javax.swing.JTextField;
+import javax.swing.JOptionPane; 
 
 import connection.SQL;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
+import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.Tab;
-import javafx.scene.control.TabPane;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.Border;
 import javafx.scene.layout.BorderStroke;
 import javafx.scene.layout.BorderStrokeStyle;
@@ -41,9 +32,22 @@ import javafx.stage.Stage;
  */
 public class FXMain extends Application {
   
-	private final int SCENE_WIDTH = 800;
+	
+	/**
+	 * A list of the contributors' names.
+	 */
+	private static final String NAMES[] = {
+			"Stan Hu", "Jimmy Best", "Amanda Aldrich", "Taylor Riccetti", "Joshua Lau"
+	};
+	
+	
+	private final int SCENE_WIDTH = 900;
 	private final int SCENE_HEIGHT = 600;
  
+	private final Tab homeTab = new Tab("Home");
+	private final Tab aboutTab = new Tab("About");
+	private final Tab settingsTab = new Tab("Settings");
+
 	public static void main(String[] args) {
         launch(args);
     }
@@ -56,6 +60,8 @@ public class FXMain extends Application {
         SQL.connect();
         StackPane root = new StackPane();
         root.getChildren().add(getTabs());
+        primaryStage.setMinHeight(SCENE_HEIGHT);
+        primaryStage.setMinWidth(SCENE_WIDTH);
         primaryStage.setScene(new Scene(root, SCENE_WIDTH, SCENE_HEIGHT, Color.MISTYROSE));
         primaryStage.show();
     }
@@ -68,27 +74,56 @@ public class FXMain extends Application {
      * @author Taylor Riccetti
      */
     private TabPane getTabs() {
-        TabPane tabPane = new TabPane();
-    	Tab homeTab = new Tab("Home");
-		Tab aboutTab = new Tab("About");
-		homeTab.setContent(getUserInputPane());
+        TabPane tabPane = new TabPane(); 
+		homeTab.setContent(getLoginPane());
 		
     	homeTab.closableProperty().set(false);
     	aboutTab.closableProperty().set(false); 
+    	settingsTab.closableProperty().set(false);
     	
     	// Initially all other tabs are disabled until the user logs in.
     	aboutTab.disableProperty().set(true);
+    	settingsTab.disableProperty().set(true);
     	
-    	
-    	
+    	aboutTab.setContent(getAboutContent());
+    	settingsTab.setContent(getSettingContent());
 
     	tabPane.getTabs().add(homeTab);
     	tabPane.getTabs().add(aboutTab);
+    	tabPane.getTabs().add(settingsTab);
     	return tabPane;
     	
     }
 
-	private StackPane getUserInputPane() {
+	private StackPane getAboutContent() {
+		StackPane aboutPane = new StackPane();
+		
+		// Adds all the contributors to a grid pane.
+		GridPane contributorGrid = new GridPane();
+		contributorGrid.setAlignment(Pos.TOP_LEFT);
+		contributorGrid.setVgap(10);
+		contributorGrid.setHgap(10);
+		contributorGrid.setPadding(new Insets(25)); 
+		
+		aboutPane.setAlignment(Pos.TOP_LEFT);
+	    Text contributors = new Text("Contributors:");
+	    contributors.setFont(Font.font("Arial", FontWeight.NORMAL, 20));
+
+		contributorGrid.add(contributors, 0, 0, 2, 1);
+
+		for(int i = 1; i < NAMES.length; i++) {
+			Text currentName = new Text(NAMES[i - 1]);
+			contributorGrid.add(currentName, 1, i);
+		}
+		aboutPane.getChildren().add(contributorGrid);	
+		
+		GridPane Users = new GridPane();
+		         
+		
+		return aboutPane;
+	}
+
+	private StackPane getLoginPane() {
 		StackPane loginContainer = new StackPane();
 		TabPane tabPane = new TabPane();
 	    Tab loginTab = new Tab("Login");
@@ -132,7 +167,7 @@ public class FXMain extends Application {
             			loginActionText.setText("Please use the sign up tab.");
             		}
             	} else if (code == 1) {
-            		loginActionText.setText("Welcome back, " + user.getFirstName() + " " + user.getLastName() + "!");
+            	 	homeTab.setContent(getHomeContent("Welcome back, " + user.getFirstName() + " " + user.getLastName() + "!"));
             	} else if (code == 2) { 
             		loginActionText.setText("Incorrect password - try again.");
             	} else {
@@ -140,8 +175,7 @@ public class FXMain extends Application {
             	}    
          	}
             
-        });
-	    
+        }); 
 	     
 	    
 	    HBox hbBtn = new HBox(10);
@@ -191,16 +225,17 @@ public class FXMain extends Application {
 	            			email.getText(), password.getText());
 	            	int code = SQL.login(user);
 	            	if (code == 0) {
-            			SQL.updateUser(user);
-            			signUpActionText.setText("Welcome, " + firstName.getText() + " " + lastName.getText() + "!");
-	            	} else if (code == 1 | code == 2) {
+            			SQL.updateUser(user); 
+            			homeTab.setContent(getHomeContent("Welcome, " + firstName.getText() + " " + lastName.getText() + "!"));
+            		} else if (code == 1 | code == 2) {
 	            		signUpActionText.setText("This email is already registered.");
 	            	} else {
 	            		signUpActionText.setText("Error - could not access the login server.");
 	            	}
             	}
             }
-	    	
+
+			
 	    });
 	 
 	    signUp.add(signUpMessage, 0, 0, 2, 1);
@@ -215,7 +250,7 @@ public class FXMain extends Application {
 	    signUp.add(confirmPassLabel, 0, 5);
 	    signUp.add(confirmPass, 1, 5);
 		signUp.add(hbBtn2, 3, 6);
-		signUp.add(signUpActionText, 3, 7);
+		signUp.add(signUpActionText, 2, 7, 2, 1);
 	    signUpTab.setContent(signUp);
 
 	    loginTab.closableProperty().set(false);
@@ -226,13 +261,111 @@ public class FXMain extends Application {
 	    
         tabPane.getTabs().add(loginTab);
        	tabPane.getTabs().add(signUpTab);
-       	tabPane.setMaxWidth(SCENE_WIDTH / 2);
-       	tabPane.setMaxHeight(SCENE_HEIGHT / 2);
+    
+       	
+       	tabPane.setMaxWidth(SCENE_WIDTH / 1.8);
+       	tabPane.setMaxHeight(SCENE_HEIGHT / 1.8);
        	loginContainer.getChildren().add(tabPane);
        	tabPane.setBorder(new Border(new BorderStroke(Color.DARKGRAY, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
        	StackPane.setAlignment(tabPane, Pos.CENTER);
        	return loginContainer;
 	    	
-	} 
-    
+	}  
+
+	private StackPane getHomeContent(String welcomeText) {
+		StackPane homePane = new StackPane();
+		homePane.getChildren().add(new Text(welcomeText));
+		aboutTab.disableProperty().set(false);
+		settingsTab.disableProperty().set(false);
+		return homePane;		
+	}
+		
+	private StackPane getSettingContent() {
+		StackPane settingPane = new StackPane();
+		
+		TabPane tabPane = new TabPane();
+	    Tab accountTab = new Tab("Account");
+	    GridPane account = new GridPane();
+	    account.setAlignment(Pos.TOP_CENTER);
+	    account.setVgap(10);
+	    account.setHgap(10);
+	    account.setPadding(new Insets(25)); 
+	    Text changePassMessage = new Text("Change Password");
+	    changePassMessage.setFont(Font.font("Arial", FontWeight.NORMAL, 20));
+	    Label currPassLabel = new Label("Current Password:");
+	    PasswordField currPassword = new PasswordField();
+	    Label newPassLabel = new Label("New Password:");
+	    PasswordField newPassword = new PasswordField();
+	    Label confirmPassLabel = new Label("Confirm Password:");
+	    PasswordField confirmPassword = new PasswordField();
+	    Button changePassButton = new Button("Change Password");
+	    final Text changePassText = new Text();
+
+	    changePassButton.setOnAction(new EventHandler<ActionEvent>() {
+	    	// TO-DO action event handler for changing a password
+            @Override
+            public void handle(ActionEvent event) { 
+            	changePassText.setFill(Color.LIMEGREEN);
+				changePassText.setText("Password Changed!");
+            }
+	    });
+	    
+	    account.add(changePassMessage, 0, 0, 2, 1);
+	    account.add(currPassLabel, 0, 1);
+	    account.add(currPassword, 1, 1);
+	    account.add(newPassLabel, 0, 2);
+	    account.add(newPassword, 1, 2);
+	    account.add(confirmPassLabel, 0, 3);
+	    account.add(confirmPassword, 1, 3);
+	    account.add(changePassButton, 1, 4);
+	    account.add(changePassText, 0, 4, 2, 1);
+	    
+
+		Separator separator = new Separator();
+		separator.setOrientation(Orientation.VERTICAL);
+		account.add(separator, 2, 0, 1, 5);
+		
+	    Text changeEmailMessage = new Text("Change E-Mail");
+	    changeEmailMessage.setFont(Font.font("Arial", FontWeight.NORMAL, 20));
+	    Label currEmailLabel = new Label("Current E-Mail:");
+	    PasswordField currEmail = new PasswordField();
+	    Label newEmailLabel = new Label("New E-Mail:");
+	    PasswordField newEmail = new PasswordField();
+	    Button changeEmailButton = new Button("Change E-Mail");
+	    final Text changeEmailText = new Text();
+
+	    changeEmailButton.setOnAction(new EventHandler<ActionEvent>() {
+	    	// TO-DO action event handler for changing email
+            @Override
+            public void handle(ActionEvent event) { 
+
+            	changeEmailText.setFill(Color.LIMEGREEN);
+            	changeEmailText.setText("E-Mail Changed!");
+            }
+	    });
+	
+	    account.add(changeEmailMessage, 3, 0, 2, 1);
+	    account.add(currEmailLabel, 3, 1);
+	    account.add(currEmail, 4, 1);
+	    account.add(newEmailLabel, 3, 2);
+	    account.add(newEmail, 4, 2);
+	    account.add(changeEmailButton, 4, 3);
+	    account.add(changeEmailText, 3, 3, 2, 1);
+
+	    Tab preferenceTab = new Tab("Preferences");
+		   
+	    accountTab.closableProperty().set(false);
+	    preferenceTab.closableProperty().set(false);
+	    accountTab.setContent(account);
+	    tabPane.getTabs().add(accountTab);
+	    tabPane.getTabs().add(preferenceTab);
+	    tabPane.setMaxHeight(SCENE_HEIGHT - 50);
+	    tabPane.setMaxWidth(SCENE_WIDTH - 50);
+       	tabPane.setBorder(new Border(new BorderStroke(Color.DARKGRAY, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
+
+	    settingPane.getChildren().add(tabPane);
+	    
+		return settingPane;
+	}
+	
 }
