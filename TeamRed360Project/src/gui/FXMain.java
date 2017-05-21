@@ -51,7 +51,9 @@ public class FXMain extends Application {
     @Override
     public void start(Stage primaryStage) {
         primaryStage.setTitle("Nailed It!");
-                
+     
+
+        SQL.connect();
         StackPane root = new StackPane();
         root.getChildren().add(getTabs());
         primaryStage.setScene(new Scene(root, SCENE_WIDTH, SCENE_HEIGHT, Color.MISTYROSE));
@@ -113,7 +115,7 @@ public class FXMain extends Application {
  			* @param theEvent The event reference.
  			*/
             @Override
-            public void handle(ActionEvent event) {
+            public void handle(ActionEvent event) {            
             	User user = new User("", "",
             			loginEmail.getText(), loginPassword.getText());
             	int code = SQL.login(user);
