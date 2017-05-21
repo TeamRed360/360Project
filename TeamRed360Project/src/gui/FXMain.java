@@ -154,7 +154,6 @@ public class FXMain extends Application {
 	    login.add(loginPassword, 1, 2);
 	    login.add(hbBtn, 3, 6);
 	    login.add(loginActionText, 3, 7);
-
 	    loginTab.setContent(login);
 	    Tab signUpTab = new Tab("Sign Up");
 	    GridPane signUp = new GridPane();
@@ -169,7 +168,7 @@ public class FXMain extends Application {
 	    Label lastNameLabel = new Label("Last Name:");
 	    TextField lastName = new TextField();
 	    Label confirmPassLabel = new Label("Confirm Password:");
-	    TextField confirmPass = new TextField();
+	    PasswordField confirmPass = new PasswordField();
 	    final Text signUpActionText = new Text();
 
 	    Button signUpButton = new Button("Sign Up");
