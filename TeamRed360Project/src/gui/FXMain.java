@@ -1,6 +1,6 @@
 package gui;  
  
-import javax.swing.JOptionPane; 
+import javax.swing.JOptionPane;
 
 import connection.SQL;
 import javafx.application.Application;
@@ -10,7 +10,14 @@ import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
+import javafx.scene.control.Separator;
+import javafx.scene.control.Tab;
+import javafx.scene.control.TabPane;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.Border;
 import javafx.scene.layout.BorderStroke;
 import javafx.scene.layout.BorderStrokeStyle;
@@ -111,7 +118,7 @@ public class FXMain extends Application {
 
 		contributorGrid.add(contributors, 0, 0, 2, 1);
 
-		for(int i = 1; i < NAMES.length; i++) {
+		for(int i = 1; i < NAMES.length + 1; i++) {
 			Text currentName = new Text(NAMES[i - 1]);
 			contributorGrid.add(currentName, 1, i);
 		}
@@ -353,10 +360,23 @@ public class FXMain extends Application {
 	    account.add(changeEmailText, 3, 3, 2, 1);
 
 	    Tab preferenceTab = new Tab("Preferences");
-		   
+	    GridPane preference = new GridPane();
+	    preference.setAlignment(Pos.TOP_CENTER);
+	    preference.setVgap(10);
+	    preference.setHgap(10);
+	    preference.setPadding(new Insets(25)); 
+	    Text typeOfProject = new Text("Type of Project");
+	    typeOfProject.setFont(Font.font("Arial", FontWeight.NORMAL, 20));
+	    
+	    preference.add(typeOfProject, 0, 0, 2, 1);
+
+
+	    
+	    
 	    accountTab.closableProperty().set(false);
 	    preferenceTab.closableProperty().set(false);
 	    accountTab.setContent(account);
+	    preferenceTab.setContent(preference);
 	    tabPane.getTabs().add(accountTab);
 	    tabPane.getTabs().add(preferenceTab);
 	    tabPane.setMaxHeight(SCENE_HEIGHT - 50);
