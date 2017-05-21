@@ -1,16 +1,13 @@
 package connection;
 
 import java.sql.Connection;
-import java.sql.ResultSet;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Properties;
-import java.util.Scanner;
 
 import gui.User;
-
-import java.io.*;
 
 /**
  * A class to handle SQL/database related operations. 

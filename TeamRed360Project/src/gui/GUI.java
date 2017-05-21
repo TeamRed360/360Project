@@ -20,6 +20,8 @@ import javax.swing.JPasswordField;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
 
+import javafx.application.*;
+
 import connection.SQL;
 
 /**
@@ -75,6 +77,7 @@ public class GUI extends JFrame {
         
         setSize(FRAME_SIZE);
         setLocationRelativeTo(null);
+         
         
         JTabbedPane tabbedPane = new JTabbedPane();
         JPanel homeTab = new JPanel();

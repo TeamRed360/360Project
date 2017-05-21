@@ -33,6 +33,7 @@ public final class GUIMain {
      * @param theArgs Command line arguments.
      */
     public static void main(final String[] theArgs) {
+
         EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {
@@ -40,7 +41,7 @@ public final class GUIMain {
                 new GUI().start();
                 SQL.connect();
             }
-        });
+        }); 
     }
     
     /**
