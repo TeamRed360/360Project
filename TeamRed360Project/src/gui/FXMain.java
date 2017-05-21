@@ -248,6 +248,7 @@ public class FXMain extends Application {
 			
 	    });
 	 
+	    // adding all sign up input boxes
 	    signUp.add(signUpMessage, 0, 0, 2, 1);
 	    signUp.add(firstNameLabel, 0, 1);
 	    signUp.add(firstName, 1, 1);
