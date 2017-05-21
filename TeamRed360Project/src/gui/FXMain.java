@@ -11,7 +11,7 @@ import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.Separator;
@@ -26,11 +26,14 @@ import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import model.ProjectPreferences;
+import model.User;
  
 /** 
  * JavaFx Application. 
@@ -368,9 +371,29 @@ public class FXMain extends Application {
 	    Text typeOfProject = new Text("Type of Project");
 	    typeOfProject.setFont(Font.font("Arial", FontWeight.NORMAL, 20));
 	    
+	    VBox checkBoxContainer = new VBox(8);
+ 
+	    for(ProjectPreferences type : ProjectPreferences.values()) {
+	    	// Makes a check box from the enum value.
+	    	CheckBox checkBox = new CheckBox(type.type());
+	    	checkBox.setId(type.type());
+	    	checkBox.setOnAction(new EventHandler<ActionEvent>() {
+		    	 
+	            @Override
+	            public void handle(ActionEvent event) {       
+	            	// gets id
+	            	System.out.println(((CheckBox) event.getSource()).getId());
+	            	// is selected or not
+	            	System.out.println(((CheckBox) event.getSource()).isSelected());
+	            }
+	            
+	    	});
+	    	checkBoxContainer.getChildren().add(checkBox);
+	    }
+	    
+	    
 	    preference.add(typeOfProject, 0, 0, 2, 1);
-
-
+	    preference.add(checkBoxContainer, 0, 1);
 	    
 	    
 	    accountTab.closableProperty().set(false);

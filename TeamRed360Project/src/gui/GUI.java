@@ -21,7 +21,7 @@ import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
 
 import javafx.application.*;
-
+import model.User;
 import connection.SQL;
 
 /**

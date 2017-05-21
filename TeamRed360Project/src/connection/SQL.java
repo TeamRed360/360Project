@@ -7,7 +7,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Properties;
 
-import gui.User;
+import model.User;
 
 /**
  * A class to handle SQL/database related operations. 

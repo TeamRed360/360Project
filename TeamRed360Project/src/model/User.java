@@ -1,4 +1,4 @@
-package gui;
+package model;
 /*
  * TCSS 360 - Software Development Team Red
  * User object stores the user's name and email.

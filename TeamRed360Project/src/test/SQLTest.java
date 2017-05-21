@@ -9,7 +9,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import connection.SQL;
-import gui.User;
+import model.User;
 
 /**
  * JUnit tests for SQL.java for import/export functionality.
@@ -21,7 +21,7 @@ public class SQLTest {
 
 	
 	/**
-	 * Test method for {@link connection.SQL#login(gui.User)}.
+	 * Test method for {@link connection.SQL#login(model.User)}.
 	 */
 	@Before
 	public void setup() {
@@ -39,7 +39,7 @@ public class SQLTest {
 	}
 
 	/**
-	 * Test method for {@link connection.SQL#updateUser(gui.User)}.
+	 * Test method for {@link connection.SQL#updateUser(model.User)}.
 	 */
 	@Test
 	public void testUpdateUser() {
