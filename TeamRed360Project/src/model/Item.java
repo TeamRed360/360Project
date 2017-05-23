@@ -5,7 +5,7 @@ import java.text.NumberFormat;
 
 /**
  * 
- * @author Taylor Riccetti
+ * @author Taylor Riccetti, Amanda Aldrich
  *
  */
 public class Item implements Comparable<Item> { 
