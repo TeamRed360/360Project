@@ -18,6 +18,13 @@ import javafx.scene.control.Separator;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundImage;
+import javafx.scene.layout.BackgroundPosition;
+import javafx.scene.layout.BackgroundRepeat;
+import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.Border;
 import javafx.scene.layout.BorderStroke;
 import javafx.scene.layout.BorderStrokeStyle;
@@ -32,7 +39,8 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import model.ProjectPreferences;
+import model.Project;
+import model.Tag;
 import model.User;
  
 /** 
@@ -57,6 +65,9 @@ public class FXMain extends Application {
 	private final Tab homeTab = new Tab("Home");
 	private final Tab aboutTab = new Tab("About");
 	private final Tab settingsTab = new Tab("Settings");
+	
+	private Text welcomeText = new Text();
+	
 
 	public static void main(String[] args) {
         launch(args);
@@ -125,8 +136,19 @@ public class FXMain extends Application {
 			Text currentName = new Text(NAMES[i - 1]);
 			contributorGrid.add(currentName, 1, i);
 		}
-		aboutPane.getChildren().add(contributorGrid);	
 		
+		
+		Text credits = new Text("Credits:");
+		credits.setFont(Font.font("Arial", FontWeight.NORMAL, 20));
+		
+		Text lightBulb = new Text("Icons made by: http://www.flaticon.com/authors/vectors-market"
+				+ "\nVectors Market http://www.flaticon.com is licensed by http://creativecommons.org/licenses/by/3.0/CC 3.0 BY");
+
+	    
+		contributorGrid.add(credits, 4, 0, 2, 1);
+		contributorGrid.add(lightBulb, 4, 1);
+		aboutPane.getChildren().add(contributorGrid);	
+
 		GridPane Users = new GridPane();
 		         
 		
@@ -236,7 +258,8 @@ public class FXMain extends Application {
 	            	int code = SQL.login(user);
 	            	if (code == 0) {
             			SQL.updateUser(user); 
-            			homeTab.setContent(getHomeContent("Welcome, " + firstName.getText() + " " + lastName.getText() + "!"));
+            			welcomeText.setText("Welcome, " + firstName.getText() + " " + lastName.getText() + "!");
+            			homeTab.setContent(getHomeContent(welcomeText.getText()));
             		} else if (code == 1 | code == 2) {
 	            		signUpActionText.setText("This email is already registered.");
 	            	} else {
@@ -285,12 +308,80 @@ public class FXMain extends Application {
 
 	private StackPane getHomeContent(String welcomeText) {
 		StackPane homePane = new StackPane();
-		homePane.getChildren().add(new Text(welcomeText));
+			
+		GridPane homeGrid = new GridPane();
+		homeGrid.setAlignment(Pos.TOP_LEFT);
+		homeGrid.setVgap(10);
+		homeGrid.setHgap(10);
+		homeGrid.setPadding(new Insets(25)); 
+		
+		Text welcome = new Text(welcomeText);
+	    welcome.setFont(Font.font("Arial", FontWeight.NORMAL, 20));
+	    Button projectButton = new Button("Projects");
+	    BackgroundImage backgroundImage = new BackgroundImage(new Image("./fence-with-three-planks.png"), 
+	    													  BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, 
+	    													  BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
+        Background background = new Background(backgroundImage); 
+        projectButton.setBackground(background);
+        projectButton.setMinSize(128, 128);
+        
+        projectButton.setOnAction(new EventHandler<ActionEvent>() {
+		    	 
+	            @Override
+	            public void handle(ActionEvent event) {  
+	            	homeTab.setContent(addProjectView());
+	            }
+        
+        });
+	    
+	    homeGrid.add(welcome, 0, 0, 2, 1);
+		homeGrid.add(projectButton, 0, 1, 3, 1);
+	    
+	    
+	    
+		homePane.getChildren().add(homeGrid);
+
 		aboutTab.disableProperty().set(false);
 		settingsTab.disableProperty().set(false);
 		return homePane;		
 	}
 		
+	private StackPane addProjectView() {
+		StackPane projectPane = new StackPane();
+    
+	    GridPane projectGrid = new GridPane();
+	    projectGrid.setAlignment(Pos.TOP_LEFT);
+	    projectGrid.setVgap(10);
+	    projectGrid.setHgap(10);
+	    projectGrid.setPadding(new Insets(25)); 
+	    Text projectMessage = new Text("Your Projects");
+	    projectMessage.setFont(Font.font("Arial", FontWeight.NORMAL, 20));
+
+	    Button backButton = new Button("Back");
+	    
+	    backButton.setOnAction(new EventHandler<ActionEvent>() {
+		    	 
+	            @Override
+	            public void handle(ActionEvent event) {  
+	            	homeTab.setContent(getHomeContent(welcomeText.getText()));
+	            }
+	            
+	    });
+	    
+	    projectGrid.add(projectMessage, 0, 0, 2, 1);
+	    
+	    Project testProject = new Project("Fence");
+	    projectGrid.add(getProjectPane(testProject), 0, 1, 2, 1);
+	    
+	    projectGrid.add(backButton, 0, 10);
+	    
+	   	projectPane.setMaxHeight(SCENE_HEIGHT);
+       	projectPane.setMaxWidth(SCENE_WIDTH);
+       	projectPane.getChildren().add(projectGrid);
+       	StackPane.setAlignment(projectPane, Pos.CENTER);
+       	return projectPane;
+	}
+
 	private StackPane getSettingContent() {
 		StackPane settingPane = new StackPane();
 		
@@ -374,7 +465,7 @@ public class FXMain extends Application {
 	    
 	    VBox checkBoxContainer = new VBox(8);
  
-	    for(ProjectPreferences type : ProjectPreferences.values()) {
+	    for(Tag type : Tag.values()) {
 	    	// Makes a check box from the enum value.
 	    	CheckBox checkBox = new CheckBox(type.type());
 	    	checkBox.setId(type.type());
@@ -410,6 +501,14 @@ public class FXMain extends Application {
 	    settingPane.getChildren().add(tabPane);
 	    
 		return settingPane;
+	}
+	
+	private StackPane getProjectPane(Project project) {
+		StackPane projectPane = new StackPane();
+
+		
+		
+		return projectPane;		
 	}
 	
 }
