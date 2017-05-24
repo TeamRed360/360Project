@@ -198,7 +198,8 @@ public class FXMain extends Application {
             			loginActionText.setText("Please use the sign up tab.");
             		}
             	} else if (code == 1) {
-            	 	homeTab.setContent(getHomeContent("Welcome back, " + user.getFirstName() + " " + user.getLastName() + "!"));
+            		welcomeText.setText("Welcome back, " + user.getFirstName() + " " + user.getLastName() + "!");
+            	 	homeTab.setContent(getHomeContent(welcomeText.getText()));
             	} else if (code == 2) { 
             		loginActionText.setText("Incorrect password - try again.");
             	} else {
