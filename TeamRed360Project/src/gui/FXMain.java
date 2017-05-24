@@ -68,6 +68,8 @@ public class FXMain extends Application {
 	
 	private Text welcomeText = new Text();
 	
+	private User currentUser = null;
+	
 
 	public static void main(String[] args) {
         launch(args);
@@ -200,6 +202,7 @@ public class FXMain extends Application {
             		}
             	} else if (code == 1) {
             	 	homeTab.setContent(getHomeContent("Welcome back, " + user.getFirstName() + " " + user.getLastName() + "!"));
+            	 	currentUser = user;
             	} else if (code == 2) { 
             		loginActionText.setText("Incorrect password - try again.");
             	} else {
@@ -404,11 +407,23 @@ public class FXMain extends Application {
 	    final Text changePassText = new Text();
 
 	    changePassButton.setOnAction(new EventHandler<ActionEvent>() {
-	    	// TO-DO action event handler for changing a password
             @Override
-            public void handle(ActionEvent event) { 
-            	changePassText.setFill(Color.LIMEGREEN);
-				changePassText.setText("Password Changed!");
+            public void handle(ActionEvent event) {
+            	if (currPassword.getText().equals(currentUser.getPassword())) {
+	            	if (newPassword.getText().equals(confirmPassword.getText())) {
+		            	currentUser.setPassword(newPassword.getText());
+		            	changePassText.setFill(Color.LIMEGREEN);
+						changePassText.setText("Password Changed!");
+						SQL.updateUser(currentUser);
+	            	} else {
+		            	changePassText.setFill(Color.RED);
+						changePassText.setText("Passwords do not match!");            		
+	            	}
+            	} else {
+	            	changePassText.setFill(Color.RED);
+					changePassText.setText("Current password is invalid!");            		
+            	}
+            		
             }
 	    });
 	    
