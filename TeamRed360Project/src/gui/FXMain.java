@@ -10,6 +10,7 @@ import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
@@ -198,7 +199,8 @@ public class FXMain extends Application {
             			loginActionText.setText("Please use the sign up tab.");
             		}
             	} else if (code == 1) {
-            	 	homeTab.setContent(getHomeContent("Welcome back, " + user.getFirstName() + " " + user.getLastName() + "!"));
+            		welcomeText.setText("Welcome back, " + user.getFirstName() + " " + user.getLastName() + "!");
+            	 	homeTab.setContent(getHomeContent(welcomeText.getText()));
             	} else if (code == 2) { 
             		loginActionText.setText("Incorrect password - try again.");
             	} else {
@@ -309,7 +311,7 @@ public class FXMain extends Application {
 		StackPane homePane = new StackPane();
 			
 		GridPane homeGrid = new GridPane();
-		homeGrid.setAlignment(Pos.TOP_LEFT);
+		homeGrid.setAlignment(Pos.CENTER);
 		homeGrid.setVgap(10);
 		homeGrid.setHgap(10);
 		homeGrid.setPadding(new Insets(25)); 
@@ -334,9 +336,11 @@ public class FXMain extends Application {
         });
 	    
 	    homeGrid.add(welcome, 0, 0, 2, 1);
-		homeGrid.add(projectButton, 0, 1, 3, 1);
+	   // add(Node child, int columnIndex, int rowIndex, int colspan, int rowspan)
+
+		homeGrid.add(projectButton, 0, 1, 3, 2);
 	    
-	    
+	    homeGrid.add(getCalculatorPane(), 4, 1, 10, 1);
 	    
 		homePane.getChildren().add(homeGrid);
 
@@ -345,7 +349,135 @@ public class FXMain extends Application {
 		return homePane;		
 	}
 		
+<<<<<<< HEAD
 	
+=======
+	private GridPane getCalculatorPane() {
+		GridPane calculatorGrid = new GridPane();
+		calculatorGrid.setAlignment(Pos.CENTER);
+		calculatorGrid.setMinHeight(SCENE_HEIGHT - 100);
+		calculatorGrid.setMinWidth((SCENE_WIDTH - 50) / 2);
+		calculatorGrid.setAlignment(Pos.TOP_LEFT);
+		calculatorGrid.setVgap(10);
+		calculatorGrid.setHgap(10);
+		calculatorGrid.setPadding(new Insets(25)); 
+	    TextField total = new TextField();
+	    total.setPrefWidth(SCENE_WIDTH / 3);
+		total.setAlignment(Pos.CENTER_RIGHT);
+		
+		int row = 3;
+		int col = 0;
+		for(int i = 0; i < 10; i++) {
+			Button currButton = new Button("" + i);
+			currButton.setOnAction(new EventHandler<ActionEvent>() {    	
+	            @Override
+	            public void handle(ActionEvent event) {    
+	            	total.setText(total.getText() + ((Button) event.getSource()).getText());
+	            }
+            
+			});
+			if(i == 0) {
+				calculatorGrid.add(currButton, 1, 4);
+			} else {
+				calculatorGrid.add(currButton, col, row);
+				col++;
+				if(col == 3) {
+					col = 0;
+					row--;
+				}					
+			}		
+		}
+		
+		Button addButton = new Button(" + ");
+		addButton.setOnAction(new EventHandler<ActionEvent>() {    	
+            @Override
+            public void handle(ActionEvent event) {    
+            	total.setText(total.getText() + ((Button) event.getSource()).getText());
+            }        
+		});
+		
+		Button subtractButton = new Button(" - ");
+		subtractButton.setOnAction(new EventHandler<ActionEvent>() {    	
+            @Override
+            public void handle(ActionEvent event) {    
+            	total.setText(total.getText() + ((Button) event.getSource()).getText());
+            }        
+		});
+		
+		Button multiplyButton = new Button(" * ");
+		multiplyButton.setOnAction(new EventHandler<ActionEvent>() {    	
+            @Override
+            public void handle(ActionEvent event) {    
+            	total.setText(total.getText() + ((Button) event.getSource()).getText());
+            }        
+		});
+		
+		Button divideButton = new Button(" / ");
+		divideButton.setOnAction(new EventHandler<ActionEvent>() {    	
+            @Override
+            public void handle(ActionEvent event) {    
+            	total.setText(total.getText() + ((Button) event.getSource()).getText());
+            }        
+		});
+		
+		Button carrotButton = new Button("^");
+		carrotButton.setOnAction(new EventHandler<ActionEvent>() {    	
+            @Override
+            public void handle(ActionEvent event) {    
+            	total.setText(total.getText() + ((Button) event.getSource()).getText());
+            }        
+		});
+		
+		Button openParenButton = new Button(" ( ");
+		openParenButton.setOnAction(new EventHandler<ActionEvent>() {    	
+            @Override
+            public void handle(ActionEvent event) {    
+            	total.setText(total.getText() + ((Button) event.getSource()).getText());
+            }        
+		});
+		
+		Button closeParenButton = new Button(" ) ");
+		divideButton.setOnAction(new EventHandler<ActionEvent>() {    	
+            @Override
+            public void handle(ActionEvent event) {    
+            	total.setText(total.getText() + ((Button) event.getSource()).getText());
+            }        
+		});
+		
+		Button decimalButton = new Button(".");
+		decimalButton.setOnAction(new EventHandler<ActionEvent>() {    	
+            @Override
+            public void handle(ActionEvent event) {    
+            	total.setText(total.getText() + ((Button) event.getSource()).getText());
+            }        
+		});
+		
+
+		Button equalButton = new Button("=");
+		decimalButton.setOnAction(new EventHandler<ActionEvent>() {    	
+            @Override
+            public void handle(ActionEvent event) {    
+            	total.setText(total.getText() + ((Button) event.getSource()).getText());
+            }        
+		});
+		
+		calculatorGrid.add(total, 0, 0, 4, 1);
+	    calculatorGrid.add(addButton, 3, 4);
+	    calculatorGrid.add(subtractButton, 3, 3);
+	    calculatorGrid.add(divideButton, 3, 1);
+	    calculatorGrid.add(multiplyButton, 3, 2);
+	    calculatorGrid.add(carrotButton, 3, 5);
+	    calculatorGrid.add(openParenButton, 0, 4);
+	    calculatorGrid.add(closeParenButton, 2, 4);
+	    calculatorGrid.add(decimalButton, 1, 5);
+	    calculatorGrid.add(equalButton, 2, 5);
+	    
+	    
+	    calculatorGrid.setBorder(new Border(new BorderStroke(Color.DARKGRAY, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
+		return calculatorGrid;
+	}
+
+>>>>>>> 48804cc15a1051b3f8b7b8a71d5d36dde1dbd3c6
 	private StackPane addProjectView() {
 		StackPane projectPane = new StackPane();
     
