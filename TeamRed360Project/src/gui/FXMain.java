@@ -1,7 +1,6 @@
 package gui;  
  
 import javax.swing.JOptionPane;
-import javax.swing.text.html.HTML.Tag;
 
 import connection.SQL;
 import javafx.application.Application;
@@ -10,10 +9,8 @@ import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.Separator;
@@ -34,7 +31,7 @@ import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.TilePane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
@@ -61,7 +58,12 @@ public class FXMain extends Application {
 	
 	private final int SCENE_WIDTH = 900;
 	private final int SCENE_HEIGHT = 600;
- 
+	
+	private final Font HEADER_FONT = Font.font("Arial", FontWeight.NORMAL, 20);
+	private final Border BORDER = new Border(new BorderStroke(Color.DARKGRAY,
+															  BorderStrokeStyle.SOLID, 
+															  CornerRadii.EMPTY, 
+															  BorderWidths.DEFAULT));
 	private final Tab homeTab = new Tab("Home");
 	private final Tab aboutTab = new Tab("About");
 	private final Tab settingsTab = new Tab("Settings");
@@ -127,7 +129,7 @@ public class FXMain extends Application {
 		
 		aboutPane.setAlignment(Pos.TOP_LEFT);
 	    Text contributors = new Text("Contributors:");
-	    contributors.setFont(Font.font("Arial", FontWeight.NORMAL, 20));
+	    contributors.setFont(HEADER_FONT);
 
 		contributorGrid.add(contributors, 0, 0, 2, 1);
 
@@ -138,7 +140,7 @@ public class FXMain extends Application {
 		
 		
 		Text credits = new Text("Credits:");
-		credits.setFont(Font.font("Arial", FontWeight.NORMAL, 20));
+		credits.setFont(HEADER_FONT);
 		
 		Text lightBulb = new Text("Icons made by: http://www.flaticon.com/authors/vectors-market"
 				+ "\nVectors Market http://www.flaticon.com is licensed by http://creativecommons.org/licenses/by/3.0/CC 3.0 BY");
@@ -153,7 +155,7 @@ public class FXMain extends Application {
 		
 		return aboutPane;
 	}
-
+	
 	private StackPane getLoginPane() {
 		StackPane loginContainer = new StackPane();
 		TabPane tabPane = new TabPane();
@@ -164,7 +166,7 @@ public class FXMain extends Application {
 	    login.setHgap(10);
 	    login.setPadding(new Insets(25)); 
 	    Text loginMessage = new Text("Welcome");
-	    loginMessage.setFont(Font.font("Arial", FontWeight.NORMAL, 20));
+	    loginMessage.setFont(HEADER_FONT);
 	    Label emailLabel = new Label("E-Mail:");
 	    TextField loginEmail = new TextField();
 	    Label passwordLabel = new Label("Password:");
@@ -230,7 +232,7 @@ public class FXMain extends Application {
 	    signUp.setHgap(10);
 	    signUp.setPadding(new Insets(25)); 
 	    Text signUpMessage = new Text("Sign Up");
-	    signUpMessage.setFont(Font.font("Arial", FontWeight.NORMAL, 20));
+	    signUpMessage.setFont(HEADER_FONT);
 	    Label firstNameLabel = new Label("First Name:");
 	    TextField firstName = new TextField();
 	    Label lastNameLabel = new Label("Last Name:");
@@ -300,7 +302,7 @@ public class FXMain extends Application {
        	tabPane.setMaxWidth(SCENE_WIDTH / 1.8);
        	tabPane.setMaxHeight(SCENE_HEIGHT / 1.8);
        	loginContainer.getChildren().add(tabPane);
-       	tabPane.setBorder(new Border(new BorderStroke(Color.DARKGRAY, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
+       	tabPane.setBorder(BORDER);
        	StackPane.setAlignment(tabPane, Pos.CENTER);
        	return loginContainer;
 	    	
@@ -334,13 +336,9 @@ public class FXMain extends Application {
         
         });
 	    
-	    homeGrid.add(welcome, 0, 0, 2, 1);
-	   // add(Node child, int columnIndex, int rowIndex, int colspan, int rowspan)
-
-		homeGrid.add(projectButton, 0, 1, 3, 2);
-	    
-	    homeGrid.add(getCalculatorPane(), 4, 1, 10, 1);
-	    
+	    homeGrid.add(welcome, 0, 0, 2, 1); 
+		homeGrid.add(projectButton, 0, 1, 3, 2); 
+	    homeGrid.add(getCalculatorPane(), 4, 1, 10, 1); 
 		homePane.getChildren().add(homeGrid);
 
 		aboutTab.disableProperty().set(false);
@@ -470,7 +468,7 @@ public class FXMain extends Application {
 	    calculatorGrid.add(equalButton, 2, 5);
 	    
 	    
-	    calculatorGrid.setBorder(new Border(new BorderStroke(Color.DARKGRAY, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
+	    calculatorGrid.setBorder(BORDER);
 		return calculatorGrid;
 	}
  
@@ -522,18 +520,22 @@ public class FXMain extends Application {
        	return projectPane;
 	}
 
-	private StackPane getSettingContent() {
-		StackPane settingPane = new StackPane();
-		
+	/**
+	 * Returns a JavaFX TilePane containing all settings content.
+	 * @return TilePane
+	 * @author Taylor Riccetti
+	 */
+	private TilePane getSettingContent() {
+		TilePane settingPane = new TilePane();
 		TabPane tabPane = new TabPane();
 	    Tab accountTab = new Tab("Account");
 	    GridPane account = new GridPane();
-	    account.setAlignment(Pos.TOP_CENTER);
+	    account.setAlignment(Pos.CENTER);
 	    account.setVgap(10);
 	    account.setHgap(10);
 	    account.setPadding(new Insets(25)); 
 	    Text changePassMessage = new Text("Change Password");
-	    changePassMessage.setFont(Font.font("Arial", FontWeight.NORMAL, 20));
+	    changePassMessage.setFont(HEADER_FONT);
 	    Label currPassLabel = new Label("Current Password:");
 	    PasswordField currPassword = new PasswordField();
 	    Label newPassLabel = new Label("New Password:");
@@ -568,7 +570,7 @@ public class FXMain extends Application {
 		account.add(separator, 2, 0, 1, 5);
 		
 	    Text changeEmailMessage = new Text("Change E-Mail");
-	    changeEmailMessage.setFont(Font.font("Arial", FontWeight.NORMAL, 20));
+	    changeEmailMessage.setFont(HEADER_FONT);
 	    Label currEmailLabel = new Label("Current E-Mail:");
 	    PasswordField currEmail = new PasswordField();
 	    Label newEmailLabel = new Label("New E-Mail:");
@@ -601,7 +603,7 @@ public class FXMain extends Application {
 	    tabPane.getTabs().add(accountTab); 
 	    tabPane.setMaxHeight(SCENE_HEIGHT - 50);
 	    tabPane.setMaxWidth(SCENE_WIDTH - 50);
-       	tabPane.setBorder(new Border(new BorderStroke(Color.DARKGRAY, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
+       	tabPane.setBorder(BORDER);
 
 	    settingPane.getChildren().add(tabPane);
 	    
@@ -626,7 +628,7 @@ public class FXMain extends Application {
 	    addProjectGrid.setHgap(10);
 	    addProjectGrid.setPadding(new Insets(25)); 
 	    Text addProjectMessage = new Text("Add new Project");
-	    addProjectMessage.setFont(Font.font("Arial", FontWeight.NORMAL, 20));
+	    addProjectMessage.setFont(HEADER_FONT);
 
 	    Button submitButton = new Button("Submit");
 	    
@@ -648,15 +650,11 @@ public class FXMain extends Application {
 	            	homeTab.setContent(addProjectView());
 	            }
 	            
-	    });
-	    
+	    }); 
 
-	    addProjectGrid.add(addProjectMessage, 0, 0, 2, 1);
-	    
-	    addProjectGrid.add(submitButton, 0, 5);
-
-	    addProjectGrid.add(backButton, 0, 10);
-	    
+	    addProjectGrid.add(addProjectMessage, 0, 0, 2, 1); 
+	    addProjectGrid.add(submitButton, 0, 5); 
+	    addProjectGrid.add(backButton, 0, 10); 
 		return addProjectPane;
 	    
 	}   
