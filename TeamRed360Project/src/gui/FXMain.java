@@ -45,7 +45,7 @@ import model.User;
 /** 
  * JavaFx Application. 
  * @author Taylor Riccetti
- *
+ * edited by Amanda Aldrich
  */
 public class FXMain extends Application {
   
