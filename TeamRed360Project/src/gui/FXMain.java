@@ -345,6 +345,7 @@ public class FXMain extends Application {
 		return homePane;		
 	}
 		
+	
 	private StackPane addProjectView() {
 		StackPane projectPane = new StackPane();
     
@@ -356,6 +357,16 @@ public class FXMain extends Application {
 	    Text projectMessage = new Text("Your Projects");
 	    projectMessage.setFont(Font.font("Arial", FontWeight.NORMAL, 20));
 
+	    Button addNewButton = new Button("Add New Project...");
+	    
+	    addNewButton.setOnAction(new EventHandler<ActionEvent>(){
+	    	@Override
+            public void handle(ActionEvent event) {  
+            	homeTab.setContent(addNewProjectView());
+
+            }
+	    });
+	    
 	    Button backButton = new Button("Back");
 	    
 	    backButton.setOnAction(new EventHandler<ActionEvent>() {
@@ -371,6 +382,8 @@ public class FXMain extends Application {
 	    
 	    Project testProject = new Project("Fence");
 	    projectGrid.add(getProjectPane(testProject), 0, 1, 2, 1);
+
+	    projectGrid.add(addNewButton, 0, 5);
 	    
 	    projectGrid.add(backButton, 0, 10);
 	    
@@ -475,4 +488,49 @@ public class FXMain extends Application {
 		return projectPane;		
 	}
 	
+
+	private StackPane addNewProjectView() {
+		StackPane addProjectPane = new StackPane();
+    
+	    GridPane addProjectGrid = new GridPane();
+	    addProjectGrid.setAlignment(Pos.TOP_LEFT);
+	    addProjectGrid.setVgap(10);
+	    addProjectGrid.setHgap(10);
+	    addProjectGrid.setPadding(new Insets(25)); 
+	    Text addProjectMessage = new Text("Add new Project");
+	    addProjectMessage.setFont(Font.font("Arial", FontWeight.NORMAL, 20));
+
+	    Button submitButton = new Button("Submit");
+	    
+	    submitButton.setOnAction(new EventHandler<ActionEvent>(){
+	    	@Override
+            public void handle(ActionEvent event) {  
+            	//do things
+	    		//make projects
+
+            }
+	    });
+	    
+	    Button backButton = new Button("Back");
+	    
+	    backButton.setOnAction(new EventHandler<ActionEvent>() {
+		    	 
+	            @Override
+	            public void handle(ActionEvent event) {  
+	            	homeTab.setContent(addProjectView());
+	            }
+	            
+	    });
+	    
+
+	    addProjectGrid.add(addProjectMessage, 0, 0, 2, 1);
+	    
+	    addProjectGrid.add(submitButton, 0, 5);
+
+	    addProjectGrid.add(backButton, 0, 10);
+	    
+		return addProjectPane;
+	    
+	}   
+
 }
