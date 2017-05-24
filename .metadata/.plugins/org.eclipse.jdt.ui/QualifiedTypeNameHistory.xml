@@ -42,7 +42,6 @@
 <fullyQualifiedTypeName name="javafx.scene.paint.Paint"/>
 <fullyQualifiedTypeName name="javafx.scene.layout.Background"/>
 <fullyQualifiedTypeName name="javafx.scene.layout.BackgroundFill"/>
-<fullyQualifiedTypeName name="javafx.scene.layout.TilePane"/>
 <fullyQualifiedTypeName name="javafx.scene.image.ImageView"/>
 <fullyQualifiedTypeName name="javafx.scene.image.Image"/>
 <fullyQualifiedTypeName name="javafx.scene.web.WebView"/>
@@ -52,4 +51,5 @@
 <fullyQualifiedTypeName name="javafx.scene.layout.BackgroundPosition"/>
 <fullyQualifiedTypeName name="javafx.geometry.Pos"/>
 <fullyQualifiedTypeName name="model.Project"/>
+<fullyQualifiedTypeName name="javafx.scene.layout.TilePane"/>
 </qualifiedTypeNameHistroy>
