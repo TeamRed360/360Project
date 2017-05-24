@@ -11,38 +11,23 @@ import java.text.NumberFormat;
 public class Item implements Comparable<Item> { 
 	
 	private String name;
-	
-	private String manufacturer;
-	
+
 	private int quantity;
 	
 	private BigDecimal price;
 	
+  
+
 	/**
 	 * Constructs the item with the given name, price and quantity.
-	 *
+	 * 
 	 * @param theName
 	 * @param thePrice
 	 * @param theQuantity
 	 * @author Taylor Riccetti
 	 */
 	public Item(String theName, Double thePrice, int theQuantity) {
-		this(theName, thePrice, theQuantity, "N/A");
-	}
-
-	/**
-	 * Constructs the item with the given name, price, quantity
-	 * and manufacturer.
-	 * 
-	 * @param theName
-	 * @param thePrice
-	 * @param theQuantity
-	 * @param theManufacturer
-	 * @author Taylor Riccetti
-	 */
-	public Item(String theName, Double thePrice, int theQuantity, String theManufacturer) {
-		name = theName; 
-		manufacturer = theManufacturer;
+		name = theName;  
 		price = new BigDecimal(thePrice);
 		quantity = theQuantity;		
 	}
@@ -56,16 +41,7 @@ public class Item implements Comparable<Item> {
 		return name;
 	}
 	
-	/**
-	 * Returns the manufacturer or retailer of the item.
-	 * @return manufacturer.
-	 * 
-     * @author Taylor Riccetti
-	 */
-	public String getManufacturer() {
-		return manufacturer;
-	}
-	
+ 
 	/**
 	 * Returns the quantity of the item.
 	 * @return the quantity.
@@ -101,9 +77,7 @@ public class Item implements Comparable<Item> {
 	@Override
 	public String toString() {
 		StringBuilder bs = new StringBuilder();
-		bs.append(name);
-		bs.append(" - ");
-		bs.append(manufacturer);
+		bs.append(name); 
 		bs.append(": ");
 		bs.append(NumberFormat.getCurrencyInstance().format(price));
 		bs.append(" - ");

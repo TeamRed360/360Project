@@ -1,6 +1,7 @@
 package gui;  
  
 import javax.swing.JOptionPane;
+import javax.swing.text.html.HTML.Tag;
 
 import connection.SQL;
 import javafx.application.Application;
@@ -19,7 +20,6 @@ import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundImage;
 import javafx.scene.layout.BackgroundPosition;
@@ -40,7 +40,6 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import model.Project;
-import model.Tag;
 import model.User;
  
 /** 
@@ -453,47 +452,12 @@ public class FXMain extends Application {
 	    account.add(newEmail, 4, 2);
 	    account.add(changeEmailButton, 4, 3);
 	    account.add(changeEmailText, 3, 3, 2, 1);
-
-	    Tab preferenceTab = new Tab("Preferences");
-	    GridPane preference = new GridPane();
-	    preference.setAlignment(Pos.TOP_CENTER);
-	    preference.setVgap(10);
-	    preference.setHgap(10);
-	    preference.setPadding(new Insets(25)); 
-	    Text typeOfProject = new Text("Type of Project");
-	    typeOfProject.setFont(Font.font("Arial", FontWeight.NORMAL, 20));
-	    
-	    VBox checkBoxContainer = new VBox(8);
  
-	    for(Tag type : Tag.values()) {
-	    	// Makes a check box from the enum value.
-	    	CheckBox checkBox = new CheckBox(type.type());
-	    	checkBox.setId(type.type());
-	    	checkBox.setOnAction(new EventHandler<ActionEvent>() {
-		    	 
-	            @Override
-	            public void handle(ActionEvent event) {       
-	            	// gets id
-	            	System.out.println(((CheckBox) event.getSource()).getId());
-	            	// is selected or not
-	            	System.out.println(((CheckBox) event.getSource()).isSelected());
-	            }
-	            
-	    	});
-	    	checkBoxContainer.getChildren().add(checkBox);
-	    }
 	    
 	    
-	    preference.add(typeOfProject, 0, 0, 2, 1);
-	    preference.add(checkBoxContainer, 0, 1);
-	    
-	    
-	    accountTab.closableProperty().set(false);
-	    preferenceTab.closableProperty().set(false);
-	    accountTab.setContent(account);
-	    preferenceTab.setContent(preference);
-	    tabPane.getTabs().add(accountTab);
-	    tabPane.getTabs().add(preferenceTab);
+	    accountTab.closableProperty().set(false); 
+	    accountTab.setContent(account); 
+	    tabPane.getTabs().add(accountTab); 
 	    tabPane.setMaxHeight(SCENE_HEIGHT - 50);
 	    tabPane.setMaxWidth(SCENE_WIDTH - 50);
        	tabPane.setBorder(new Border(new BorderStroke(Color.DARKGRAY, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));

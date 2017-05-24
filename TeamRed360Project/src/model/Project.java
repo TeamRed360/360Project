@@ -17,17 +17,14 @@ public class Project {
 	private Set<Item> contents;
 	
 	private BigDecimal totalPrice;
-	
-	private Set<Tag> tags;
-	
+	 
 	/**
 	 * Contructs a project object.
 	 */
 	public Project(String name) {
 		this.name = name;
 		contents = new TreeSet<>();
-		totalPrice = new BigDecimal(0.0);
-		tags = new HashSet<>();
+		totalPrice = new BigDecimal(0.0); 
 	}
 	
 	public void add(Item theItem) {
@@ -42,10 +39,7 @@ public class Project {
 	private void updatePrice(Item theItem) {
 		totalPrice.add(theItem.getTotalPrice());
 	}
-	
-	public void setTag(Tag theTag) {
-		tags.add(theTag);
-	}
+
 	
 	public Item[] getListOfItems(){
 		return (Item[]) contents.toArray();
