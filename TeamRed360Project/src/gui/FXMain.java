@@ -1,9 +1,19 @@
 package gui;  
  
+import java.io.BufferedWriter;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.io.Writer;
+import java.math.BigDecimal;
+
 import javax.swing.JOptionPane;
 
 import connection.SQL;
 import javafx.application.Application;
+import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -12,11 +22,13 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.Separator;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.TextFieldListCell;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundImage;
@@ -24,6 +36,7 @@ import javafx.scene.layout.BackgroundPosition;
 import javafx.scene.layout.BackgroundRepeat;
 import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.Border;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.BorderStroke;
 import javafx.scene.layout.BorderStrokeStyle;
 import javafx.scene.layout.BorderWidths;
@@ -32,13 +45,16 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.TilePane;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import model.Item;
 import model.Project;
 import model.User;
+import sun.font.FontFamily;
  
 /** 
  * JavaFx Application. 
@@ -506,7 +522,7 @@ public class FXMain extends Application {
 	    
 	    projectGrid.add(projectMessage, 0, 0, 2, 1);
 	    
-	    Project testProject = new Project("Fence");
+	    Project testProject = new Project("Fence", "a fence");
 	    projectGrid.add(getProjectPane(testProject), 0, 1, 2, 1);
 
 	    projectGrid.add(addNewButton, 0, 5);
@@ -618,31 +634,57 @@ public class FXMain extends Application {
 		return projectPane;		
 	}
 	
-
+	/**
+	 * Creates the Create a Project view.
+	 * @author Amanda Aldrich
+	 * @return addProjectPane which is the pane we are building on.
+	 */
 	private StackPane addNewProjectView() {
+		
+		//pproject gets created to be customized by user
+		Project tempProject = new Project(" ", " ");
+		
+		//my pane
 		StackPane addProjectPane = new StackPane();
     
+		//the grid layout
 	    GridPane addProjectGrid = new GridPane();
 	    addProjectGrid.setAlignment(Pos.TOP_LEFT);
 	    addProjectGrid.setVgap(10);
 	    addProjectGrid.setHgap(10);
 	    addProjectGrid.setPadding(new Insets(25)); 
+	    
+	    //my heading
 	    Text addProjectMessage = new Text("Add new Project");
 	    addProjectMessage.setFont(HEADER_FONT);
 
-	    Button submitButton = new Button("Submit");
+	    //project name setup
+	    Text projectName = new Text("Project Name:");
+	    projectName.setFont(Font.font("Arial", FontWeight.NORMAL, 10));
+	    TextField projectNameField = new TextField();
+	    projectNameField.setAlignment(Pos.BASELINE_LEFT);
 	    
+	    //project desc setup
+	    Text projectDesc = new Text("Project Description:");
+	    projectDesc.setFont(Font.font("Arial", FontWeight.NORMAL, 10));
+	    TextField projectDescField = new TextField();
+	    projectDescField.setAlignment(Pos.BASELINE_LEFT);
+	    
+	    itemPane(tempProject);
+	    
+	    //my submit button
+	    Button submitButton = new Button("Submit");
 	    submitButton.setOnAction(new EventHandler<ActionEvent>(){
 	    	@Override
             public void handle(ActionEvent event) {  
-            	//do things
-	    		//make projects
-
+            	tempProject.changeName(projectNameField.getText());
+            	tempProject.changeDesc(projectDescField.getText());
+            	homeTab.setContent(addProjectView());
             }
 	    });
 	    
+	    //my back button
 	    Button backButton = new Button("Back");
-	    
 	    backButton.setOnAction(new EventHandler<ActionEvent>() {
 		    	 
 	            @Override
@@ -652,11 +694,125 @@ public class FXMain extends Application {
 	            
 	    }); 
 
+	    BorderPane border = new BorderPane();
+	    
+	    border.setLeft(addProjectGrid);
+	    border.setRight(itemPane(tempProject));
+	    border.setCenter(listPane(tempProject));
+	    
 	    addProjectGrid.add(addProjectMessage, 0, 0, 2, 1); 
+	    
+	    addProjectGrid.add(projectName, 0, 1, 2, 1);
+	    addProjectGrid.add(projectNameField, 0, 2, 2, 1);
+	    
+	    addProjectGrid.add(projectDesc, 0, 3, 2, 1);
+	    addProjectGrid.add(projectDescField, 0, 4, 2, 1);
+	    
 	    addProjectGrid.add(submitButton, 0, 5); 
 	    addProjectGrid.add(backButton, 0, 10); 
+	    
+	    addProjectPane.setMaxHeight(SCENE_HEIGHT);
+       	addProjectPane.setMaxWidth(SCENE_WIDTH);
+       	addProjectPane.getChildren().add(border);
+       	StackPane.setAlignment(border, Pos.CENTER);
 		return addProjectPane;
 	    
 	}   
 
+	/**
+	 * This should house the items
+	 * @author Amanda Aldrich
+	 * @param myProject
+	 * @return itemsPane, which is the pane we are messing with
+	 */
+	private GridPane itemPane(Project myProject){
+		GridPane itemsPane = new GridPane();
+		itemsPane.setAlignment(Pos.TOP_RIGHT);
+	    itemsPane.setVgap(10);
+	    itemsPane.setHgap(10);
+	    itemsPane.setPadding(new Insets(25)); 
+		
+		Text itemName = new Text("Item Name:");
+	    itemName.setFont(Font.font("Arial", FontWeight.NORMAL, 10));
+	    TextField itemNameField = new TextField("Name");
+	    itemNameField.setAlignment(Pos.BASELINE_LEFT);
+		
+	    Text itemQty = new Text("Item Quantity:");
+	    itemQty.setFont(Font.font("Arial", FontWeight.NORMAL, 10));
+	    TextField itemQtyField = new TextField("0");
+	    itemQtyField.setAlignment(Pos.BASELINE_LEFT);
+	    
+	    Text itemPrice = new Text("Item Price:");
+	    itemPrice.setFont(Font.font("Arial", FontWeight.NORMAL, 10));
+	    TextField itemPriceField = new TextField("0.0");
+	    itemPriceField.setAlignment(Pos.BASELINE_LEFT);
+	    
+		Button addButton = new Button("Add Item");
+		addButton.setOnAction(new EventHandler<ActionEvent>(){
+	    	@Override
+            public void handle(ActionEvent event) {
+	    		String theName = itemNameField.getText();
+	    		double thePrice = Double.parseDouble(itemPriceField.getText());
+	    		int theQty = Integer.parseInt(itemQtyField.getText());
+	    		
+	    		Item tempItem = new Item(theName, thePrice, theQty);
+            	myProject.add(tempItem);
+            	
+            	itemNameField.clear();
+            	itemPriceField.clear();
+            	itemQtyField.clear();
+
+            }
+	    });
+				
+		itemsPane.add(itemName, 1, 1, 2, 1);
+		itemsPane.add(itemNameField, 1, 2, 2, 1);
+		
+		itemsPane.add(itemQty, 1, 3, 2, 1);
+		itemsPane.add(itemQtyField, 1, 4, 2, 1);
+		
+		itemsPane.add(itemPrice, 1, 5, 2, 1);
+		itemsPane.add(itemPriceField, 1, 6, 2, 1);
+		
+		itemsPane.add(addButton, 1, 9);
+				
+		return itemsPane;
+		
+	}
+	
+	/**
+	 * creates the list view.
+	 * @author Amanda Aldrich
+	 * @param myProject
+	 * @return list, the list
+	 */
+	
+	//this whole thing is janked up....but I gotta commit beofre I leave
+	private ListView<String> listPane(Project myProject){
+		
+		Item tempI = new Item("fake", 0.0, 0);
+		
+		ListView<String> list = new ListView<>(FXCollections.observableArrayList(tempI.toString()));
+		
+		list.setEditable(true);
+			
+			
+		list.setCellFactory(TextFieldListCell.forListView());		
+
+		list.setOnEditCommit(new EventHandler<ListView.EditEvent<String>>() {
+			@Override
+			public void handle(ListView.EditEvent<String> t) {
+				list.getItems().set(t.getIndex(), t.getNewValue());
+				//System.out.println("setOnEditCommit");
+				if(list.getSelectionModel().getSelectedIndices().contains(list.getItems().size()-1))
+                    list.getItems().add("new list item");
+			}
+						
+		});
+	        
+		
+		
+		return list;
+		
+	}
 }

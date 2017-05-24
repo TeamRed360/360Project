@@ -14,6 +14,8 @@ public class Project {
 
 	private String name;
 	
+	private String desc;
+	
 	private Set<Item> contents;
 	
 	private BigDecimal totalPrice;
@@ -21,10 +23,19 @@ public class Project {
 	/**
 	 * Contructs a project object.
 	 */
-	public Project(String name) {
+	public Project(String name, String desc) {
 		this.name = name;
+		this.desc = desc;
 		contents = new TreeSet<>();
 		totalPrice = new BigDecimal(0.0); 
+	}
+	
+	public void changeName(String newName){
+		name = newName;
+	}
+	
+	public void changeDesc(String newDesc){
+		desc = newDesc;
 	}
 	
 	public void add(Item theItem) {
@@ -40,9 +51,10 @@ public class Project {
 		totalPrice.add(theItem.getTotalPrice());
 	}
 
-	
+	//modified by Amanda
 	public Item[] getListOfItems(){
-		return (Item[]) contents.toArray();
+		Item[] result = contents.toArray(new Item[contents.size()]);
+		return result;
 	}
 	
 	@Override
