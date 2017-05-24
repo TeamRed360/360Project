@@ -77,7 +77,6 @@ public class FXMain extends Application {
     public void start(Stage primaryStage) {
         primaryStage.setTitle("Nailed It!");
      
-
         SQL.connect();
         StackPane root = new StackPane();
         root.getChildren().add(getTabs());
@@ -349,9 +348,7 @@ public class FXMain extends Application {
 		return homePane;		
 	}
 		
-<<<<<<< HEAD
-	
-=======
+
 	private GridPane getCalculatorPane() {
 		GridPane calculatorGrid = new GridPane();
 		calculatorGrid.setAlignment(Pos.CENTER);
@@ -476,8 +473,7 @@ public class FXMain extends Application {
 	    calculatorGrid.setBorder(new Border(new BorderStroke(Color.DARKGRAY, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
 		return calculatorGrid;
 	}
-
->>>>>>> 48804cc15a1051b3f8b7b8a71d5d36dde1dbd3c6
+ 
 	private StackPane addProjectView() {
 		StackPane projectPane = new StackPane();
     
