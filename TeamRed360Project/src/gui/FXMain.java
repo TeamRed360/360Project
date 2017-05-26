@@ -463,6 +463,14 @@ public class FXMain extends Application {
             }        
 		});
 		equalButton.setMinSize(50, 50);
+		Button clearButton = new Button("C/E");
+		clearButton.setOnAction(new EventHandler<ActionEvent>() {    	
+            @Override
+            public void handle(ActionEvent event) {    
+            	total.setText("");
+            }        
+		});
+		clearButton.setMinSize(50, 50);
 		calculatorGrid.add(total, 0, 0, 4, 1);
 	    calculatorGrid.add(addButton, 3, 4);
 	    calculatorGrid.add(subtractButton, 3, 3);
@@ -473,6 +481,7 @@ public class FXMain extends Application {
 	    calculatorGrid.add(closeParenButton, 2, 4);
 	    calculatorGrid.add(decimalButton, 1, 5);
 	    calculatorGrid.add(equalButton, 2, 5);
+	    calculatorGrid.add(clearButton, 0, 5);
 	    
 	    
 	    calculatorGrid.setBorder(BORDER);
