@@ -785,8 +785,7 @@ public class FXMain extends Application {
 	 * @author Amanda Aldrich
 	 * @param myProject
 	 * @return list, the list
-	 */
-	
+	 */ 
 	//this whole thing is janked up....but I gotta commit beofre I leave
 	private ListView<String> listPane(Project myProject){
 		
