@@ -3,7 +3,7 @@
  * Team Red
  */
 
-package gui;
+package depreciated;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;

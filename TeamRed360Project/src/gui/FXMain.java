@@ -1,19 +1,10 @@
 package gui;  
  
-import java.io.BufferedWriter;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStreamWriter;
-import java.io.Writer;
-import java.math.BigDecimal;
-
-import javax.swing.JOptionPane;
+import javax.swing.JOptionPane; 
 
 import connection.SQL;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
-import javafx.collections.ListChangeListener;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -27,6 +18,8 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.Separator;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.TextFieldListCell;
 import javafx.scene.image.Image;
@@ -45,7 +38,6 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.TilePane;
-import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
@@ -54,7 +46,6 @@ import javafx.stage.Stage;
 import model.Item;
 import model.Project;
 import model.User;
-import sun.font.FontFamily;
  
 /** 
  * JavaFx Application. 
@@ -212,7 +203,7 @@ public class FXMain extends Application {
             			    JOptionPane.YES_NO_OPTION);
             		if (reply == JOptionPane.YES_OPTION) {
             			email.setText(loginEmail.getText());
-            			password.setText(loginPassword.getText());
+            			password.setText(loginPassword.getText()); 
             			loginActionText.setText("Please use the sign up tab.");
             		}
             	} else if (code == 1) {
@@ -366,14 +357,14 @@ public class FXMain extends Application {
 	private GridPane getCalculatorPane() {
 		GridPane calculatorGrid = new GridPane();
 		calculatorGrid.setAlignment(Pos.CENTER);
-		calculatorGrid.setMinHeight(SCENE_HEIGHT - 100);
-		calculatorGrid.setMinWidth((SCENE_WIDTH - 50) / 2);
+		calculatorGrid.setMinHeight(400);
+		calculatorGrid.setMinWidth(275);
 		calculatorGrid.setAlignment(Pos.TOP_LEFT);
 		calculatorGrid.setVgap(10);
 		calculatorGrid.setHgap(10);
 		calculatorGrid.setPadding(new Insets(25)); 
 	    TextField total = new TextField();
-	    total.setPrefWidth(SCENE_WIDTH / 3);
+	    total.setPrefWidth(225);
 		total.setAlignment(Pos.CENTER_RIGHT);
 		
 		int row = 3;
@@ -387,6 +378,7 @@ public class FXMain extends Application {
 	            }
             
 			});
+			currButton.setMinSize(50, 50);
 			if(i == 0) {
 				calculatorGrid.add(currButton, 1, 4);
 			} else {
@@ -406,7 +398,7 @@ public class FXMain extends Application {
             	total.setText(total.getText() + ((Button) event.getSource()).getText());
             }        
 		});
-		
+		addButton.setMinSize(50, 50);
 		Button subtractButton = new Button(" - ");
 		subtractButton.setOnAction(new EventHandler<ActionEvent>() {    	
             @Override
@@ -414,7 +406,7 @@ public class FXMain extends Application {
             	total.setText(total.getText() + ((Button) event.getSource()).getText());
             }        
 		});
-		
+		subtractButton.setMinSize(50, 50);
 		Button multiplyButton = new Button(" * ");
 		multiplyButton.setOnAction(new EventHandler<ActionEvent>() {    	
             @Override
@@ -422,7 +414,7 @@ public class FXMain extends Application {
             	total.setText(total.getText() + ((Button) event.getSource()).getText());
             }        
 		});
-		
+		multiplyButton.setMinSize(50, 50);
 		Button divideButton = new Button(" / ");
 		divideButton.setOnAction(new EventHandler<ActionEvent>() {    	
             @Override
@@ -430,7 +422,7 @@ public class FXMain extends Application {
             	total.setText(total.getText() + ((Button) event.getSource()).getText());
             }        
 		});
-		
+		divideButton.setMinSize(50, 50);
 		Button carrotButton = new Button("^");
 		carrotButton.setOnAction(new EventHandler<ActionEvent>() {    	
             @Override
@@ -438,7 +430,7 @@ public class FXMain extends Application {
             	total.setText(total.getText() + ((Button) event.getSource()).getText());
             }        
 		});
-		
+		carrotButton.setMinSize(50, 50);
 		Button openParenButton = new Button(" ( ");
 		openParenButton.setOnAction(new EventHandler<ActionEvent>() {    	
             @Override
@@ -446,7 +438,7 @@ public class FXMain extends Application {
             	total.setText(total.getText() + ((Button) event.getSource()).getText());
             }        
 		});
-		
+		openParenButton.setMinSize(50, 50);
 		Button closeParenButton = new Button(" ) ");
 		divideButton.setOnAction(new EventHandler<ActionEvent>() {    	
             @Override
@@ -454,7 +446,7 @@ public class FXMain extends Application {
             	total.setText(total.getText() + ((Button) event.getSource()).getText());
             }        
 		});
-		
+		closeParenButton.setMinSize(50, 50);
 		Button decimalButton = new Button(".");
 		decimalButton.setOnAction(new EventHandler<ActionEvent>() {    	
             @Override
@@ -462,8 +454,7 @@ public class FXMain extends Application {
             	total.setText(total.getText() + ((Button) event.getSource()).getText());
             }        
 		});
-		
-
+		decimalButton.setMinSize(50, 50);
 		Button equalButton = new Button("=");
 		decimalButton.setOnAction(new EventHandler<ActionEvent>() {    	
             @Override
@@ -471,7 +462,7 @@ public class FXMain extends Application {
             	total.setText(total.getText() + ((Button) event.getSource()).getText());
             }        
 		});
-		
+		equalButton.setMinSize(50, 50);
 		calculatorGrid.add(total, 0, 0, 4, 1);
 	    calculatorGrid.add(addButton, 3, 4);
 	    calculatorGrid.add(subtractButton, 3, 3);
@@ -787,12 +778,25 @@ public class FXMain extends Application {
 	 * @return list, the list
 	 */ 
 	//this whole thing is janked up....but I gotta commit beofre I leave
-	private ListView<String> listPane(Project myProject){
+	private TableView listPane(Project myProject){
 		
 		Item tempI = new Item("fake", 0.0, 0);
 		
 		ListView<String> list = new ListView<>(FXCollections.observableArrayList(tempI.toString()));
 		
+		
+		
+	    TableView table = new TableView();
+		TableColumn itemName = new TableColumn("Item Name");
+        TableColumn price = new TableColumn("Price");
+        TableColumn quantity = new TableColumn("Quantity");
+        TableColumn totalPrice = new TableColumn("Total Price");
+	       
+
+        table.setEditable(true);
+        table.getColumns().addAll(itemName, price, quantity, totalPrice);
+
+        
 		list.setEditable(true);
 			
 			
@@ -811,7 +815,7 @@ public class FXMain extends Application {
 	        
 		
 		
-		return list;
+		return table;
 		
 	}
 }
