@@ -112,9 +112,10 @@ public class FXMain extends Application {
     	aboutTab.closableProperty().set(false); 
     	settingsTab.closableProperty().set(false);
     	
+    	// Moved to getLoginPane
     	// Initially all other tabs are disabled until the user logs in.
-    	aboutTab.disableProperty().set(true);
-    	settingsTab.disableProperty().set(true);
+    	//aboutTab.disableProperty().set(true);
+    	//settingsTab.disableProperty().set(true);
     	
     	aboutTab.setContent(getAboutContent());
     	settingsTab.setContent(getSettingContent());
@@ -166,6 +167,10 @@ public class FXMain extends Application {
 	}
 	
 	private StackPane getLoginPane() {
+		// Tabs disabled when not logged in
+    	aboutTab.disableProperty().set(true);
+    	settingsTab.disableProperty().set(true);
+    	
 		StackPane loginContainer = new StackPane();
 		TabPane tabPane = new TabPane();
 	    Tab loginTab = new Tab("Login");
@@ -346,9 +351,32 @@ public class FXMain extends Application {
 	            }
         
         });
+        
+        //signout button
+        Button signoutButton = new Button("Sign Out");
+	    BackgroundImage signoutImage = new BackgroundImage(new Image("./chainsaw.png"), 
+	    													  BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, 
+	    													  BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
+        Background signout = new Background(signoutImage); 
+        signoutButton.setBackground(signout);
+        signoutButton.setMinSize(128, 128);
+        
+        signoutButton.setOnAction(new EventHandler<ActionEvent>() {
+	    	 
+            @Override
+            public void handle(ActionEvent event) {  
+            	homeTab.setContent(getLoginPane());
+            	currentUser = null;
+            	// update database if needed
+            	// maybe add a pop-up: "Are you sure You want to sign out?"
+            }
+    
+        });
+        //
 	    
 	    homeGrid.add(welcome, 0, 0, 2, 1); 
 		homeGrid.add(projectButton, 0, 1, 3, 2); 
+		homeGrid.add(signoutButton, 0, 2, 3, 2); 
 	    homeGrid.add(getCalculatorPane(), 4, 1, 10, 1); 
 		homePane.getChildren().add(homeGrid);
 
