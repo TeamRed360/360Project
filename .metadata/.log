@@ -5195,6 +5195,7 @@ user global configuration and to define the default location to store repositori
 not correct please set the HOME environment variable and restart Eclipse. Otherwise Git for Windows and
 EGit might behave differently since they see different configuration options.
 This warning can be switched off on the Team > Git > Confirmations and Warnings preference page.
+<<<<<<< HEAD
 
 !ENTRY org.eclipse.ui.workbench 4 2 2017-05-25 21:07:24.575
 !MESSAGE Problems occurred when invoking code from plug-in: "org.eclipse.ui.workbench".
@@ -5268,3 +5269,5 @@ java.lang.IllegalArgumentException: Cannot set lower sequence number for root (p
 	at org.eclipse.core.internal.resources.SaveManager.save(SaveManager.java:1165)
 	at org.eclipse.core.internal.resources.DelayedSnapshotJob.run(DelayedSnapshotJob.java:52)
 	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:55)
+=======
+>>>>>>> 4d83f66a89cbe02bd05e7fb8d44c0e5fee082cb0
