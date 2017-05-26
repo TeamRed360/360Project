@@ -632,11 +632,11 @@ public class FXMain extends Application {
 	 */
 	private GridPane addNewProjectView() {
 		
-		//pproject gets created to be customized by user
+		//project gets created to be customized by user
 		Project tempProject = new Project(" ", " ");
 		
 		//my pane
-		//StackPane addProjectPane = new StackPane();
+		StackPane addProjectPane = new StackPane();
     
 		//the grid layout
 	    GridPane addProjectGrid = new GridPane();
@@ -702,10 +702,10 @@ public class FXMain extends Application {
 	    addProjectGrid.add(submitButton, 0, 5); 
 	    addProjectGrid.add(backButton, 0, 10); 
 	    
-	    //addProjectPane.setMaxHeight(SCENE_HEIGHT);
-       	//addProjectPane.setMaxWidth(SCENE_WIDTH);
-       	//addProjectPane.getChildren().add(border);
-       	//StackPane.setAlignment(border, Pos.CENTER);
+	    addProjectPane.setMaxHeight(SCENE_HEIGHT);
+       	addProjectPane.setMaxWidth(SCENE_WIDTH);
+       	addProjectPane.getChildren().add(border);
+       	StackPane.setAlignment(border, Pos.CENTER);
 		return addProjectGrid;
 	    
 	}   
@@ -773,7 +773,7 @@ public class FXMain extends Application {
 	
 	/**
 	 * creates the list view.
-	 * @author Amanda Aldrich
+	 * @author Amanda Aldrich, Taylor Riccetti
 	 * @param myProject
 	 * @return list, the list
 	 */ 
