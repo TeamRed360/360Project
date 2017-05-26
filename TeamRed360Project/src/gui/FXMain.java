@@ -639,13 +639,13 @@ public class FXMain extends Application {
 	 * @author Amanda Aldrich
 	 * @return addProjectPane which is the pane we are building on.
 	 */
-	private StackPane addNewProjectView() {
+	private GridPane addNewProjectView() {
 		
 		//pproject gets created to be customized by user
 		Project tempProject = new Project(" ", " ");
 		
 		//my pane
-		StackPane addProjectPane = new StackPane();
+		//StackPane addProjectPane = new StackPane();
     
 		//the grid layout
 	    GridPane addProjectGrid = new GridPane();
@@ -711,11 +711,11 @@ public class FXMain extends Application {
 	    addProjectGrid.add(submitButton, 0, 5); 
 	    addProjectGrid.add(backButton, 0, 10); 
 	    
-	    addProjectPane.setMaxHeight(SCENE_HEIGHT);
-       	addProjectPane.setMaxWidth(SCENE_WIDTH);
-       	addProjectPane.getChildren().add(border);
-       	StackPane.setAlignment(border, Pos.CENTER);
-		return addProjectPane;
+	    //addProjectPane.setMaxHeight(SCENE_HEIGHT);
+       	//addProjectPane.setMaxWidth(SCENE_WIDTH);
+       	//addProjectPane.getChildren().add(border);
+       	//StackPane.setAlignment(border, Pos.CENTER);
+		return addProjectGrid;
 	    
 	}   
 
