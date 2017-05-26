@@ -645,7 +645,7 @@ public class FXMain extends Application {
 		Project tempProject = new Project(" ", " ");
 		
 		//my pane
-		//StackPane addProjectPane = new StackPane();
+		StackPane addProjectPane = new StackPane();
     
 		//the grid layout
 	    GridPane addProjectGrid = new GridPane();
@@ -711,10 +711,10 @@ public class FXMain extends Application {
 	    addProjectGrid.add(submitButton, 0, 5); 
 	    addProjectGrid.add(backButton, 0, 10); 
 	    
-	    //addProjectPane.setMaxHeight(SCENE_HEIGHT);
-       	//addProjectPane.setMaxWidth(SCENE_WIDTH);
-       	//addProjectPane.getChildren().add(border);
-       	//StackPane.setAlignment(border, Pos.CENTER);
+	    addProjectPane.setMaxHeight(SCENE_HEIGHT);
+       	addProjectPane.setMaxWidth(SCENE_WIDTH);
+       	addProjectPane.getChildren().add(border);
+       	StackPane.setAlignment(border, Pos.CENTER);
 		return addProjectGrid;
 	    
 	}   
@@ -790,10 +790,7 @@ public class FXMain extends Application {
 	private TableView listPane(Project myProject){
 		
 		Item tempI = new Item("fake", 0.0, 0);
-		
-		ListView<String> list = new ListView<>(FXCollections.observableArrayList(tempI.toString()));
-		
-		
+	 
 		
 	    TableView table = new TableView();
 		TableColumn itemName = new TableColumn("Item Name");
@@ -805,22 +802,7 @@ public class FXMain extends Application {
         table.setEditable(true);
         table.getColumns().addAll(itemName, price, quantity, totalPrice);
 
-        
-		list.setEditable(true);
-			
-			
-		list.setCellFactory(TextFieldListCell.forListView());		
-
-		list.setOnEditCommit(new EventHandler<ListView.EditEvent<String>>() {
-			@Override
-			public void handle(ListView.EditEvent<String> t) {
-				list.getItems().set(t.getIndex(), t.getNewValue());
-				//System.out.println("setOnEditCommit");
-				if(list.getSelectionModel().getSelectedIndices().contains(list.getItems().size()-1))
-                    list.getItems().add("new list item");
-			}
-						
-		});
+         
 	        
 		
 		
