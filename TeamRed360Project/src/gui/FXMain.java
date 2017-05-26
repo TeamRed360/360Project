@@ -71,6 +71,8 @@ public class FXMain extends Application {
 															  BorderStrokeStyle.SOLID, 
 															  CornerRadii.EMPTY, 
 															  BorderWidths.DEFAULT));
+    private Stage mainScreen; 
+    private final TabPane tabPane = new TabPane();
 	private final Tab homeTab = new Tab("Home");
 	private final Tab aboutTab = new Tab("About");
 	private final Tab settingsTab = new Tab("Settings");
@@ -85,16 +87,17 @@ public class FXMain extends Application {
     }
     
     @Override
-    public void start(Stage primaryStage) {
-        primaryStage.setTitle("Nailed It!");
+    public void start(Stage screen) {
+    	mainScreen = screen;
+    	mainScreen.setTitle("Nailed It!");
      
         SQL.connect();
         StackPane root = new StackPane();
         root.getChildren().add(getTabs());
-        primaryStage.setMinHeight(SCENE_HEIGHT);
-        primaryStage.setMinWidth(SCENE_WIDTH);
-        primaryStage.setScene(new Scene(root, SCENE_WIDTH, SCENE_HEIGHT, Color.MISTYROSE));
-        primaryStage.show();
+        mainScreen.setMinHeight(SCENE_HEIGHT);
+        mainScreen.setMinWidth(SCENE_WIDTH);
+        mainScreen.setScene(new Scene(root, SCENE_WIDTH, SCENE_HEIGHT, Color.MISTYROSE));
+        mainScreen.show();
     }
     
     
@@ -105,7 +108,7 @@ public class FXMain extends Application {
      * @author Taylor Riccetti
      */
     private TabPane getTabs() {
-        TabPane tabPane = new TabPane(); 
+        
 		homeTab.setContent(getLoginPane());
 		
     	homeTab.closableProperty().set(false);
@@ -352,31 +355,10 @@ public class FXMain extends Application {
         
         });
         
-        //signout button
-        Button signoutButton = new Button("Sign Out");
-	    BackgroundImage signoutImage = new BackgroundImage(new Image("./chainsaw.png"), 
-	    													  BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, 
-	    													  BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
-        Background signout = new Background(signoutImage); 
-        signoutButton.setBackground(signout);
-        signoutButton.setMinSize(128, 128);
         
-        signoutButton.setOnAction(new EventHandler<ActionEvent>() {
-	    	 
-            @Override
-            public void handle(ActionEvent event) {  
-            	homeTab.setContent(getLoginPane());
-            	currentUser = null;
-            	// update database if needed
-            	// maybe add a pop-up: "Are you sure You want to sign out?"
-            }
-    
-        });
-        //
 	    
 	    homeGrid.add(welcome, 0, 0, 2, 1); 
 		homeGrid.add(projectButton, 0, 1, 3, 2); 
-		homeGrid.add(signoutButton, 0, 2, 3, 2); 
 	    homeGrid.add(getCalculatorPane(), 4, 1, 10, 1); 
 		homePane.getChildren().add(homeGrid);
 
@@ -614,6 +596,32 @@ public class FXMain extends Application {
             }
 	    });
 	    
+	    
+	    //signout button
+        Button signoutButton = new Button("Sign Out");
+	    BackgroundImage signoutImage = new BackgroundImage(new Image("./chainsaw.png"), 
+	    													  BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, 
+	    													  BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
+        Background signout = new Background(signoutImage); 
+        signoutButton.setBackground(signout);
+        signoutButton.setMinSize(128, 128);
+        
+        signoutButton.setOnAction(new EventHandler<ActionEvent>() {
+	    	 
+            @Override
+            public void handle(ActionEvent event) {  
+            	homeTab.setContent(getLoginPane());
+            	//should select the tab at index zero.. not working..
+            	// user still has to navigate back to the home tab to log back in
+            	tabPane.getSelectionModel().select(0);
+            	currentUser = null;
+            	// update database if needed
+            	// maybe add a pop-up: "Are you sure You want to sign out?"
+            }
+    
+        });
+        //
+	    
 	    account.add(changePassMessage, 0, 0, 2, 1);
 	    account.add(currPassLabel, 0, 1);
 	    account.add(currPassword, 1, 1);
@@ -656,7 +664,8 @@ public class FXMain extends Application {
 	    account.add(changeEmailButton, 4, 3);
 	    account.add(changeEmailText, 3, 3, 2, 1);
  
-	    
+	    account.add(signoutButton, 4, 4, 3, 2); 
+
 	    
 	    accountTab.closableProperty().set(false); 
 	    accountTab.setContent(account); 
