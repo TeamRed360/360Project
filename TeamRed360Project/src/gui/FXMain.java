@@ -208,12 +208,9 @@ public class FXMain extends Application {
             			password.setText(loginPassword.getText()); 
             			loginActionText.setText("Please use the sign up tab.");
             		}
-            	} else if (code == 1) {
-<<<<<<< HEAD
+            	} else if (code == 1) { 
             	 	homeTab.setContent(getHomeContent("Welcome back, " + user.getFirstName() + " " + user.getLastName() + "!"));
-            	 	currentUser = user;
-=======
->>>>>>> 4d83f66a89cbe02bd05e7fb8d44c0e5fee082cb0
+            	 	currentUser = user; 
             		welcomeText.setText("Welcome back, " + user.getFirstName() + " " + user.getLastName() + "!");
             	 	homeTab.setContent(getHomeContent(welcomeText.getText()));
             	} else if (code == 2) { 
