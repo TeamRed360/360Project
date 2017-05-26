@@ -1,9 +1,10 @@
 package gui;  
  
-import javax.swing.JOptionPane;
+import javax.swing.JOptionPane; 
 
 import connection.SQL;
 import javafx.application.Application;
+import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -11,21 +12,24 @@ import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.Separator;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.TextFieldListCell;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundImage;
 import javafx.scene.layout.BackgroundPosition;
 import javafx.scene.layout.BackgroundRepeat;
 import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.Border;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.BorderStroke;
 import javafx.scene.layout.BorderStrokeStyle;
 import javafx.scene.layout.BorderWidths;
@@ -33,20 +37,20 @@ import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.TilePane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import model.Item;
 import model.Project;
-import model.Tag;
 import model.User;
  
 /** 
  * JavaFx Application. 
  * @author Taylor Riccetti
- *
+ * edited by Amanda Aldrich
  */
 public class FXMain extends Application {
   
@@ -61,7 +65,12 @@ public class FXMain extends Application {
 	
 	private final int SCENE_WIDTH = 900;
 	private final int SCENE_HEIGHT = 600;
- 
+	
+	private final Font HEADER_FONT = Font.font("Arial", FontWeight.NORMAL, 20);
+	private final Border BORDER = new Border(new BorderStroke(Color.DARKGRAY,
+															  BorderStrokeStyle.SOLID, 
+															  CornerRadii.EMPTY, 
+															  BorderWidths.DEFAULT));
 	private final Tab homeTab = new Tab("Home");
 	private final Tab aboutTab = new Tab("About");
 	private final Tab settingsTab = new Tab("Settings");
@@ -79,7 +88,6 @@ public class FXMain extends Application {
     public void start(Stage primaryStage) {
         primaryStage.setTitle("Nailed It!");
      
-
         SQL.connect();
         StackPane root = new StackPane();
         root.getChildren().add(getTabs());
@@ -130,7 +138,7 @@ public class FXMain extends Application {
 		
 		aboutPane.setAlignment(Pos.TOP_LEFT);
 	    Text contributors = new Text("Contributors:");
-	    contributors.setFont(Font.font("Arial", FontWeight.NORMAL, 20));
+	    contributors.setFont(HEADER_FONT);
 
 		contributorGrid.add(contributors, 0, 0, 2, 1);
 
@@ -141,7 +149,7 @@ public class FXMain extends Application {
 		
 		
 		Text credits = new Text("Credits:");
-		credits.setFont(Font.font("Arial", FontWeight.NORMAL, 20));
+		credits.setFont(HEADER_FONT);
 		
 		Text lightBulb = new Text("Icons made by: http://www.flaticon.com/authors/vectors-market"
 				+ "\nVectors Market http://www.flaticon.com is licensed by http://creativecommons.org/licenses/by/3.0/CC 3.0 BY");
@@ -156,7 +164,7 @@ public class FXMain extends Application {
 		
 		return aboutPane;
 	}
-
+	
 	private StackPane getLoginPane() {
 		StackPane loginContainer = new StackPane();
 		TabPane tabPane = new TabPane();
@@ -167,7 +175,7 @@ public class FXMain extends Application {
 	    login.setHgap(10);
 	    login.setPadding(new Insets(25)); 
 	    Text loginMessage = new Text("Welcome");
-	    loginMessage.setFont(Font.font("Arial", FontWeight.NORMAL, 20));
+	    loginMessage.setFont(HEADER_FONT);
 	    Label emailLabel = new Label("E-Mail:");
 	    TextField loginEmail = new TextField();
 	    Label passwordLabel = new Label("Password:");
@@ -197,12 +205,14 @@ public class FXMain extends Application {
             			    JOptionPane.YES_NO_OPTION);
             		if (reply == JOptionPane.YES_OPTION) {
             			email.setText(loginEmail.getText());
-            			password.setText(loginPassword.getText());
+            			password.setText(loginPassword.getText()); 
             			loginActionText.setText("Please use the sign up tab.");
             		}
             	} else if (code == 1) {
             	 	homeTab.setContent(getHomeContent("Welcome back, " + user.getFirstName() + " " + user.getLastName() + "!"));
             	 	currentUser = user;
+            		welcomeText.setText("Welcome back, " + user.getFirstName() + " " + user.getLastName() + "!");
+            	 	homeTab.setContent(getHomeContent(welcomeText.getText()));
             	} else if (code == 2) { 
             		loginActionText.setText("Incorrect password - try again.");
             	} else {
@@ -233,7 +243,7 @@ public class FXMain extends Application {
 	    signUp.setHgap(10);
 	    signUp.setPadding(new Insets(25)); 
 	    Text signUpMessage = new Text("Sign Up");
-	    signUpMessage.setFont(Font.font("Arial", FontWeight.NORMAL, 20));
+	    signUpMessage.setFont(HEADER_FONT);
 	    Label firstNameLabel = new Label("First Name:");
 	    TextField firstName = new TextField();
 	    Label lastNameLabel = new Label("Last Name:");
@@ -303,7 +313,7 @@ public class FXMain extends Application {
        	tabPane.setMaxWidth(SCENE_WIDTH / 1.8);
        	tabPane.setMaxHeight(SCENE_HEIGHT / 1.8);
        	loginContainer.getChildren().add(tabPane);
-       	tabPane.setBorder(new Border(new BorderStroke(Color.DARKGRAY, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
+       	tabPane.setBorder(BORDER);
        	StackPane.setAlignment(tabPane, Pos.CENTER);
        	return loginContainer;
 	    	
@@ -313,7 +323,7 @@ public class FXMain extends Application {
 		StackPane homePane = new StackPane();
 			
 		GridPane homeGrid = new GridPane();
-		homeGrid.setAlignment(Pos.TOP_LEFT);
+		homeGrid.setAlignment(Pos.CENTER);
 		homeGrid.setVgap(10);
 		homeGrid.setHgap(10);
 		homeGrid.setPadding(new Insets(25)); 
@@ -337,11 +347,9 @@ public class FXMain extends Application {
         
         });
 	    
-	    homeGrid.add(welcome, 0, 0, 2, 1);
-		homeGrid.add(projectButton, 0, 1, 3, 1);
-	    
-	    
-	    
+	    homeGrid.add(welcome, 0, 0, 2, 1); 
+		homeGrid.add(projectButton, 0, 1, 3, 2); 
+	    homeGrid.add(getCalculatorPane(), 4, 1, 10, 1); 
 		homePane.getChildren().add(homeGrid);
 
 		aboutTab.disableProperty().set(false);
@@ -349,6 +357,141 @@ public class FXMain extends Application {
 		return homePane;		
 	}
 		
+
+	private GridPane getCalculatorPane() {
+		GridPane calculatorGrid = new GridPane();
+		calculatorGrid.setAlignment(Pos.CENTER);
+		calculatorGrid.setMinHeight(400);
+		calculatorGrid.setMinWidth(275);
+		calculatorGrid.setAlignment(Pos.TOP_LEFT);
+		calculatorGrid.setVgap(10);
+		calculatorGrid.setHgap(10);
+		calculatorGrid.setPadding(new Insets(25)); 
+	    TextField total = new TextField();
+	    total.setPrefWidth(225);
+		total.setAlignment(Pos.CENTER_RIGHT);
+		
+		int row = 3;
+		int col = 0;
+		for(int i = 0; i < 10; i++) {
+			Button currButton = new Button("" + i);
+			currButton.setOnAction(new EventHandler<ActionEvent>() {    	
+	            @Override
+	            public void handle(ActionEvent event) {    
+	            	total.setText(total.getText() + ((Button) event.getSource()).getText());
+	            }
+            
+			});
+			currButton.setMinSize(50, 50);
+			if(i == 0) {
+				calculatorGrid.add(currButton, 1, 4);
+			} else {
+				calculatorGrid.add(currButton, col, row);
+				col++;
+				if(col == 3) {
+					col = 0;
+					row--;
+				}					
+			}		
+		}
+		
+		Button addButton = new Button(" + ");
+		addButton.setOnAction(new EventHandler<ActionEvent>() {    	
+            @Override
+            public void handle(ActionEvent event) {    
+            	total.setText(total.getText() + ((Button) event.getSource()).getText());
+            }        
+		});
+		addButton.setMinSize(50, 50);
+		Button subtractButton = new Button(" - ");
+		subtractButton.setOnAction(new EventHandler<ActionEvent>() {    	
+            @Override
+            public void handle(ActionEvent event) {    
+            	total.setText(total.getText() + ((Button) event.getSource()).getText());
+            }        
+		});
+		subtractButton.setMinSize(50, 50);
+		Button multiplyButton = new Button(" * ");
+		multiplyButton.setOnAction(new EventHandler<ActionEvent>() {    	
+            @Override
+            public void handle(ActionEvent event) {    
+            	total.setText(total.getText() + ((Button) event.getSource()).getText());
+            }        
+		});
+		multiplyButton.setMinSize(50, 50);
+		Button divideButton = new Button(" / ");
+		divideButton.setOnAction(new EventHandler<ActionEvent>() {    	
+            @Override
+            public void handle(ActionEvent event) {    
+            	total.setText(total.getText() + ((Button) event.getSource()).getText());
+            }        
+		});
+		divideButton.setMinSize(50, 50);
+		Button carrotButton = new Button("^");
+		carrotButton.setOnAction(new EventHandler<ActionEvent>() {    	
+            @Override
+            public void handle(ActionEvent event) {    
+            	total.setText(total.getText() + ((Button) event.getSource()).getText());
+            }        
+		});
+		carrotButton.setMinSize(50, 50);
+		Button openParenButton = new Button(" ( ");
+		openParenButton.setOnAction(new EventHandler<ActionEvent>() {    	
+            @Override
+            public void handle(ActionEvent event) {    
+            	total.setText(total.getText() + ((Button) event.getSource()).getText());
+            }        
+		});
+		openParenButton.setMinSize(50, 50);
+		Button closeParenButton = new Button(" ) ");
+		divideButton.setOnAction(new EventHandler<ActionEvent>() {    	
+            @Override
+            public void handle(ActionEvent event) {    
+            	total.setText(total.getText() + ((Button) event.getSource()).getText());
+            }        
+		});
+		closeParenButton.setMinSize(50, 50);
+		Button decimalButton = new Button(".");
+		decimalButton.setOnAction(new EventHandler<ActionEvent>() {    	
+            @Override
+            public void handle(ActionEvent event) {    
+            	total.setText(total.getText() + ((Button) event.getSource()).getText());
+            }        
+		});
+		decimalButton.setMinSize(50, 50);
+		Button equalButton = new Button("=");
+		decimalButton.setOnAction(new EventHandler<ActionEvent>() {    	
+            @Override
+            public void handle(ActionEvent event) {    
+            	total.setText(total.getText() + ((Button) event.getSource()).getText());
+            }        
+		});
+		equalButton.setMinSize(50, 50);
+		Button clearButton = new Button("C/E");
+		clearButton.setOnAction(new EventHandler<ActionEvent>() {    	
+            @Override
+            public void handle(ActionEvent event) {    
+            	total.setText("");
+            }        
+		});
+		clearButton.setMinSize(50, 50);
+		calculatorGrid.add(total, 0, 0, 4, 1);
+	    calculatorGrid.add(addButton, 3, 4);
+	    calculatorGrid.add(subtractButton, 3, 3);
+	    calculatorGrid.add(divideButton, 3, 1);
+	    calculatorGrid.add(multiplyButton, 3, 2);
+	    calculatorGrid.add(carrotButton, 3, 5);
+	    calculatorGrid.add(openParenButton, 0, 4);
+	    calculatorGrid.add(closeParenButton, 2, 4);
+	    calculatorGrid.add(decimalButton, 1, 5);
+	    calculatorGrid.add(equalButton, 2, 5);
+	    calculatorGrid.add(clearButton, 0, 5);
+	    
+	    
+	    calculatorGrid.setBorder(BORDER);
+		return calculatorGrid;
+	}
+ 
 	private StackPane addProjectView() {
 		StackPane projectPane = new StackPane();
     
@@ -360,6 +503,16 @@ public class FXMain extends Application {
 	    Text projectMessage = new Text("Your Projects");
 	    projectMessage.setFont(Font.font("Arial", FontWeight.NORMAL, 20));
 
+	    Button addNewButton = new Button("Add New Project...");
+	    
+	    addNewButton.setOnAction(new EventHandler<ActionEvent>(){
+	    	@Override
+            public void handle(ActionEvent event) {  
+            	homeTab.setContent(addNewProjectView());
+
+            }
+	    });
+	    
 	    Button backButton = new Button("Back");
 	    
 	    backButton.setOnAction(new EventHandler<ActionEvent>() {
@@ -373,8 +526,10 @@ public class FXMain extends Application {
 	    
 	    projectGrid.add(projectMessage, 0, 0, 2, 1);
 	    
-	    Project testProject = new Project("Fence");
+	    Project testProject = new Project("Fence", "a fence");
 	    projectGrid.add(getProjectPane(testProject), 0, 1, 2, 1);
+
+	    projectGrid.add(addNewButton, 0, 5);
 	    
 	    projectGrid.add(backButton, 0, 10);
 	    
@@ -385,18 +540,22 @@ public class FXMain extends Application {
        	return projectPane;
 	}
 
-	private StackPane getSettingContent() {
-		StackPane settingPane = new StackPane();
-		
+	/**
+	 * Returns a JavaFX TilePane containing all settings content.
+	 * @return TilePane
+	 * @author Taylor Riccetti
+	 */
+	private TilePane getSettingContent() {
+		TilePane settingPane = new TilePane();
 		TabPane tabPane = new TabPane();
 	    Tab accountTab = new Tab("Account");
 	    GridPane account = new GridPane();
-	    account.setAlignment(Pos.TOP_CENTER);
+	    account.setAlignment(Pos.CENTER);
 	    account.setVgap(10);
 	    account.setHgap(10);
 	    account.setPadding(new Insets(25)); 
 	    Text changePassMessage = new Text("Change Password");
-	    changePassMessage.setFont(Font.font("Arial", FontWeight.NORMAL, 20));
+	    changePassMessage.setFont(HEADER_FONT);
 	    Label currPassLabel = new Label("Current Password:");
 	    PasswordField currPassword = new PasswordField();
 	    Label newPassLabel = new Label("New Password:");
@@ -443,7 +602,7 @@ public class FXMain extends Application {
 		account.add(separator, 2, 0, 1, 5);
 		
 	    Text changeEmailMessage = new Text("Change E-Mail");
-	    changeEmailMessage.setFont(Font.font("Arial", FontWeight.NORMAL, 20));
+	    changeEmailMessage.setFont(HEADER_FONT);
 	    Label currEmailLabel = new Label("Current E-Mail:");
 	    PasswordField currEmail = new PasswordField();
 	    Label newEmailLabel = new Label("New E-Mail:");
@@ -468,50 +627,15 @@ public class FXMain extends Application {
 	    account.add(newEmail, 4, 2);
 	    account.add(changeEmailButton, 4, 3);
 	    account.add(changeEmailText, 3, 3, 2, 1);
-
-	    Tab preferenceTab = new Tab("Preferences");
-	    GridPane preference = new GridPane();
-	    preference.setAlignment(Pos.TOP_CENTER);
-	    preference.setVgap(10);
-	    preference.setHgap(10);
-	    preference.setPadding(new Insets(25)); 
-	    Text typeOfProject = new Text("Type of Project");
-	    typeOfProject.setFont(Font.font("Arial", FontWeight.NORMAL, 20));
-	    
-	    VBox checkBoxContainer = new VBox(8);
  
-	    for(Tag type : Tag.values()) {
-	    	// Makes a check box from the enum value.
-	    	CheckBox checkBox = new CheckBox(type.type());
-	    	checkBox.setId(type.type());
-	    	checkBox.setOnAction(new EventHandler<ActionEvent>() {
-		    	 
-	            @Override
-	            public void handle(ActionEvent event) {       
-	            	// gets id
-	            	System.out.println(((CheckBox) event.getSource()).getId());
-	            	// is selected or not
-	            	System.out.println(((CheckBox) event.getSource()).isSelected());
-	            }
-	            
-	    	});
-	    	checkBoxContainer.getChildren().add(checkBox);
-	    }
 	    
 	    
-	    preference.add(typeOfProject, 0, 0, 2, 1);
-	    preference.add(checkBoxContainer, 0, 1);
-	    
-	    
-	    accountTab.closableProperty().set(false);
-	    preferenceTab.closableProperty().set(false);
-	    accountTab.setContent(account);
-	    preferenceTab.setContent(preference);
-	    tabPane.getTabs().add(accountTab);
-	    tabPane.getTabs().add(preferenceTab);
+	    accountTab.closableProperty().set(false); 
+	    accountTab.setContent(account); 
+	    tabPane.getTabs().add(accountTab); 
 	    tabPane.setMaxHeight(SCENE_HEIGHT - 50);
 	    tabPane.setMaxWidth(SCENE_WIDTH - 50);
-       	tabPane.setBorder(new Border(new BorderStroke(Color.DARKGRAY, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
+       	tabPane.setBorder(BORDER);
 
 	    settingPane.getChildren().add(tabPane);
 	    
@@ -526,4 +650,179 @@ public class FXMain extends Application {
 		return projectPane;		
 	}
 	
+	/**
+	 * Creates the Create a Project view.
+	 * @author Amanda Aldrich
+	 * @return addProjectPane which is the pane we are building on.
+	 */
+	private GridPane addNewProjectView() {
+		
+		//pproject gets created to be customized by user
+		Project tempProject = new Project(" ", " ");
+		
+		//my pane
+		StackPane addProjectPane = new StackPane();
+    
+		//the grid layout
+	    GridPane addProjectGrid = new GridPane();
+	    addProjectGrid.setAlignment(Pos.TOP_LEFT);
+	    addProjectGrid.setVgap(10);
+	    addProjectGrid.setHgap(10);
+	    addProjectGrid.setPadding(new Insets(25)); 
+	    
+	    //my heading
+	    Text addProjectMessage = new Text("Add new Project");
+	    addProjectMessage.setFont(HEADER_FONT);
+
+	    //project name setup
+	    Text projectName = new Text("Project Name:");
+	    projectName.setFont(Font.font("Arial", FontWeight.NORMAL, 10));
+	    TextField projectNameField = new TextField();
+	    projectNameField.setAlignment(Pos.BASELINE_LEFT);
+	    
+	    //project desc setup
+	    Text projectDesc = new Text("Project Description:");
+	    projectDesc.setFont(Font.font("Arial", FontWeight.NORMAL, 10));
+	    TextField projectDescField = new TextField();
+	    projectDescField.setAlignment(Pos.BASELINE_LEFT);
+	    
+	    itemPane(tempProject);
+	    
+	    //my submit button
+	    Button submitButton = new Button("Submit");
+	    submitButton.setOnAction(new EventHandler<ActionEvent>(){
+	    	@Override
+            public void handle(ActionEvent event) {  
+            	tempProject.changeName(projectNameField.getText());
+            	tempProject.changeDesc(projectDescField.getText());
+            	homeTab.setContent(addProjectView());
+            }
+	    });
+	    
+	    //my back button
+	    Button backButton = new Button("Back");
+	    backButton.setOnAction(new EventHandler<ActionEvent>() {
+		    	 
+	            @Override
+	            public void handle(ActionEvent event) {  
+	            	homeTab.setContent(addProjectView());
+	            }
+	            
+	    }); 
+
+	    BorderPane border = new BorderPane();
+	    
+	    border.setLeft(addProjectGrid);
+	    border.setRight(itemPane(tempProject));
+	    border.setCenter(listPane(tempProject));
+	    
+	    addProjectGrid.add(addProjectMessage, 0, 0, 2, 1); 
+	    
+	    addProjectGrid.add(projectName, 0, 1, 2, 1);
+	    addProjectGrid.add(projectNameField, 0, 2, 2, 1);
+	    
+	    addProjectGrid.add(projectDesc, 0, 3, 2, 1);
+	    addProjectGrid.add(projectDescField, 0, 4, 2, 1);
+	    
+	    addProjectGrid.add(submitButton, 0, 5); 
+	    addProjectGrid.add(backButton, 0, 10); 
+	    
+	    addProjectPane.setMaxHeight(SCENE_HEIGHT);
+       	addProjectPane.setMaxWidth(SCENE_WIDTH);
+       	addProjectPane.getChildren().add(border);
+       	StackPane.setAlignment(border, Pos.CENTER);
+		return addProjectGrid;
+	    
+	}   
+
+	/**
+	 * This should house the items
+	 * @author Amanda Aldrich
+	 * @param myProject
+	 * @return itemsPane, which is the pane we are messing with
+	 */
+	private GridPane itemPane(Project myProject){
+		GridPane itemsPane = new GridPane();
+		itemsPane.setAlignment(Pos.TOP_RIGHT);
+	    itemsPane.setVgap(10);
+	    itemsPane.setHgap(10);
+	    itemsPane.setPadding(new Insets(25)); 
+		
+		Text itemName = new Text("Item Name:");
+	    itemName.setFont(Font.font("Arial", FontWeight.NORMAL, 10));
+	    TextField itemNameField = new TextField("Name");
+	    itemNameField.setAlignment(Pos.BASELINE_LEFT);
+		
+	    Text itemQty = new Text("Item Quantity:");
+	    itemQty.setFont(Font.font("Arial", FontWeight.NORMAL, 10));
+	    TextField itemQtyField = new TextField("0");
+	    itemQtyField.setAlignment(Pos.BASELINE_LEFT);
+	    
+	    Text itemPrice = new Text("Item Price:");
+	    itemPrice.setFont(Font.font("Arial", FontWeight.NORMAL, 10));
+	    TextField itemPriceField = new TextField("0.0");
+	    itemPriceField.setAlignment(Pos.BASELINE_LEFT);
+	    
+		Button addButton = new Button("Add Item");
+		addButton.setOnAction(new EventHandler<ActionEvent>(){
+	    	@Override
+            public void handle(ActionEvent event) {
+	    		String theName = itemNameField.getText();
+	    		double thePrice = Double.parseDouble(itemPriceField.getText());
+	    		int theQty = Integer.parseInt(itemQtyField.getText());
+	    		
+	    		Item tempItem = new Item(theName, thePrice, theQty);
+            	myProject.add(tempItem);
+            	
+            	itemNameField.clear();
+            	itemPriceField.clear();
+            	itemQtyField.clear();
+
+            }
+	    });
+				
+		itemsPane.add(itemName, 1, 1, 2, 1);
+		itemsPane.add(itemNameField, 1, 2, 2, 1);
+		
+		itemsPane.add(itemQty, 1, 3, 2, 1);
+		itemsPane.add(itemQtyField, 1, 4, 2, 1);
+		
+		itemsPane.add(itemPrice, 1, 5, 2, 1);
+		itemsPane.add(itemPriceField, 1, 6, 2, 1);
+		
+		itemsPane.add(addButton, 1, 9);
+				
+		return itemsPane;
+		
+	}
+	
+	/**
+	 * creates the list view.
+	 * @author Amanda Aldrich
+	 * @param myProject
+	 * @return list, the list
+	 */ 
+	//this whole thing is janked up....but I gotta commit beofre I leave
+	private TableView listPane(Project myProject){
+		
+		Item tempI = new Item("fake", 0.0, 0);
+	 
+		
+	    TableView table = new TableView();
+		TableColumn itemName = new TableColumn("Item Name");
+        TableColumn price = new TableColumn("Price");
+        TableColumn quantity = new TableColumn("Quantity");
+        TableColumn totalPrice = new TableColumn("Total Price");
+	       
+
+        table.setEditable(true);
+        table.getColumns().addAll(itemName, price, quantity, totalPrice);
+
+         
+	        
+		
+		
+		return table;
+		
+	}
 }
