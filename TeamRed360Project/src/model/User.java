@@ -8,6 +8,9 @@ package model;
  * @version 1.6 
  */
 public class User {
+	
+	
+	private int id;
 
 	private String myEmail;
 	
@@ -24,11 +27,27 @@ public class User {
 				|| theEmail == null || thePassword == null) {
 			throw new IllegalArgumentException("Illegal Parameters!");
 		}
-		
+		id = -1; //this is set later on, needs an SQL response to determine
 		myFirstName = theFirstName;
 		myLastName = theLastName;
 		myEmail = theEmail;
 		myPassword = thePassword;
+	}
+	
+	public void setId(final int id) {
+		this.id = id;
+	}
+	
+	public void setEmail(final String email) {
+		myEmail = email;
+	}
+	
+	public void setPassword(final String password) {
+		myPassword = password;
+	}
+	
+	public int getId() {
+		return id;
 	}
 	
 	public String getFirstName(){

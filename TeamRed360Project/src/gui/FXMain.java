@@ -5,6 +5,7 @@ import javax.swing.JOptionPane;
 import connection.SQL;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -19,6 +20,7 @@ import javafx.scene.control.Separator;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TablePosition;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.TextFieldListCell;
@@ -71,11 +73,15 @@ public class FXMain extends Application {
 															  BorderStrokeStyle.SOLID, 
 															  CornerRadii.EMPTY, 
 															  BorderWidths.DEFAULT));
+    private Stage mainScreen; 
+    private final TabPane tabPane = new TabPane();
 	private final Tab homeTab = new Tab("Home");
 	private final Tab aboutTab = new Tab("About");
 	private final Tab settingsTab = new Tab("Settings");
 	
 	private Text welcomeText = new Text();
+	
+	private User currentUser = null;
 	
 
 	public static void main(String[] args) {
@@ -83,16 +89,17 @@ public class FXMain extends Application {
     }
     
     @Override
-    public void start(Stage primaryStage) {
-        primaryStage.setTitle("Nailed It!");
+    public void start(Stage screen) {
+    	mainScreen = screen;
+    	mainScreen.setTitle("Nailed It!");
      
         SQL.connect();
         StackPane root = new StackPane();
         root.getChildren().add(getTabs());
-        primaryStage.setMinHeight(SCENE_HEIGHT);
-        primaryStage.setMinWidth(SCENE_WIDTH);
-        primaryStage.setScene(new Scene(root, SCENE_WIDTH, SCENE_HEIGHT, Color.MISTYROSE));
-        primaryStage.show();
+        mainScreen.setMinHeight(SCENE_HEIGHT);
+        mainScreen.setMinWidth(SCENE_WIDTH);
+        mainScreen.setScene(new Scene(root, SCENE_WIDTH, SCENE_HEIGHT, Color.MISTYROSE));
+        mainScreen.show();
     }
     
     
@@ -103,16 +110,17 @@ public class FXMain extends Application {
      * @author Taylor Riccetti
      */
     private TabPane getTabs() {
-        TabPane tabPane = new TabPane(); 
+        
 		homeTab.setContent(getLoginPane());
 		
     	homeTab.closableProperty().set(false);
     	aboutTab.closableProperty().set(false); 
     	settingsTab.closableProperty().set(false);
     	
+    	// Moved to getLoginPane
     	// Initially all other tabs are disabled until the user logs in.
-    	aboutTab.disableProperty().set(true);
-    	settingsTab.disableProperty().set(true);
+    	//aboutTab.disableProperty().set(true);
+    	//settingsTab.disableProperty().set(true);
     	
     	aboutTab.setContent(getAboutContent());
     	settingsTab.setContent(getSettingContent());
@@ -164,6 +172,10 @@ public class FXMain extends Application {
 	}
 	
 	private StackPane getLoginPane() {
+		// Tabs disabled when not logged in
+    	aboutTab.disableProperty().set(true);
+    	settingsTab.disableProperty().set(true);
+    	
 		StackPane loginContainer = new StackPane();
 		TabPane tabPane = new TabPane();
 	    Tab loginTab = new Tab("Login");
@@ -206,7 +218,9 @@ public class FXMain extends Application {
             			password.setText(loginPassword.getText()); 
             			loginActionText.setText("Please use the sign up tab.");
             		}
-            	} else if (code == 1) {
+            	} else if (code == 1) { 
+            	 	homeTab.setContent(getHomeContent("Welcome back, " + user.getFirstName() + " " + user.getLastName() + "!"));
+            	 	currentUser = user; 
             		welcomeText.setText("Welcome back, " + user.getFirstName() + " " + user.getLastName() + "!");
             	 	homeTab.setContent(getHomeContent(welcomeText.getText()));
             	} else if (code == 2) { 
@@ -342,6 +356,8 @@ public class FXMain extends Application {
 	            }
         
         });
+        
+        
 	    
 	    homeGrid.add(welcome, 0, 0, 2, 1); 
 		homeGrid.add(projectButton, 0, 1, 3, 2); 
@@ -463,6 +479,14 @@ public class FXMain extends Application {
             }        
 		});
 		equalButton.setMinSize(50, 50);
+		Button clearButton = new Button("C/E");
+		clearButton.setOnAction(new EventHandler<ActionEvent>() {    	
+            @Override
+            public void handle(ActionEvent event) {    
+            	total.setText("");
+            }        
+		});
+		clearButton.setMinSize(50, 50);
 		calculatorGrid.add(total, 0, 0, 4, 1);
 	    calculatorGrid.add(addButton, 3, 4);
 	    calculatorGrid.add(subtractButton, 3, 3);
@@ -473,6 +497,7 @@ public class FXMain extends Application {
 	    calculatorGrid.add(closeParenButton, 2, 4);
 	    calculatorGrid.add(decimalButton, 1, 5);
 	    calculatorGrid.add(equalButton, 2, 5);
+	    calculatorGrid.add(clearButton, 0, 5);
 	    
 	    
 	    calculatorGrid.setBorder(BORDER);
@@ -553,13 +578,51 @@ public class FXMain extends Application {
 	    final Text changePassText = new Text();
 
 	    changePassButton.setOnAction(new EventHandler<ActionEvent>() {
-	    	// TO-DO action event handler for changing a password
             @Override
-            public void handle(ActionEvent event) { 
-            	changePassText.setFill(Color.LIMEGREEN);
-				changePassText.setText("Password Changed!");
+            public void handle(ActionEvent event) {
+            	if (currPassword.getText().equals(currentUser.getPassword())) {
+	            	if (newPassword.getText().equals(confirmPassword.getText())) {
+		            	currentUser.setPassword(newPassword.getText());
+		            	changePassText.setFill(Color.LIMEGREEN);
+						changePassText.setText("Password Changed!");
+						SQL.updateUser(currentUser);
+	            	} else {
+		            	changePassText.setFill(Color.RED);
+						changePassText.setText("Passwords do not match!");            		
+	            	}
+            	} else {
+	            	changePassText.setFill(Color.RED);
+					changePassText.setText("Current password is invalid!");            		
+            	}
+            		
             }
 	    });
+	    
+	    
+	    //signout button
+        Button signoutButton = new Button("Sign Out");
+	    BackgroundImage signoutImage = new BackgroundImage(new Image("./chainsaw.png"), 
+	    													  BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, 
+	    													  BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
+        Background signout = new Background(signoutImage); 
+        signoutButton.setBackground(signout);
+        signoutButton.setMinSize(128, 128);
+        
+        signoutButton.setOnAction(new EventHandler<ActionEvent>() {
+	    	 
+            @Override
+            public void handle(ActionEvent event) {  
+            	homeTab.setContent(getLoginPane());
+            	//should select the tab at index zero.. not working..
+            	// user still has to navigate back to the home tab to log back in
+            	tabPane.getSelectionModel().select(0);
+            	currentUser = null;
+            	// update database if needed
+            	// maybe add a pop-up: "Are you sure You want to sign out?"
+            }
+    
+        });
+        //
 	    
 	    account.add(changePassMessage, 0, 0, 2, 1);
 	    account.add(currPassLabel, 0, 1);
@@ -603,7 +666,8 @@ public class FXMain extends Application {
 	    account.add(changeEmailButton, 4, 3);
 	    account.add(changeEmailText, 3, 3, 2, 1);
  
-	    
+	    account.add(signoutButton, 4, 4, 3, 2); 
+
 	    
 	    accountTab.closableProperty().set(false); 
 	    accountTab.setContent(account); 
@@ -630,10 +694,16 @@ public class FXMain extends Application {
 	 * @author Amanda Aldrich
 	 * @return addProjectPane which is the pane we are building on.
 	 */
-	private GridPane addNewProjectView() {
+	private StackPane addNewProjectView() {
 		
 		//project gets created to be customized by user
 		Project tempProject = new Project(" ", " ");
+		
+		final ObservableList myList = 
+				FXCollections.observableArrayList(new Item("edit me", 0.0, 0));
+	 
+		
+	    TableView table = new TableView();
 		
 		//my pane
 		StackPane addProjectPane = new StackPane();
@@ -661,7 +731,7 @@ public class FXMain extends Application {
 	    TextField projectDescField = new TextField();
 	    projectDescField.setAlignment(Pos.BASELINE_LEFT);
 	    
-	    itemPane(tempProject);
+	    
 	    
 	    //my submit button
 	    Button submitButton = new Button("Submit");
@@ -670,7 +740,7 @@ public class FXMain extends Application {
             public void handle(ActionEvent event) {  
             	tempProject.changeName(projectNameField.getText());
             	tempProject.changeDesc(projectDescField.getText());
-            	homeTab.setContent(addProjectView());
+            	//homeTab.setContent(addProjectView());
             }
 	    });
 	    
@@ -683,13 +753,26 @@ public class FXMain extends Application {
 	            	homeTab.setContent(addProjectView());
 	            }
 	            
+	    });
+	    
+	  //my add button
+	    Button addButton = new Button("Add Row");
+	    backButton.setOnAction(new EventHandler<ActionEvent>() {
+		    	 
+	            @Override
+	            public void handle(ActionEvent event) {  
+	            	addRow(table);
+	            }
+	            
 	    }); 
+	    addButton.setFocusTraversable(false);
 
 	    BorderPane border = new BorderPane();
 	    
 	    border.setLeft(addProjectGrid);
-	    border.setRight(itemPane(tempProject));
-	    border.setCenter(listPane(tempProject));
+	    
+	    border.setCenter(itemTable(table, myList));
+	    border.setRight(addButton);
 	    
 	    addProjectGrid.add(addProjectMessage, 0, 0, 2, 1); 
 	    
@@ -706,116 +789,63 @@ public class FXMain extends Application {
        	addProjectPane.setMaxWidth(SCENE_WIDTH);
        	addProjectPane.getChildren().add(border);
        	StackPane.setAlignment(border, Pos.CENTER);
-		return addProjectGrid;
+		return addProjectPane;
 	    
 	}   
 
-	/**
-	 * This should house the items
-	 * @author Amanda Aldrich
-	 * @param myProject
-	 * @return itemsPane, which is the pane we are messing with
-	 */
-	private GridPane itemPane(Project myProject){
-		GridPane itemsPane = new GridPane();
-		itemsPane.setAlignment(Pos.TOP_RIGHT);
-	    itemsPane.setVgap(10);
-	    itemsPane.setHgap(10);
-	    itemsPane.setPadding(new Insets(25)); 
 		
-		Text itemName = new Text("Item Name:");
-	    itemName.setFont(Font.font("Arial", FontWeight.NORMAL, 10));
-	    TextField itemNameField = new TextField("Name");
-	    itemNameField.setAlignment(Pos.BASELINE_LEFT);
-		
-	    Text itemQty = new Text("Item Quantity:");
-	    itemQty.setFont(Font.font("Arial", FontWeight.NORMAL, 10));
-	    TextField itemQtyField = new TextField("0");
-	    itemQtyField.setAlignment(Pos.BASELINE_LEFT);
-	    
-	    Text itemPrice = new Text("Item Price:");
-	    itemPrice.setFont(Font.font("Arial", FontWeight.NORMAL, 10));
-	    TextField itemPriceField = new TextField("0.0");
-	    itemPriceField.setAlignment(Pos.BASELINE_LEFT);
-	    
-		Button addButton = new Button("Add Item");
-		addButton.setOnAction(new EventHandler<ActionEvent>(){
-	    	@Override
-            public void handle(ActionEvent event) {
-	    		String theName = itemNameField.getText();
-	    		double thePrice = Double.parseDouble(itemPriceField.getText());
-	    		int theQty = Integer.parseInt(itemQtyField.getText());
-	    		
-	    		Item tempItem = new Item(theName, thePrice, theQty);
-            	myProject.add(tempItem);
-            	
-            	itemNameField.clear();
-            	itemPriceField.clear();
-            	itemQtyField.clear();
-
-            }
-	    });
-				
-		itemsPane.add(itemName, 1, 1, 2, 1);
-		itemsPane.add(itemNameField, 1, 2, 2, 1);
-		
-		itemsPane.add(itemQty, 1, 3, 2, 1);
-		itemsPane.add(itemQtyField, 1, 4, 2, 1);
-		
-		itemsPane.add(itemPrice, 1, 5, 2, 1);
-		itemsPane.add(itemPriceField, 1, 6, 2, 1);
-		
-		itemsPane.add(addButton, 1, 9);
-				
-		return itemsPane;
-		
-	}
-	
 	/**
 	 * creates the list view.
-	 * @author Amanda Aldrich, Taylor Riccetti
+	 * @author Amanda Aldrich
 	 * @param myProject
 	 * @return list, the list
 	 */ 
-	//this whole thing is janked up....but I gotta commit beofre I leave
-	private TableView listPane(Project myProject){
+	private TableView itemTable(TableView table, ObservableList myList){
+	    
+	    TableColumn itemHeader = new TableColumn("Enter Item Information");
 		
-		Item tempI = new Item("fake", 0.0, 0);
-		
-		ListView<String> list = new ListView<>(FXCollections.observableArrayList(tempI.toString()));
-		
-		
-		
-	    TableView table = new TableView();
-		TableColumn itemName = new TableColumn("Item Name");
+	    TableColumn itemName = new TableColumn("Item Name");
+	    itemName.setMinWidth(125);
+	    
         TableColumn price = new TableColumn("Price");
-        TableColumn quantity = new TableColumn("Quantity");
-        TableColumn totalPrice = new TableColumn("Total Price");
-	       
-
-        table.setEditable(true);
-        table.getColumns().addAll(itemName, price, quantity, totalPrice);
-
+        price.setMinWidth(125);
         
-		list.setEditable(true);
-			
-			
-		list.setCellFactory(TextFieldListCell.forListView());		
-
-		list.setOnEditCommit(new EventHandler<ListView.EditEvent<String>>() {
-			@Override
-			public void handle(ListView.EditEvent<String> t) {
-				list.getItems().set(t.getIndex(), t.getNewValue());
-				//System.out.println("setOnEditCommit");
-				if(list.getSelectionModel().getSelectedIndices().contains(list.getItems().size()-1))
-                    list.getItems().add("new list item");
-			}
-						
-		});
+        TableColumn quantity = new TableColumn("Quantity");
+        quantity.setMinWidth(125);
+        
+        TableColumn totalPrice = new TableColumn("Total Price");
+        totalPrice.setMinWidth(125);
+        
+        table.setEditable(true);        
+        table.getColumns().addAll(itemHeader, totalPrice);
+        itemHeader.getColumns().addAll(itemName, price, quantity);
+        //table.setItems(myList);
+         
 	        
 		
 		
 		return table;
 		
 	}
+	
+	public void addRow(TableView table) {
+
+        // get current position
+        TablePosition pos = table.getFocusModel().getFocusedCell();
+
+        // clear current selection
+        table.getSelectionModel().clearSelection();
+
+        // create new record and add it to the model
+        Item newItem = new Item("edit me", 0.0, 0);
+        table.getItems().add(newItem);
+
+        // get last row
+        int row = table.getItems().size() - 1;
+        table.getSelectionModel().select( row, pos.getTableColumn());
+
+        // scroll to new row
+        table.scrollTo(newItem);
+
+    }
 }

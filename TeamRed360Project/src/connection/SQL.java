@@ -133,6 +133,7 @@ public class SQL {
 				String email = results.getString(4);
 				String password = results.getString(5);
 				lastUser = new User(firstName, lastName, email, password);
+				lastUser.setId(id);
 				if (password.equals(theClient.getPassword())) {
 					return 1; //login success
 				} else {
