@@ -5,6 +5,7 @@ import javax.swing.JOptionPane;
 import connection.SQL;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -19,6 +20,7 @@ import javafx.scene.control.Separator;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TablePosition;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.TextFieldListCell;
@@ -692,10 +694,16 @@ public class FXMain extends Application {
 	 * @author Amanda Aldrich
 	 * @return addProjectPane which is the pane we are building on.
 	 */
-	private GridPane addNewProjectView() {
+	private StackPane addNewProjectView() {
 		
-		//pproject gets created to be customized by user
+		//project gets created to be customized by user
 		Project tempProject = new Project(" ", " ");
+		
+		final ObservableList myList = 
+				FXCollections.observableArrayList(new Item("edit me", 0.0, 0));
+	 
+		
+	    TableView table = new TableView();
 		
 		//my pane
 		StackPane addProjectPane = new StackPane();
@@ -723,7 +731,7 @@ public class FXMain extends Application {
 	    TextField projectDescField = new TextField();
 	    projectDescField.setAlignment(Pos.BASELINE_LEFT);
 	    
-	    itemPane(tempProject);
+	    
 	    
 	    //my submit button
 	    Button submitButton = new Button("Submit");
@@ -732,7 +740,7 @@ public class FXMain extends Application {
             public void handle(ActionEvent event) {  
             	tempProject.changeName(projectNameField.getText());
             	tempProject.changeDesc(projectDescField.getText());
-            	homeTab.setContent(addProjectView());
+            	//homeTab.setContent(addProjectView());
             }
 	    });
 	    
@@ -745,13 +753,26 @@ public class FXMain extends Application {
 	            	homeTab.setContent(addProjectView());
 	            }
 	            
+	    });
+	    
+	  //my add button
+	    Button addButton = new Button("Add Row");
+	    backButton.setOnAction(new EventHandler<ActionEvent>() {
+		    	 
+	            @Override
+	            public void handle(ActionEvent event) {  
+	            	addRow(table);
+	            }
+	            
 	    }); 
+	    addButton.setFocusTraversable(false);
 
 	    BorderPane border = new BorderPane();
 	    
 	    border.setLeft(addProjectGrid);
-	    border.setRight(itemPane(tempProject));
-	    border.setCenter(listPane(tempProject));
+	    
+	    border.setCenter(itemTable(table, myList));
+	    border.setRight(addButton);
 	    
 	    addProjectGrid.add(addProjectMessage, 0, 0, 2, 1); 
 	    
@@ -768,93 +789,37 @@ public class FXMain extends Application {
        	addProjectPane.setMaxWidth(SCENE_WIDTH);
        	addProjectPane.getChildren().add(border);
        	StackPane.setAlignment(border, Pos.CENTER);
-		return addProjectGrid;
+		return addProjectPane;
 	    
 	}   
 
-	/**
-	 * This should house the items
-	 * @author Amanda Aldrich
-	 * @param myProject
-	 * @return itemsPane, which is the pane we are messing with
-	 */
-	private GridPane itemPane(Project myProject){
-		GridPane itemsPane = new GridPane();
-		itemsPane.setAlignment(Pos.TOP_RIGHT);
-	    itemsPane.setVgap(10);
-	    itemsPane.setHgap(10);
-	    itemsPane.setPadding(new Insets(25)); 
 		
-		Text itemName = new Text("Item Name:");
-	    itemName.setFont(Font.font("Arial", FontWeight.NORMAL, 10));
-	    TextField itemNameField = new TextField("Name");
-	    itemNameField.setAlignment(Pos.BASELINE_LEFT);
-		
-	    Text itemQty = new Text("Item Quantity:");
-	    itemQty.setFont(Font.font("Arial", FontWeight.NORMAL, 10));
-	    TextField itemQtyField = new TextField("0");
-	    itemQtyField.setAlignment(Pos.BASELINE_LEFT);
-	    
-	    Text itemPrice = new Text("Item Price:");
-	    itemPrice.setFont(Font.font("Arial", FontWeight.NORMAL, 10));
-	    TextField itemPriceField = new TextField("0.0");
-	    itemPriceField.setAlignment(Pos.BASELINE_LEFT);
-	    
-		Button addButton = new Button("Add Item");
-		addButton.setOnAction(new EventHandler<ActionEvent>(){
-	    	@Override
-            public void handle(ActionEvent event) {
-	    		String theName = itemNameField.getText();
-	    		double thePrice = Double.parseDouble(itemPriceField.getText());
-	    		int theQty = Integer.parseInt(itemQtyField.getText());
-	    		
-	    		Item tempItem = new Item(theName, thePrice, theQty);
-            	myProject.add(tempItem);
-            	
-            	itemNameField.clear();
-            	itemPriceField.clear();
-            	itemQtyField.clear();
-
-            }
-	    });
-				
-		itemsPane.add(itemName, 1, 1, 2, 1);
-		itemsPane.add(itemNameField, 1, 2, 2, 1);
-		
-		itemsPane.add(itemQty, 1, 3, 2, 1);
-		itemsPane.add(itemQtyField, 1, 4, 2, 1);
-		
-		itemsPane.add(itemPrice, 1, 5, 2, 1);
-		itemsPane.add(itemPriceField, 1, 6, 2, 1);
-		
-		itemsPane.add(addButton, 1, 9);
-				
-		return itemsPane;
-		
-	}
-	
 	/**
 	 * creates the list view.
 	 * @author Amanda Aldrich
 	 * @param myProject
 	 * @return list, the list
 	 */ 
-	//this whole thing is janked up....but I gotta commit beofre I leave
-	private TableView listPane(Project myProject){
+	private TableView itemTable(TableView table, ObservableList myList){
+	    
+	    TableColumn itemHeader = new TableColumn("Enter Item Information");
 		
-		Item tempI = new Item("fake", 0.0, 0);
-	 
-		
-	    TableView table = new TableView();
-		TableColumn itemName = new TableColumn("Item Name");
+	    TableColumn itemName = new TableColumn("Item Name");
+	    itemName.setMinWidth(125);
+	    
         TableColumn price = new TableColumn("Price");
+        price.setMinWidth(125);
+        
         TableColumn quantity = new TableColumn("Quantity");
+        quantity.setMinWidth(125);
+        
         TableColumn totalPrice = new TableColumn("Total Price");
-	       
-
-        table.setEditable(true);
-        table.getColumns().addAll(itemName, price, quantity, totalPrice);
-
+        totalPrice.setMinWidth(125);
+        
+        table.setEditable(true);        
+        table.getColumns().addAll(itemHeader, totalPrice);
+        itemHeader.getColumns().addAll(itemName, price, quantity);
+        //table.setItems(myList);
          
 	        
 		
@@ -862,4 +827,25 @@ public class FXMain extends Application {
 		return table;
 		
 	}
+	
+	public void addRow(TableView table) {
+
+        // get current position
+        TablePosition pos = table.getFocusModel().getFocusedCell();
+
+        // clear current selection
+        table.getSelectionModel().clearSelection();
+
+        // create new record and add it to the model
+        Item newItem = new Item("edit me", 0.0, 0);
+        table.getItems().add(newItem);
+
+        // get last row
+        int row = table.getItems().size() - 1;
+        table.getSelectionModel().select( row, pos.getTableColumn());
+
+        // scroll to new row
+        table.scrollTo(newItem);
+
+    }
 }
