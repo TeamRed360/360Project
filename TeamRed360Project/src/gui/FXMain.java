@@ -1,6 +1,6 @@
 package gui;  
  
-import javax.swing.JOptionPane; 
+import javax.swing.JOptionPane;
 
 import connection.SQL;
 import javafx.application.Application;
@@ -23,7 +23,6 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TablePosition;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
-import javafx.scene.control.cell.TextFieldListCell;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundImage;
@@ -48,6 +47,7 @@ import javafx.stage.Stage;
 import model.Item;
 import model.Project;
 import model.User;
+
  
 /** 
  * JavaFx Application. 
@@ -684,8 +684,6 @@ public class FXMain extends Application {
 	private StackPane getProjectPane(Project project) {
 		StackPane projectPane = new StackPane();
 
-		
-		
 		return projectPane;		
 	}
 	
@@ -697,26 +695,23 @@ public class FXMain extends Application {
 	private StackPane addNewProjectView() {
 		
 		//project gets created to be customized by user
-		Project tempProject = new Project(" ", " ");
-		
-		final ObservableList myList = 
-				FXCollections.observableArrayList(new Item("edit me", 0.0, 0));
-	 
-		
-	    TableView table = new TableView();
+		Project tempProject = new Project(" ", " ");	 
 		
 		//my pane
 		StackPane addProjectPane = new StackPane();
     
 		//the grid layout
 	    GridPane addProjectGrid = new GridPane();
+	    TilePane titlePane = new TilePane();
+	    titlePane.setHgap(20);
+	    titlePane.setVgap(20);
 	    addProjectGrid.setAlignment(Pos.TOP_LEFT);
 	    addProjectGrid.setVgap(10);
 	    addProjectGrid.setHgap(10);
 	    addProjectGrid.setPadding(new Insets(25)); 
 	    
 	    //my heading
-	    Text addProjectMessage = new Text("Add new Project");
+	    Text addProjectMessage = new Text("\n	Add new Project\n");
 	    addProjectMessage.setFont(HEADER_FONT);
 
 	    //project name setup
@@ -755,26 +750,14 @@ public class FXMain extends Application {
 	            
 	    });
 	    
-	  //my add button
-	    Button addButton = new Button("Add Row");
-	    backButton.setOnAction(new EventHandler<ActionEvent>() {
-		    	 
-	            @Override
-	            public void handle(ActionEvent event) {  
-	            	addRow(table);
-	            }
-	            
-	    }); 
-	    addButton.setFocusTraversable(false);
-
 	    BorderPane border = new BorderPane();
 	    
 	    border.setLeft(addProjectGrid);
+	    border.setCenter(makingTheList(tempProject));
+	    border.setTop(titlePane);
+	    //border.setRight();
 	    
-	    border.setCenter(itemTable(table, myList));
-	    border.setRight(addButton);
-	    
-	    addProjectGrid.add(addProjectMessage, 0, 0, 2, 1); 
+	    titlePane.getChildren().add(addProjectMessage); 
 	    
 	    addProjectGrid.add(projectName, 0, 1, 2, 1);
 	    addProjectGrid.add(projectNameField, 0, 2, 2, 1);
@@ -783,69 +766,110 @@ public class FXMain extends Application {
 	    addProjectGrid.add(projectDescField, 0, 4, 2, 1);
 	    
 	    addProjectGrid.add(submitButton, 0, 5); 
-	    addProjectGrid.add(backButton, 0, 10); 
+	    addProjectGrid.add(backButton, 0, 35); 
 	    
 	    addProjectPane.setMaxHeight(SCENE_HEIGHT);
        	addProjectPane.setMaxWidth(SCENE_WIDTH);
        	addProjectPane.getChildren().add(border);
        	StackPane.setAlignment(border, Pos.CENTER);
+       	
 		return addProjectPane;
 	    
 	}   
 
-		
 	/**
-	 * creates the list view.
+	 * This method creates the listview and its buttons
 	 * @author Amanda Aldrich
-	 * @param myProject
-	 * @return list, the list
-	 */ 
-	private TableView itemTable(TableView table, ObservableList myList){
+	 * @return basePlate, the the pane everythign was laid out on.
+	 */
+	private TilePane makingTheList(Project tempProject){
+		
+		TilePane basePlate = new TilePane();
+		basePlate.setHgap(10);
+		basePlate.setVgap(10);
+		GridPane listFormGrid = new GridPane();
+		final ObservableList<String> strings = FXCollections.observableArrayList();
+		ListView<String> listView = new ListView<String>(strings);  
+		
+		//item name setup
+	    Text itemName = new Text("Item Name:");
+	    itemName.setFont(Font.font("Arial", FontWeight.NORMAL, 10));
+	    TextField itemNameField = new TextField();
+	    itemNameField.setAlignment(Pos.BASELINE_LEFT);
+
+	    //item price setup
+	    Text itemPrice = new Text("Item Price:");
+	    itemPrice.setFont(Font.font("Arial", FontWeight.NORMAL, 10));
+	    TextField itemPriceField = new TextField();
+	    itemPriceField.setAlignment(Pos.BASELINE_LEFT);
 	    
-	    TableColumn itemHeader = new TableColumn("Enter Item Information");
-		
-	    TableColumn itemName = new TableColumn("Item Name");
-	    itemName.setMinWidth(125);
+	    //item qty setup
+	    Text itemQty = new Text("Item Quantity:");
+	    itemQty.setFont(Font.font("Arial", FontWeight.NORMAL, 10));
+	    TextField itemQtyField = new TextField();
+	    itemQtyField.setAlignment(Pos.BASELINE_LEFT);
 	    
-        TableColumn price = new TableColumn("Price");
-        price.setMinWidth(125);
-        
-        TableColumn quantity = new TableColumn("Quantity");
-        quantity.setMinWidth(125);
-        
-        TableColumn totalPrice = new TableColumn("Total Price");
-        totalPrice.setMinWidth(125);
-        
-        table.setEditable(true);        
-        table.getColumns().addAll(itemHeader, totalPrice);
-        itemHeader.getColumns().addAll(itemName, price, quantity);
-        //table.setItems(myList);
-         
-	        
-		
-		
-		return table;
-		
+	    Text totalPrice = new Text("Total Price: " + tempProject.getOverallPrice());
+	    totalPrice.setFont(Font.font("Arial", FontWeight.NORMAL, 10));
+	    
+	    Button addButton = new Button("Add Item");
+	    addButton.setOnAction(new EventHandler<ActionEvent>(){
+	    	@Override
+            public void handle(ActionEvent event) { 
+	    		Item myItem;
+	    		try{
+	    			myItem = new Item(itemNameField.getText(), Double.parseDouble(itemPriceField.getText()), 
+            			Integer.parseUnsignedInt(itemQtyField.getText()));
+	    			tempProject.add(myItem);
+		    		
+	    			
+	    		}
+	    		catch (NumberFormatException e){
+	    			myItem = new Item("Oops, Something Goofed", 0.0, 0);
+	    		}
+	    		strings.add(myItem.toString());
+	    		totalPrice.setText("Total Price: " + tempProject.getOverallPrice());
+	    		
+	    		itemNameField.clear();
+	    		itemPriceField.clear();
+	    		itemQtyField.clear();
+	    		
+            }
+	    });	
+	    
+	    Button removeButton = new Button("Remove Item");
+	    removeButton.setOnAction(new EventHandler<ActionEvent>(){
+	    	@Override
+            public void handle(ActionEvent event) {  
+            	int myIndex = listView.getSelectionModel().getSelectedIndex();
+	    		listView.getItems().remove(myIndex);
+	    		tempProject.remove(tempProject.getListOfItems()[myIndex]);
+	    		totalPrice.setText("Total Price: " + tempProject.getOverallPrice());
+            }
+	    });	
+	    
+	    //adding create object form
+	    listFormGrid.add(itemName, 0, 1, 2, 1);
+	    listFormGrid.add(itemNameField, 0, 2, 2, 1);
+	    
+	    listFormGrid.add(itemPrice, 0, 4, 2, 1);
+	    listFormGrid.add(itemPriceField, 0, 5, 2, 1);
+	    
+	    listFormGrid.add(itemQty, 0, 7, 2, 1);
+	    listFormGrid.add(itemQtyField, 0, 8, 2, 1);
+	    
+	    listFormGrid.add(addButton, 0, 10);
+	    listFormGrid.add(removeButton, 1, 10);
+	    
+	    listFormGrid.add(totalPrice, 0, 12, 2, 1);
+	    
+	    basePlate.getChildren().add(listView);
+	    basePlate.getChildren().add(listFormGrid);
+	    
+		return basePlate;
 	}
+
+		
 	
-	public void addRow(TableView table) {
 
-        // get current position
-        TablePosition pos = table.getFocusModel().getFocusedCell();
-
-        // clear current selection
-        table.getSelectionModel().clearSelection();
-
-        // create new record and add it to the model
-        Item newItem = new Item("edit me", 0.0, 0);
-        table.getItems().add(newItem);
-
-        // get last row
-        int row = table.getItems().size() - 1;
-        table.getSelectionModel().select( row, pos.getTableColumn());
-
-        // scroll to new row
-        table.scrollTo(newItem);
-
-    }
 }

@@ -39,7 +39,6 @@
 <fullyQualifiedTypeName name="javafx.scene.layout.BackgroundSize"/>
 <fullyQualifiedTypeName name="javafx.scene.layout.BackgroundPosition"/>
 <fullyQualifiedTypeName name="model.Project"/>
-<fullyQualifiedTypeName name="javafx.scene.layout.TilePane"/>
 <fullyQualifiedTypeName name="javafx.geometry.Pos"/>
 <fullyQualifiedTypeName name="javafx.scene.layout.VBox"/>
 <fullyQualifiedTypeName name="javafx.scene.layout.BorderPane"/>
@@ -51,7 +50,6 @@
 <fullyQualifiedTypeName name="java.io.BufferedWriter"/>
 <fullyQualifiedTypeName name="java.lang.System"/>
 <fullyQualifiedTypeName name="java.io.IOException"/>
-<fullyQualifiedTypeName name="javafx.scene.control.ListView"/>
 <fullyQualifiedTypeName name="javafx.collections.FXCollections"/>
 <fullyQualifiedTypeName name="java.util.ArrayList"/>
 <fullyQualifiedTypeName name="javafx.collections.ListChangeListener"/>
@@ -60,4 +58,6 @@
 <fullyQualifiedTypeName name="javafx.scene.control.TableView"/>
 <fullyQualifiedTypeName name="javafx.collections.ObservableList"/>
 <fullyQualifiedTypeName name="javafx.scene.control.TablePosition"/>
+<fullyQualifiedTypeName name="javafx.scene.control.ListView"/>
+<fullyQualifiedTypeName name="javafx.scene.layout.TilePane"/>
 </qualifiedTypeNameHistroy>
