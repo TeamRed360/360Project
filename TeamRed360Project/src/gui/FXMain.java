@@ -1,6 +1,5 @@
 package gui;  
  
-import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 
 import javax.swing.JOptionPane;
@@ -22,12 +21,8 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.Separator;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TablePosition;
-import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
-import javafx.scene.input.KeyCode;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundImage;
 import javafx.scene.layout.BackgroundPosition;
@@ -70,14 +65,19 @@ public class FXMain extends Application {
 	
 	private ArrayList<Project> projects = new ArrayList<Project>();
 	
+	/** The scenes width. */
+	private final int SCENE_WIDTH = 825;
 	
-	private final int SCENE_WIDTH = 900;
+	/** The scenes height. */ 
 	private final int SCENE_HEIGHT = 600;
 	
+	/** A constant for the font of header text. */
 	private final Font HEADER_FONT = Font.font("Arial", FontWeight.NORMAL, 20);
+
+	/** A constant for the borders. */
 	private final Border BORDER = new Border(new BorderStroke(Color.DARKGRAY,
 															  BorderStrokeStyle.SOLID, 
-															  CornerRadii.EMPTY, 
+															  new CornerRadii(3), 
 															  BorderWidths.DEFAULT));
     private Stage mainScreen; 
     private final TabPane tabPane = new TabPane();
@@ -97,11 +97,16 @@ public class FXMain extends Application {
     @Override
     public void start(Stage screen) {
     	mainScreen = screen;
-    	mainScreen.setTitle("Nailed It!");
-     
-        SQL.connect();
-        StackPane root = new StackPane();
+    	mainScreen.setTitle("Nailed It!"); 
+    	
+    	// Moved to login, so if offline user can skip login
+    	// SQL.connect();
+          
+    	StackPane root = new StackPane();
         root.getChildren().add(getTabs());
+        // messing around with css effects
+        // root.getStylesheets().add("gui/GUICss.css");
+        
         mainScreen.setMinHeight(SCENE_HEIGHT);
         mainScreen.setMinWidth(SCENE_WIDTH);
         mainScreen.setScene(new Scene(root, SCENE_WIDTH, SCENE_HEIGHT, Color.MISTYROSE));
@@ -120,8 +125,8 @@ public class FXMain extends Application {
 		homeTab.setContent(getLoginPane());
 		
     	homeTab.closableProperty().set(false);
-    	aboutTab.closableProperty().set(false); 
     	settingsTab.closableProperty().set(false);
+    	aboutTab.closableProperty().set(false); 
     	
     	// Moved to getLoginPane
     	// Initially all other tabs are disabled until the user logs in.
@@ -132,8 +137,8 @@ public class FXMain extends Application {
     	settingsTab.setContent(getSettingContent());
 
     	tabPane.getTabs().add(homeTab);
-    	tabPane.getTabs().add(aboutTab);
     	tabPane.getTabs().add(settingsTab);
+    	tabPane.getTabs().add(aboutTab);
     	return tabPane;
     	
     }
@@ -206,6 +211,30 @@ public class FXMain extends Application {
 	    final Text loginActionText = new Text();
 	    Button continueButton = new Button("Continue");
 		    
+	    Button skipLoginButton = new Button("Skip");
+	    Button skipLoginButton2 = new Button("Skip");
+	    skipLoginButton.setOnAction(new EventHandler<ActionEvent>() {
+	    	 
+            @Override
+            public void handle(ActionEvent event) {     
+        	 	currentUser = new User("Guest", "Guest", "User", "guest@guest.com");
+        		welcomeText.setText("Logged in as Guest.");
+        	 	homeTab.setContent(getHomeContent(welcomeText.getText()));
+        	 	
+            }
+	    });
+	    
+	    skipLoginButton2.setOnAction(new EventHandler<ActionEvent>() {
+	    	 
+            @Override
+            public void handle(ActionEvent event) {     
+        	 	currentUser = new User("Guest", "Guest", "User", "guest@guest.com");
+        		welcomeText.setText("Logged in as Guest.");
+        	 	homeTab.setContent(getHomeContent(welcomeText.getText()));
+        	
+            }
+	    });
+	    
 	    TextField email = new TextField();	
 	    TextField password = new PasswordField();
 	    
@@ -219,6 +248,9 @@ public class FXMain extends Application {
  			*/
             @Override
             public void handle(ActionEvent event) {            
+            	
+            	SQL.connect();
+                
             	User user = new User("", "",
             			loginEmail.getText(), loginPassword.getText());
             	int code = SQL.login(user);
@@ -235,7 +267,6 @@ public class FXMain extends Application {
             			loginActionText.setText("Please use the sign up tab.");
             		}
             	} else if (code == 1) { 
-            	 	homeTab.setContent(getHomeContent("Welcome back, " + user.getFirstName() + " " + user.getLastName() + "!"));
             	 	currentUser = user; 
             		welcomeText.setText("Welcome back, " + user.getFirstName() + " " + user.getLastName() + "!");
             	 	homeTab.setContent(getHomeContent(welcomeText.getText()));
@@ -247,20 +278,17 @@ public class FXMain extends Application {
          	}
             
         }); 
-	     
-	    
-	    HBox hbBtn = new HBox(10);
-	    hbBtn.setAlignment(Pos.BOTTOM_RIGHT);
-	    hbBtn.getChildren().add(continueButton);
-	    
+	      
 	    // Adding components to the login tab.
 	    login.add(loginMessage, 0, 0, 2, 1);
 	    login.add(emailLabel, 0, 1);
 	    login.add(loginEmail, 1, 1);
 	    login.add(passwordLabel, 0, 2);
 	    login.add(loginPassword, 1, 2);
-	    login.add(hbBtn, 3, 6);
-	    login.add(loginActionText, 3, 7);
+	    login.add(continueButton, 3, 7);
+	    login.add(skipLoginButton, 0, 7);
+	    login.add(loginActionText, 3, 6);
+	    
 	    loginTab.setContent(login);
 	    Tab signUpTab = new Tab("Sign Up");
 	    GridPane signUp = new GridPane();
@@ -283,6 +311,9 @@ public class FXMain extends Application {
 
 			@Override
 			public void handle(ActionEvent arg0) {
+				
+				SQL.connect();
+			  				
 				signUpActionText.setFill(Color.FIREBRICK);
 
 				if (!password.getText().equals(confirmPass.getText())) {
@@ -319,6 +350,7 @@ public class FXMain extends Application {
 	    signUp.add(confirmPassLabel, 0, 5);
 	    signUp.add(confirmPass, 1, 5);
 		signUp.add(signUpButton, 3, 6);
+		signUp.add(skipLoginButton2, 0, 6);
 		signUp.add(signUpActionText, 2, 7, 2, 1);
 	    signUpTab.setContent(signUp);
 
@@ -336,9 +368,14 @@ public class FXMain extends Application {
        	return loginContainer; 
 	}  
 
+	/**
+	 * Gets a pane that displays all the home content.
+	 * @param welcomeText
+	 * @return the home pane
+	 * @author Taylor Riccetti
+	 */
 	private StackPane getHomeContent(String welcomeText) {
 		StackPane homePane = new StackPane();
-			
 		GridPane homeGrid = new GridPane();
 		homeGrid.setAlignment(Pos.CENTER);
 		homeGrid.setVgap(10);
@@ -348,25 +385,56 @@ public class FXMain extends Application {
 		Text welcome = new Text(welcomeText);
 	    welcome.setFont(Font.font("Arial", FontWeight.NORMAL, 20));
 	    Button projectButton = new Button("Projects");
-	    BackgroundImage backgroundImage = new BackgroundImage(new Image("./fence-with-three-planks.png"), 
+	    BackgroundImage backgroundImage = new BackgroundImage(new Image("./saw.png"), 
 	    													  BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, 
 	    													  BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
         Background background = new Background(backgroundImage); 
         projectButton.setBackground(background);
-        projectButton.setMinSize(128, 128);
-        
-        projectButton.setOnAction(new EventHandler<ActionEvent>() {
-		    	 
+        projectButton.setMinSize(128, 128); 
+        projectButton.setOnAction(new EventHandler<ActionEvent>() { 
 	            @Override
 	            public void handle(ActionEvent event) {  
 	            	homeTab.setContent(addProjectView());
-	            }
-        
+	            } 
         }); 
-	    
+                
+        // code and design for import button
+        Button importButton = new Button("Upload Projects");
+	    BackgroundImage importImage = new BackgroundImage(new Image("./upload.png"), 
+	    													  BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, 
+	    													  BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
+        Background importBackground = new Background(importImage); 
+        importButton.setBackground(importBackground);
+        importButton.setMinSize(128, 128); 
+        importButton.setOnAction(new EventHandler<ActionEvent>() {
+		    	 
+	            @Override
+	            public void handle(ActionEvent event) {  
+	            	//get projects from users list of project
+	            	// convert project to "text" format.	            
+	            }        
+        }); 
+        
+        // code and design for export button
+        Button exportButton = new Button("Save Projects");
+	    BackgroundImage exportImage = new BackgroundImage(new Image("./save.png"), 
+	    													  BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, 
+	    													  BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
+        Background exportBackground = new Background(exportImage); 
+        exportButton.setBackground(exportBackground);
+        exportButton.setMinSize(128, 128); 
+        exportButton.setOnAction(new EventHandler<ActionEvent>() { 
+	            @Override
+	            public void handle(ActionEvent event) {  
+	            	// saves 
+	            }        
+        }); 
+        
 	    homeGrid.add(welcome, 0, 0, 2, 1); 
-		homeGrid.add(projectButton, 0, 1, 3, 2); 
-	    homeGrid.add(getCalculatorPane(), 4, 1, 10, 1); 
+		homeGrid.add(projectButton, 1, 1); 
+		homeGrid.add(importButton, 1, 2); 
+		homeGrid.add(exportButton, 1, 3); 
+	    homeGrid.add(getCalculatorPane(), 2, 1, 2, 4); 
 		homePane.getChildren().add(homeGrid);
 
 		aboutTab.disableProperty().set(false);
@@ -374,7 +442,11 @@ public class FXMain extends Application {
 		return homePane;		
 	}
 		
-
+	/**
+	 * Returns a pane displaying the calculator.
+	 * @return a grid pane
+	 * @author Taylor Riccetti
+	 */
 	private GridPane getCalculatorPane() {
 		GridPane calculatorGrid = new GridPane();
 		calculatorGrid.setAlignment(Pos.CENTER);
@@ -509,8 +581,7 @@ public class FXMain extends Application {
 	}
  
 	/**
-	 * Builds the Projects overview.
-	 * 
+	 * Builds the Projects overview. 
 	 * @author Taylor Riccetti, heavily modified Amanda Aldrich
 	 * @return projectPane, the base the UI is on
 	 */
@@ -597,10 +668,9 @@ public class FXMain extends Application {
 	 * @return TilePane
 	 * @author Taylor Riccetti, minorly modified by Amanda Aldrich
 	 */
-	private TilePane getSettingContent() {
-		TilePane settingPane = new TilePane();
- 	    GridPane account = new GridPane();
-	    account.setAlignment(Pos.CENTER);
+	private GridPane getSettingContent() {
+	    GridPane account = new GridPane();
+	    account.setAlignment(Pos.TOP_CENTER);
 	    account.setVgap(10);
 	    account.setHgap(10);
 	    account.setPadding(new Insets(25)); 
@@ -636,6 +706,8 @@ public class FXMain extends Application {
             }
 	    });
 	    
+	    
+	     
 	    //signout button
         Button signoutButton = new Button("Sign Out");
 	    BackgroundImage signoutImage = new BackgroundImage(new Image("./chainsaw.png"), 
@@ -643,14 +715,14 @@ public class FXMain extends Application {
 	    													  BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
         Background signout = new Background(signoutImage); 
         signoutButton.setBackground(signout);
-        signoutButton.setMinSize(128, 128);
+        signoutButton.setMinSize(64, 64);
         
         signoutButton.setOnAction(new EventHandler<ActionEvent>() {
 	    	 
             @Override
             public void handle(ActionEvent event) { 
             
-            	//should select the tab at index zero.. not working..
+            	// should select the tab at index zero.. not working..
             	// user still has to navigate back to the home tab to log back in
             	currentUser = null;
             	new JOptionPane();
@@ -668,8 +740,7 @@ public class FXMain extends Application {
             	}
             }
     
-        });
-        //
+        }); 
 	    
 	    account.add(changePassMessage, 0, 0, 2, 1);
 	    account.add(currPassLabel, 0, 1);
@@ -679,7 +750,7 @@ public class FXMain extends Application {
 	    account.add(confirmPassLabel, 0, 3);
 	    account.add(confirmPassword, 1, 3);
 	    account.add(changePassButton, 1, 4);
-	    account.add(changePassText, 0, 4, 2, 1);
+	    account.add(changePassText, 1, 5, 2, 1);
 	    
 
 		Separator separator = new Separator();
@@ -704,21 +775,16 @@ public class FXMain extends Application {
             	changeEmailText.setText("E-Mail Changed!");
             }
 	    });
-	
+	    // adds change email components to the account tab.
 	    account.add(changeEmailMessage, 3, 0, 2, 1);
 	    account.add(currEmailLabel, 3, 1);
 	    account.add(currEmail, 4, 1);
 	    account.add(newEmailLabel, 3, 2);
 	    account.add(newEmail, 4, 2);
 	    account.add(changeEmailButton, 4, 3);
-	    account.add(changeEmailText, 3, 3, 2, 1);
- 
-	    account.add(signoutButton, 4, 4, 3, 2); 
-
-	     
-	    settingPane.getChildren().add(account);
-	    
-		return settingPane;
+	    account.add(changeEmailText, 4, 4, 2, 1);
+        account.add(signoutButton, 5, 5, 3, 2);     
+		return account;
 	}
 		
 	/**
@@ -777,17 +843,16 @@ public class FXMain extends Application {
 	    
 	    //my back button
 	    Button backButton = new Button("Back");
-	    backButton.setOnAction(new EventHandler<ActionEvent>() {
-		    	 
+	    backButton.setOnAction(new EventHandler<ActionEvent>() { 
 	            @Override
 	            public void handle(ActionEvent event) {  
-	            	homeTab.setContent(addProjectView());
-	            }
-	            
-	    }); 
+	            	homeTab.setContent(addProjectView()); 
+	            } 
+	    });  
+	    
 	    // my add button
 	    Button addButton = new Button("Add Row");
-	    backButton.setOnAction(new EventHandler<ActionEvent>() {
+	    addButton.setOnAction(new EventHandler<ActionEvent>() {
 		    	 
 	            @Override
 	            public void handle(ActionEvent event) {  
@@ -924,98 +989,98 @@ public class FXMain extends Application {
 		return basePlate;
 	}
 
-/**		
- * This allows you to edit an already created project.
- * @param tempProject, the project you want to change
- * @return 
- */
-private StackPane editProjectView(Project tempProject) {
-		
-		//my pane
-		StackPane editProjectPane = new StackPane();
-    
-		//the grid layout
-	    GridPane editProjectGrid = new GridPane();
-	    TilePane titlePane = new TilePane();
-	    titlePane.setHgap(20);
-	    titlePane.setVgap(20);
-	    editProjectGrid.setAlignment(Pos.TOP_LEFT);
-	    editProjectGrid.setVgap(10);
-	    editProjectGrid.setHgap(10);
-	    editProjectGrid.setPadding(new Insets(25)); 
+	/**		
+	 * This allows you to edit an already created project.
+	 * @param tempProject, the project you want to change
+	 * @return 
+	 */
+	private StackPane editProjectView(Project tempProject) {
+			
+			//my pane
+			StackPane editProjectPane = new StackPane();
 	    
-	    //my heading
-	    Text editProjectMessage = new Text("\n	Edit Your Project\n");
-	    editProjectMessage.setFont(HEADER_FONT);
-
-	    //project name setup
-	    Text projectName = new Text("Project Name:");
-	    projectName.setFont(Font.font("Arial", FontWeight.NORMAL, 10));
-	    TextField projectNameField = new TextField();
-	    if(tempProject.getName() != ""){
-	    	projectNameField.setText(tempProject.getName());
-	    }
-	    projectNameField.setAlignment(Pos.BASELINE_LEFT);
-	    
-	    //project desc setup
-	    Text projectDesc = new Text("Project Description:");
-	    projectDesc.setFont(Font.font("Arial", FontWeight.NORMAL, 10));
-	    TextField projectDescField = new TextField();
-	    if(tempProject.getDesc() != ""){
-	    	projectDescField.setText(tempProject.getDesc());
-	    }
-	    projectDescField.setAlignment(Pos.BASELINE_LEFT);
-	    
-	    
-	    
-	    //my submit button
-	    Button submitButton = new Button("Submit");
-	    submitButton.setOnAction(new EventHandler<ActionEvent>(){
-	    	@Override
-            public void handle(ActionEvent event) {  
-            	tempProject.changeName(projectNameField.getText());
-            	tempProject.changeDesc(projectDescField.getText());
-            	homeTab.setContent(addProjectView());
-            }
-	    });
-	    
-	    //my back button
-	    Button backButton = new Button("Back");
-	    backButton.setOnAction(new EventHandler<ActionEvent>() {
-		    	 
-	            @Override
+			//the grid layout
+		    GridPane editProjectGrid = new GridPane();
+		    TilePane titlePane = new TilePane();
+		    titlePane.setHgap(20);
+		    titlePane.setVgap(20);
+		    editProjectGrid.setAlignment(Pos.TOP_LEFT);
+		    editProjectGrid.setVgap(10);
+		    editProjectGrid.setHgap(10);
+		    editProjectGrid.setPadding(new Insets(25)); 
+		    
+		    //my heading
+		    Text editProjectMessage = new Text("\n	Edit Your Project\n");
+		    editProjectMessage.setFont(HEADER_FONT);
+	
+		    //project name setup
+		    Text projectName = new Text("Project Name:");
+		    projectName.setFont(Font.font("Arial", FontWeight.NORMAL, 10));
+		    TextField projectNameField = new TextField();
+		    if(tempProject.getName() != ""){
+		    	projectNameField.setText(tempProject.getName());
+		    }
+		    projectNameField.setAlignment(Pos.BASELINE_LEFT);
+		    
+		    //project desc setup
+		    Text projectDesc = new Text("Project Description:");
+		    projectDesc.setFont(Font.font("Arial", FontWeight.NORMAL, 10));
+		    TextField projectDescField = new TextField();
+		    if(tempProject.getDesc() != ""){
+		    	projectDescField.setText(tempProject.getDesc());
+		    }
+		    projectDescField.setAlignment(Pos.BASELINE_LEFT);
+		    
+		    
+		    
+		    //my submit button
+		    Button submitButton = new Button("Submit");
+		    submitButton.setOnAction(new EventHandler<ActionEvent>(){
+		    	@Override
 	            public void handle(ActionEvent event) {  
+	            	tempProject.changeName(projectNameField.getText());
+	            	tempProject.changeDesc(projectDescField.getText());
 	            	homeTab.setContent(addProjectView());
 	            }
-	            
-	    });
-	    
-	    BorderPane border = new BorderPane();
-	    
-	    border.setLeft(editProjectGrid);
-	    border.setCenter(makingTheList(tempProject));
-	    border.setTop(titlePane);
-	    //border.setRight();
-	    
-	    titlePane.getChildren().add(editProjectMessage); 
-	    
-	    editProjectGrid.add(projectName, 0, 1, 2, 1);
-	    editProjectGrid.add(projectNameField, 0, 2, 2, 1);
-	    
-	    editProjectGrid.add(projectDesc, 0, 3, 2, 1);
-	    editProjectGrid.add(projectDescField, 0, 4, 2, 1);
-	    
-	    editProjectGrid.add(submitButton, 0, 5); 
-	    editProjectGrid.add(backButton, 0, 30); 
-	    
-	    editProjectPane.setMaxHeight(SCENE_HEIGHT);
-       	editProjectPane.setMaxWidth(SCENE_WIDTH);
-       	editProjectPane.getChildren().add(border);
-       	StackPane.setAlignment(border, Pos.CENTER);
-       	
-		return editProjectPane;
-	    
-	}   
+		    });
+		    
+		    //my back button
+		    Button backButton = new Button("Back");
+		    backButton.setOnAction(new EventHandler<ActionEvent>() {
+			    	 
+		            @Override
+		            public void handle(ActionEvent event) {  
+		            	homeTab.setContent(addProjectView());
+		            }
+		            
+		    });
+		    
+		    BorderPane border = new BorderPane();
+		    
+		    border.setLeft(editProjectGrid);
+		    border.setCenter(makingTheList(tempProject));
+		    border.setTop(titlePane);
+		    //border.setRight();
+		    
+		    titlePane.getChildren().add(editProjectMessage); 
+		    
+		    editProjectGrid.add(projectName, 0, 1, 2, 1);
+		    editProjectGrid.add(projectNameField, 0, 2, 2, 1);
+		    
+		    editProjectGrid.add(projectDesc, 0, 3, 2, 1);
+		    editProjectGrid.add(projectDescField, 0, 4, 2, 1);
+		    
+		    editProjectGrid.add(submitButton, 0, 5); 
+		    editProjectGrid.add(backButton, 0, 30); 
+		    
+		    editProjectPane.setMaxHeight(SCENE_HEIGHT);
+	       	editProjectPane.setMaxWidth(SCENE_WIDTH);
+	       	editProjectPane.getChildren().add(border);
+	       	StackPane.setAlignment(border, Pos.CENTER);
+	       	
+			return editProjectPane;
+		    
+		}   
 	
 
 }
