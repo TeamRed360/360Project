@@ -8,9 +8,13 @@ import java.util.TreeSet;
 
 /**
  * 
- * @author Taylor 
+ * @author Taylor, Stan Hu
  */
 public class Project {
+
+	private int id;
+
+	private int userId;
 
 	private String name;
 	
@@ -21,13 +25,50 @@ public class Project {
 	private BigDecimal totalPrice;
 	 
 	/**
-	 * Contructs a project object.
+	 * Constructs a project object.
 	 */
-	public Project(String name, String desc) {
+	public Project(int userId, String name, String desc) {
+		this.userId = userId;
+		id = -1; //this is set later on, needs an SQL response to determine
 		this.name = name;
 		this.desc = desc;
 		contents = new TreeSet<>();
 		totalPrice = new BigDecimal(0.0); 
+	}
+	/**
+	 * Sets the user ID of the project.
+	 * @param id The id to set to.
+	 * @author Stan Hu
+	 */
+	public void setUserId(final int id) {
+		this.userId = id;
+	}
+	
+	/**
+	 * Returns the ID of the project.
+	 * @param id The id of the project in the database.
+	 * @author Stan Hu
+	 */
+	public int getUserId() {
+		return userId;
+	}
+	
+	/**
+	 * Sets the ID of the project.
+	 * @param id The id to set to.
+	 * @author Stan Hu
+	 */
+	public void setId(final int id) {
+		this.id = id;
+	}
+	
+	/**
+	 * Returns the ID of the project.
+	 * @param id The id of the project in the database.
+	 * @author Stan Hu
+	 */
+	public int getId() {
+		return id;
 	}
 	
 	/**

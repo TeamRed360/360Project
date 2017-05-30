@@ -33,7 +33,12 @@ public class User {
 		myEmail = theEmail;
 		myPassword = thePassword;
 	}
-	
+
+	/**
+	 * Sets the ID of the user.
+	 * @param id The id to set to.
+	 * @author Stan Hu
+	 */
 	public void setId(final int id) {
 		this.id = id;
 	}
@@ -45,7 +50,12 @@ public class User {
 	public void setPassword(final String password) {
 		myPassword = password;
 	}
-	
+
+	/**
+	 * Returns the ID of the user.
+	 * @param id The id of the user in the database.
+	 * @author Stan Hu
+	 */
 	public int getId() {
 		return id;
 	}
