@@ -666,15 +666,21 @@ public class FXMain extends Application {
 	    	 
             @Override
             public void handle(ActionEvent event) { 
-            	
-            	
-            	homeTab.setContent(getLoginPane());
+            
             	//should select the tab at index zero.. not working..
             	// user still has to navigate back to the home tab to log back in
-            	tabPane.getSelectionModel().select(0);
             	currentUser = null;
-            	// update database if needed
-            	// maybe add a pop-up: "Are you sure You want to sign out?"
+            	new JOptionPane();
+				// update database if needed
+            	int doubleCheck = JOptionPane.showConfirmDialog(null, 
+            			"Do you want to go back to the homeScreen?", "Homescreen?", 
+            			JOptionPane.YES_NO_OPTION);
+            	if(doubleCheck == JOptionPane.YES_OPTION){
+            		homeTab.setContent(getHomeContent("Nailed It Home"));
+            		tabPane.getSelectionModel().select(0);
+            	}else{
+            		System.exit(0);
+            	}
             }
     
         });
