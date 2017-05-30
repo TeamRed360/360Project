@@ -162,9 +162,8 @@ public class FXMain extends Application {
 
 		for(int i = 1; i < NAMES.length + 1; i++) {
 			Text currentName = new Text(NAMES[i - 1]);
-			contributorGrid.add(currentName, 1, i*2, 2, 2); //tried to make the weird gap leave -Amanda
-		}
-		
+			contributorGrid.add(currentName, 1, i); // tried to make the weird gap leave -Amanda 
+		}											// fixed it on line 177 -Taylor
 		
 		Text credits = new Text("Credits:");
 		credits.setFont(HEADER_FONT);
@@ -174,15 +173,17 @@ public class FXMain extends Application {
 
 	    
 		contributorGrid.add(credits, 4, 0, 2, 1);
-		contributorGrid.add(lightBulb, 4, 1);
-		aboutPane.getChildren().add(contributorGrid);	
-
-		GridPane Users = new GridPane();
-		         
-		
+		contributorGrid.add(lightBulb, 4, 1, 1, 2);
+		aboutPane.getChildren().add(contributorGrid);			
 		return aboutPane;
 	}
 	
+	
+	/**
+	 * Gets a pane that displays all the login and sign up content.
+	 * @return a login pane.
+	 * @author Taylor Riccetti
+	 */
 	private StackPane getLoginPane() {
 		// Tabs disabled when not logged in
     	aboutTab.disableProperty().set(true);
@@ -277,11 +278,7 @@ public class FXMain extends Application {
 	    PasswordField confirmPass = new PasswordField();
 	    final Text signUpActionText = new Text();
 
-	    Button signUpButton = new Button("Sign Up");
-	    HBox hbBtn2 = new HBox(10);
-	    hbBtn2.setAlignment(Pos.BOTTOM_RIGHT);
-	    hbBtn2.getChildren().add(signUpButton);
-	    
+	    Button signUpButton = new Button("Sign Up");   
 	    signUpButton.setOnAction(new EventHandler<ActionEvent>() {
 
 			@Override
@@ -321,27 +318,22 @@ public class FXMain extends Application {
 	    signUp.add(password, 1, 4);
 	    signUp.add(confirmPassLabel, 0, 5);
 	    signUp.add(confirmPass, 1, 5);
-		signUp.add(hbBtn2, 3, 6);
+		signUp.add(signUpButton, 3, 6);
 		signUp.add(signUpActionText, 2, 7, 2, 1);
 	    signUpTab.setContent(signUp);
 
 	    loginTab.closableProperty().set(false);
 	    signUpTab.closableProperty().set(false);  
 	    
-	    
-	    
-	    
+	    // adds the tabs to the page
         tabPane.getTabs().add(loginTab);
-       	tabPane.getTabs().add(signUpTab);
-    
-       	
+       	tabPane.getTabs().add(signUpTab);       	
        	tabPane.setMaxWidth(SCENE_WIDTH / 1.8);
        	tabPane.setMaxHeight(SCENE_HEIGHT / 1.8);
        	loginContainer.getChildren().add(tabPane);
        	tabPane.setBorder(BORDER);
        	StackPane.setAlignment(tabPane, Pos.CENTER);
-       	return loginContainer;
-	    	
+       	return loginContainer; 
 	}  
 
 	private StackPane getHomeContent(String welcomeText) {
@@ -370,9 +362,7 @@ public class FXMain extends Application {
 	            	homeTab.setContent(addProjectView());
 	            }
         
-        });
-        
-        
+        }); 
 	    
 	    homeGrid.add(welcome, 0, 0, 2, 1); 
 		homeGrid.add(projectButton, 0, 1, 3, 2); 
@@ -406,8 +396,7 @@ public class FXMain extends Application {
 	            @Override
 	            public void handle(ActionEvent event) {    
 	            	total.setText(total.getText() + ((Button) event.getSource()).getText());
-	            }
-            
+	            } 
 			});
 			currButton.setMinSize(50, 50);
 			if(i == 0) {
@@ -545,10 +534,8 @@ public class FXMain extends Application {
 	    ListView<Project> projectList = new ListView<Project>(projectObsList);
 	    projectList.setPlaceholder(placeHolderText);
 	    projectList.setMinHeight(350);
-	    projectList.setMinWidth(400);
+	    projectList.setMinWidth(400); 
 	    
-	    
-		
 	    Button addNewButton = new Button("Add New Project");
 	    addNewButton.setOnAction(new EventHandler<ActionEvent>(){
 	    	@Override
@@ -591,8 +578,7 @@ public class FXMain extends Application {
 	    projectGrid.add(projectMessage, 0, 0, 2, 1);
 	    
 	    Project testProject = new Project("Fence", "a fence");
-	    projectGrid.add(getProjectPane(testProject), 0, 1, 2, 1);
-
+	    
 	    projectGrid.add(addNewButton, 0, 5, 2, 1);
 	    projectGrid.add(editButton, 0, 7, 2, 1);
 	    projectGrid.add(removeButton, 0, 9, 2, 1);
@@ -613,9 +599,7 @@ public class FXMain extends Application {
 	 */
 	private TilePane getSettingContent() {
 		TilePane settingPane = new TilePane();
-		TabPane tabPane = new TabPane();
-	    Tab accountTab = new Tab("Account");
-	    GridPane account = new GridPane();
+ 	    GridPane account = new GridPane();
 	    account.setAlignment(Pos.CENTER);
 	    account.setVgap(10);
 	    account.setHgap(10);
@@ -635,8 +619,8 @@ public class FXMain extends Application {
             @Override
             public void handle(ActionEvent event) {
             	if (currPassword.getText().equals(currentUser.getPassword())) {
-	            	if (newPassword.getText().equals(confirmPassword.getText())) {
-		            	currentUser.setPassword(newPassword.getText());
+	            	if (newPassword.getText().equals(confirmPassword.getText())) {	            		
+	            		currentUser.setPassword(newPassword.getText());
 		            	changePassText.setFill(Color.LIMEGREEN);
 						changePassText.setText("Password Changed!");
 						SQL.updateUser(currentUser);
@@ -651,7 +635,6 @@ public class FXMain extends Application {
             		
             }
 	    });
-	    
 	    
 	    //signout button
         Button signoutButton = new Button("Sign Out");
@@ -730,25 +713,12 @@ public class FXMain extends Application {
  
 	    account.add(signoutButton, 4, 4, 3, 2); 
 
-	    
-	    accountTab.closableProperty().set(false); 
-	    accountTab.setContent(account); 
-	    tabPane.getTabs().add(accountTab); 
-	    tabPane.setMaxHeight(SCENE_HEIGHT - 50);
-	    tabPane.setMaxWidth(SCENE_WIDTH - 50);
-       	tabPane.setBorder(BORDER);
-
-	    settingPane.getChildren().add(tabPane);
+	     
+	    settingPane.getChildren().add(account);
 	    
 		return settingPane;
 	}
-	
-	private StackPane getProjectPane(Project project) {
-		StackPane projectPane = new StackPane();
-
-		return projectPane;		
-	}
-	
+		
 	/**
 	 * Creates the Create a Project view.
 	 * @author Amanda Aldrich
