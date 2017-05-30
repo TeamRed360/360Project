@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
-<fullyQualifiedTypeName name="javafx.scene.layout.GridPane"/>
 <fullyQualifiedTypeName name="javafx.geometry.Insets"/>
 <fullyQualifiedTypeName name="javax.swing.JLabel"/>
 <fullyQualifiedTypeName name="javafx.scene.Node"/>
@@ -35,7 +34,6 @@
 <fullyQualifiedTypeName name="javafx.scene.layout.BackgroundRepeat"/>
 <fullyQualifiedTypeName name="javafx.scene.layout.BackgroundSize"/>
 <fullyQualifiedTypeName name="javafx.scene.layout.BackgroundPosition"/>
-<fullyQualifiedTypeName name="model.Project"/>
 <fullyQualifiedTypeName name="javafx.geometry.Pos"/>
 <fullyQualifiedTypeName name="javafx.scene.layout.VBox"/>
 <fullyQualifiedTypeName name="javafx.scene.layout.BorderPane"/>
@@ -60,4 +58,9 @@
 <fullyQualifiedTypeName name="java.lang.System"/>
 <fullyQualifiedTypeName name="java.util.ArrayList"/>
 <fullyQualifiedTypeName name="model.Calculator"/>
+<<<<<<< HEAD
+<fullyQualifiedTypeName name="java.util.Stack"/>
+=======
+<fullyQualifiedTypeName name="model.Project"/>
+>>>>>>> 3bfaa99ee5d8ff60c7f6bc81494fde7d0ea17f96
 </qualifiedTypeNameHistroy>

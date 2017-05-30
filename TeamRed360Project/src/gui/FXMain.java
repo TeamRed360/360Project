@@ -535,26 +535,6 @@ public class FXMain extends Application {
 		});
 		carrotButton.setMinSize(50, 50);
 		
-		/*Button openParenButton = new Button(" ( ");
-		openParenButton.setOnAction(new EventHandler<ActionEvent>() {    	
-            @Override
-            public void handle(ActionEvent event) {    
-            	total.setText(total.getText() + ((Button) event.getSource()).getText());
-            	equation.add(((Button) event.getSource()).getText());
-            }        
-		});
-		openParenButton.setMinSize(50, 50);*/
-		
-		/*Button closeParenButton = new Button(" ) ");
-		closeParenButton.setOnAction(new EventHandler<ActionEvent>() {    	
-            @Override
-            public void handle(ActionEvent event) {    
-            	total.setText(total.getText() + ((Button) event.getSource()).getText());
-            	equation.add(((Button) event.getSource()).getText());
-            }        
-		});
-		closeParenButton.setMinSize(50, 50);*/
-		
 		Button decimalButton = new Button(".");
 		decimalButton.setOnAction(new EventHandler<ActionEvent>() {    	
             @Override
@@ -590,10 +570,8 @@ public class FXMain extends Application {
 	    calculatorGrid.add(subtractButton, 3, 3);
 	    calculatorGrid.add(divideButton, 3, 1);
 	    calculatorGrid.add(multiplyButton, 3, 2);
-	    calculatorGrid.add(carrotButton, 0, 4/*3, 5*/);
-	    //calculatorGrid.add(openParenButton, 0, 4);
-	    //calculatorGrid.add(closeParenButton, 2, 4);
-	    calculatorGrid.add(decimalButton, 2, 4/*1, 5*/);
+	    calculatorGrid.add(carrotButton, 0, 4);
+	    calculatorGrid.add(decimalButton, 2, 4);
 	    calculatorGrid.add(equalButton, 2, 5, 2, 1);
 	    calculatorGrid.add(clearButton, 0, 5, 2, 1);
 	    
@@ -670,7 +648,7 @@ public class FXMain extends Application {
 	    
 	    projectGrid.add(projectMessage, 0, 0, 2, 1);
 	    
-	    Project testProject = new Project("Fence", "a fence");
+	    Project testProject = new Project(-1, "Fence", "a fence");
 	    
 	    projectGrid.add(addNewButton, 0, 5, 2, 1);
 	    projectGrid.add(editButton, 0, 7, 2, 1);
@@ -817,7 +795,7 @@ public class FXMain extends Application {
 	private StackPane addNewProjectView() {
 		
 		//project gets created to be customized by user
-		Project tempProject = new Project(" ", " ");	 
+		Project tempProject = new Project(-1, " ", " ");	 
 		
 		//my pane
 		StackPane addProjectPane = new StackPane();
