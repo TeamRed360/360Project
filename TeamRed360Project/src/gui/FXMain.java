@@ -609,7 +609,7 @@ public class FXMain extends Application {
 	/**
 	 * Returns a JavaFX TilePane containing all settings content.
 	 * @return TilePane
-	 * @author Taylor Riccetti
+	 * @author Taylor Riccetti, minorly modified by Amanda Aldrich
 	 */
 	private TilePane getSettingContent() {
 		TilePane settingPane = new TilePane();
@@ -673,13 +673,15 @@ public class FXMain extends Application {
             	new JOptionPane();
 				// update database if needed
             	int doubleCheck = JOptionPane.showConfirmDialog(null, 
-            			"Do you want to go back to the homeScreen?", "Homescreen?", 
+            			"Do you want to go back to the login screen?", "Login Screen?", 
             			JOptionPane.YES_NO_OPTION);
             	if(doubleCheck == JOptionPane.YES_OPTION){
-            		homeTab.setContent(getHomeContent("Nailed It Home"));
-            		tabPane.getSelectionModel().select(0);
-            	}else{
-            		System.exit(0);
+            		homeTab.setContent(getLoginPane());
+            		//tabPane.getSelectionModel().select(0);
+            		//System.out.print(tabPane.getTabs().size());
+            		//tabPane.getTabs().remove(settingsTab);
+            		//tabPane.getTabs().add(settingsTab); I give up - Amanda
+            		currentUser = null;
             	}
             }
     
