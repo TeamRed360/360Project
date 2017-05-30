@@ -88,9 +88,14 @@
 2017-05-28 14:12:05,571 [Worker-1] INFO  c.g.t.t.d.PublishedGradleVersions - Gradle version information cache is out-of-date. Trying to update.
 =======
 >>>>>>> 0e165289027060e6fc9e899aa6d0f1174fd8726d
+<<<<<<< HEAD
+2017-05-28 16:58:54,025 [Worker-1] INFO  c.g.t.t.d.PublishedGradleVersions - Gradle version information cache is out-of-date. Trying to update.
+=======
 >>>>>>> 7529fa1d2685cf40c3976fe7b055de6420b63307
 2017-05-28 18:15:07,057 [Worker-2] INFO  c.g.t.t.d.PublishedGradleVersions - Gradle version information cache is up-to-date. Trying to read.
 2017-05-29 15:12:20,718 [Worker-3] INFO  c.g.t.t.d.PublishedGradleVersions - Gradle version information cache is out-of-date. Trying to update.
 2017-05-29 15:19:33,984 [Worker-0] INFO  c.g.t.t.d.PublishedGradleVersions - Gradle version information cache is up-to-date. Trying to read.
 2017-05-29 15:49:25,481 [Worker-1] INFO  c.g.t.t.d.PublishedGradleVersions - Gradle version information cache is up-to-date. Trying to read.
 2017-05-29 18:23:46,365 [Worker-1] INFO  c.g.t.t.d.PublishedGradleVersions - Gradle version information cache is up-to-date. Trying to read.
+>>>>>>> fd195dba3ea41021cb0c29d51575cde4268097c6
+2017-05-29 19:50:00,652 [Worker-1] INFO  c.g.t.t.d.PublishedGradleVersions - Gradle version information cache is out-of-date. Trying to update.

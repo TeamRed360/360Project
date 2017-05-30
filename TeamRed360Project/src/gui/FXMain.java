@@ -812,8 +812,19 @@ public class FXMain extends Application {
 	            	homeTab.setContent(addProjectView());
 	            }
 	            
-	    });
+	    }); 
+	    // my add button
+	    Button addButton = new Button("Add Row");
+	    backButton.setOnAction(new EventHandler<ActionEvent>() {
+		    	 
+	            @Override
+	            public void handle(ActionEvent event) {  
+	            	//addRow(table);
+	            }
+	            
+	    }); 
 	    
+	    addButton.setFocusTraversable(false); 
 	    BorderPane border = new BorderPane();
 	    
 	    border.setLeft(addProjectGrid);
