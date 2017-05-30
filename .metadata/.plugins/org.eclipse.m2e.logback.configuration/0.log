@@ -107,5 +107,11 @@
 2017-05-29 20:35:07,651 [Worker-1] INFO  c.g.t.t.d.PublishedGradleVersions - Gradle version information cache is up-to-date. Trying to read.
 2017-05-30 10:15:51,195 [Worker-1] INFO  c.g.t.t.d.PublishedGradleVersions - Gradle version information cache is up-to-date. Trying to read.
 2017-05-30 12:40:55,321 [Worker-0] INFO  c.g.t.t.d.PublishedGradleVersions - Gradle version information cache is up-to-date. Trying to read.
+<<<<<<< HEAD
 2017-05-30 12:59:45,290 [Worker-0] INFO  c.g.t.t.d.PublishedGradleVersions - Gradle version information cache is up-to-date. Trying to read.
 2017-05-30 14:04:59,647 [Worker-2] INFO  c.g.t.t.d.PublishedGradleVersions - Gradle version information cache is up-to-date. Trying to read.
+=======
+2017-05-30 15:11:26,799 [Worker-0] INFO  c.g.t.t.d.PublishedGradleVersions - Gradle version information cache is up-to-date. Trying to read.
+2017-05-30 15:11:48,748 [Worker-15] WARN  org.eclipse.jgit.util.FS_Win32 - Exception caught during execution of command '[bash, --login, -c, which git]' in 'C:\Users\Maggie', return code '1', error message 'which: no git in (/usr/local/bin:/usr/bin:/cygdrive/c/Program Files/Java/jre1.8.0_111/bin/server:/cygdrive/c/Program Files/Java/jre1.8.0_111/bin:/cygdrive/c/Program Files/Java/jre1.8.0_111/lib/amd64:/usr/bin:/cygdrive/c/ProgramData/Oracle/Java/javapath:/cygdrive/c/Program Files (x86)/NVIDIA Corporation/PhysX/Common:/cygdrive/c/WINDOWS/system32:/cygdrive/c/WINDOWS:/cygdrive/c/WINDOWS/System32/Wbem:/cygdrive/c/WINDOWS/System32/WindowsPowerShell/v1.0:/cygdrive/c/Program Files (x86)/ATI Technologies/ATI.ACE/Core-Static:/cygdrive/c/Program Files (x86)/Windows Live/Shared:/cygdrive/c/Program Files (x86)/Skype/Phone:/cygdrive/c/Users/Maggie/AppData/Local/Microsoft/WindowsApps:/cygdrive/e/java-neon/eclipse)
+'
+>>>>>>> 3bfaa99ee5d8ff60c7f6bc81494fde7d0ea17f96

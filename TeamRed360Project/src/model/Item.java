@@ -5,10 +5,12 @@ import java.text.NumberFormat;
 
 /**
  * 
- * @author Taylor Riccetti, Amanda Aldrich
+ * @author Taylor Riccetti, Amanda Aldrich, Stan Hu
  *
  */
 public class Item implements Comparable<Item> { 
+
+	private int id;
 	
 	private String name;
 
@@ -16,20 +18,37 @@ public class Item implements Comparable<Item> {
 	
 	private BigDecimal price;
 	
-  
-
 	/**
 	 * Constructs the item with the given name, price and quantity.
 	 * 
 	 * @param theName
 	 * @param thePrice
 	 * @param theQuantity
-	 * @author Taylor Riccetti
+	 * @author Taylor Riccetti, Stan Hu
 	 */
 	public Item(String theName, Double thePrice, int theQuantity) {
+		id = -1; //this is set later on, needs an SQL response to determine
 		name = theName;  
 		price = new BigDecimal(thePrice);
-		quantity = theQuantity;		
+		quantity = theQuantity;
+	}
+	
+	/**
+	 * Sets the ID of the item.
+	 * @param id The id to set to.
+	 * @author Stan Hu
+	 */
+	public void setId(final int id) {
+		this.id = id;
+	}
+	
+	/**
+	 * Returns the ID of the item.
+	 * @param id The id of the item in the database.
+	 * @author Stan Hu
+	 */
+	public int getId() {
+		return id;
 	}
 	
 	/**

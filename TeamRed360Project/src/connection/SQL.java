@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Properties;
 
+import model.Project;
 import model.User;
 
 /**
@@ -69,11 +70,21 @@ public class SQL {
 	/**
 	 * Updates (or creates if it doesn't exist) the credentials of a user.
 	 * Should be called upon any change to the user.
-	 * @param theClient
+	 * @param theClient The user to be added.
 	 */
 	public static synchronized void updateUser(final User theClient) {
 		removeFromDB(theClient);
 		addToDB(theClient);
+	}
+	
+	/**
+	 * Updates (or creates if it doesn't exist) the a project.
+	 * Should be called upon any change to a project's properties (items not included).
+	 * @param theClient
+	 */
+	public static synchronized void updateProject(final Project theProject) {
+		removeFromDB(theProject);
+		addToDB(theProject);
 	}
 	
 	/**
@@ -148,6 +159,29 @@ public class SQL {
 	}
 	
 	/**
+	 * Attempts to create the given project. Should only be called when a project is first
+	 * created, and the project should set its ID to the return value.
+	 * @param theProject The project to be created.
+	 * @return -1 if error, id of project if success
+	 */
+	public static synchronized int createProject(final Project theProject) {
+		String query = "SELECT * FROM `projects` ORDER BY id DESC";
+		Statement statement = null;
+		try {
+			connection.createStatement().execute(generateQuery(theProject)); //add the project to db
+			statement = connection.createStatement(); //now get the project's ID
+			ResultSet results = statement.executeQuery(query);
+			while (results.next()) {
+				return results.getInt(1);
+			}
+			return 0;
+		} catch (SQLException e) {
+			System.out.println("Create project error " + e);
+			return 0; //error
+		}
+	}
+	
+	/**
 	 * Saves the credentials of the given user.
 	 * @param theClient The user to save.
 	 */
@@ -168,6 +202,32 @@ public class SQL {
 			connection.createStatement().execute(
 					"DELETE FROM `users` WHERE `email` = '"
 							+ theClient.getEmail() + "'");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	/**
+	 * Saves the project.
+	 * @param theProject The project to save.
+	 */
+	private static synchronized void addToDB(final Project theProject) {
+		try {
+			connection.createStatement().execute(generateQuery(theProject));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	/**
+	 * Deletes the project. Assumes the ID of the project is properly set.
+	 * @param theProject The project to delete.
+	 */
+	private static synchronized void removeFromDB(final Project theProject) {
+		try {
+			connection.createStatement().execute(
+					"DELETE FROM `projects` WHERE `id` = '"
+							+ theProject.getId() + "'");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -202,6 +262,23 @@ public class SQL {
 		sb.append("'" + theClient.getLastName() +"',");
 		sb.append("'" + theClient.getEmail() +"',");
 		sb.append("'" + theClient.getPassword() +"')");
+		return sb.toString();
+	}
+	
+	/**
+	 * Generates an SQL query based on the properties of a project..
+	 * @param theProject The project to save.
+	 */
+	private static String generateQuery(final Project theProject) {
+		StringBuilder sb = new StringBuilder();
+		sb.append("INSERT INTO projects (");
+		sb.append("user_id, ");
+		sb.append("name, ");
+		sb.append("description) ");
+		sb.append("VALUES (");
+		sb.append("'" + theProject.getUserId() +"',");
+		sb.append("'" + theProject.getName() +"',");
+		sb.append("'" + theProject.getDesc() +"')");
 		return sb.toString();
 	}
 }

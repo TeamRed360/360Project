@@ -648,7 +648,7 @@ public class FXMain extends Application {
 	    
 	    projectGrid.add(projectMessage, 0, 0, 2, 1);
 	    
-	    Project testProject = new Project("Fence", "a fence");
+	    Project testProject = new Project(-1, "Fence", "a fence");
 	    
 	    projectGrid.add(addNewButton, 0, 5, 2, 1);
 	    projectGrid.add(editButton, 0, 7, 2, 1);
@@ -795,7 +795,7 @@ public class FXMain extends Application {
 	private StackPane addNewProjectView() {
 		
 		//project gets created to be customized by user
-		Project tempProject = new Project(" ", " ");	 
+		Project tempProject = new Project(-1, " ", " ");	 
 		
 		//my pane
 		StackPane addProjectPane = new StackPane();
