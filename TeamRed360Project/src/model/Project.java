@@ -41,6 +41,26 @@ public class Project {
 	}
 	
 	/**
+	 * Getter for the name.
+	 * 
+	 * @author Amanda Aldrich
+	 * @return name, the projects name
+	 */
+	public String getName(){
+		return name;
+	}
+	
+	/**
+	 * Getter for the description.
+	 * 
+	 * @author Amanda Aldrich
+	 * @return desc, the projects description
+	 */
+	public String getDesc(){
+		return desc;
+	}
+	
+	/**
 	 * sets the description.
 	 * 
 	 * @author Amanda Aldrich
@@ -122,15 +142,11 @@ public class Project {
 	@Override
 	public String toString() {
 		StringBuilder bs = new StringBuilder();
-		bs.append("{");
-		for(Item item : contents) {
-			bs.append(item.toString());
-			bs.append(", ");
-		}
-		bs.substring(0, bs.length() - 2);
+		bs.append(name + ", ");
+		bs.append(desc + ", Items: ");
+		bs.append(contents.size());
 		bs.append(", Total Price: ");
 		bs.append(NumberFormat.getCurrencyInstance().format(totalPrice));
-		bs.append("}");
 		return bs.toString();
 	}
 }

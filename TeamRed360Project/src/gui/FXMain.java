@@ -1,5 +1,8 @@
 package gui;  
  
+import java.awt.event.KeyEvent;
+import java.util.ArrayList;
+
 import javax.swing.JOptionPane;
 
 import connection.SQL;
@@ -63,6 +66,8 @@ public class FXMain extends Application {
 	private static final String NAMES[] = {
 			"Stan Hu", "Jimmy Best", "Amanda Aldrich", "Taylor Riccetti", "Joshua Lau"
 	};
+	
+	private ArrayList<Project> projects = new ArrayList<Project>();
 	
 	
 	private final int SCENE_WIDTH = 900;
@@ -504,10 +509,17 @@ public class FXMain extends Application {
 		return calculatorGrid;
 	}
  
-	private StackPane addProjectView() {
-		StackPane projectPane = new StackPane();
+	/**
+	 * Builds the Projects overview.
+	 * 
+	 * @author Taylor Riccetti, heavily modified Amanda Aldrich
+	 * @return projectPane, the base the UI is on
+	 */
+	private TilePane addProjectView() {
+		TilePane projectPane = new TilePane();
     
 	    GridPane projectGrid = new GridPane();
+	    
 	    projectGrid.setAlignment(Pos.TOP_LEFT);
 	    projectGrid.setVgap(10);
 	    projectGrid.setHgap(10);
@@ -515,8 +527,19 @@ public class FXMain extends Application {
 	    Text projectMessage = new Text("Your Projects");
 	    projectMessage.setFont(Font.font("Arial", FontWeight.NORMAL, 20));
 
-	    Button addNewButton = new Button("Add New Project...");
+	    Text placeHolderText = new Text("This is where your project will live");
+	    placeHolderText.setFont(Font.font("Arial", FontWeight.NORMAL, 20));
 	    
+	    final ObservableList<Project> projectObsList = FXCollections.observableArrayList(projects);
+	    
+	    ListView<Project> projectList = new ListView<Project>(projectObsList);
+	    projectList.setPlaceholder(placeHolderText);
+	    projectList.setMinHeight(350);
+	    projectList.setMinWidth(400);
+	    
+	    
+		
+	    Button addNewButton = new Button("Add New Project");
 	    addNewButton.setOnAction(new EventHandler<ActionEvent>(){
 	    	@Override
             public void handle(ActionEvent event) {  
@@ -524,6 +547,25 @@ public class FXMain extends Application {
 
             }
 	    });
+	    
+	    Button editButton = new Button("Edit Project");
+	    editButton.setOnAction(new EventHandler<ActionEvent>(){
+	    	@Override
+            public void handle(ActionEvent event) {  
+            	homeTab.setContent(editProjectView(projectList.getSelectionModel().getSelectedItem()));
+
+            }
+	    });
+	    
+	    Button removeButton = new Button("Remove Project");
+	    removeButton.setOnAction(new EventHandler<ActionEvent>(){
+	    	@Override
+            public void handle(ActionEvent event) {  
+            	int myIndex = projectList.getSelectionModel().getSelectedIndex();
+	    		projectList.getItems().remove(myIndex);
+	    		projects.remove(myIndex);
+            }
+	    });	
 	    
 	    Button backButton = new Button("Back");
 	    
@@ -541,13 +583,15 @@ public class FXMain extends Application {
 	    Project testProject = new Project("Fence", "a fence");
 	    projectGrid.add(getProjectPane(testProject), 0, 1, 2, 1);
 
-	    projectGrid.add(addNewButton, 0, 5);
-	    
-	    projectGrid.add(backButton, 0, 10);
+	    projectGrid.add(addNewButton, 0, 5, 2, 1);
+	    projectGrid.add(editButton, 0, 7, 2, 1);
+	    projectGrid.add(removeButton, 0, 9, 2, 1);
+	    projectGrid.add(backButton, 0, 40);
 	    
 	   	projectPane.setMaxHeight(SCENE_HEIGHT);
        	projectPane.setMaxWidth(SCENE_WIDTH);
        	projectPane.getChildren().add(projectGrid);
+       	projectPane.getChildren().add(projectList);
        	StackPane.setAlignment(projectPane, Pos.CENTER);
        	return projectPane;
 	}
@@ -735,7 +779,9 @@ public class FXMain extends Application {
             public void handle(ActionEvent event) {  
             	tempProject.changeName(projectNameField.getText());
             	tempProject.changeDesc(projectDescField.getText());
-            	//homeTab.setContent(addProjectView());
+            	projects.add(tempProject);
+            	//System.out.println(projects.indexOf(tempProject));
+            	homeTab.setContent(addProjectView());
             }
 	    });
 	    
@@ -766,7 +812,7 @@ public class FXMain extends Application {
 	    addProjectGrid.add(projectDescField, 0, 4, 2, 1);
 	    
 	    addProjectGrid.add(submitButton, 0, 5); 
-	    addProjectGrid.add(backButton, 0, 35); 
+	    addProjectGrid.add(backButton, 0, 30); 
 	    
 	    addProjectPane.setMaxHeight(SCENE_HEIGHT);
        	addProjectPane.setMaxWidth(SCENE_WIDTH);
@@ -780,16 +826,24 @@ public class FXMain extends Application {
 	/**
 	 * This method creates the listview and its buttons
 	 * @author Amanda Aldrich
-	 * @return basePlate, the the pane everythign was laid out on.
+	 * @return basePlate, the the pane everything was laid out on.
 	 */
 	private TilePane makingTheList(Project tempProject){
 		
-		TilePane basePlate = new TilePane();
+		TilePane basePlate = new TilePane(); //I had legos on the brain
 		basePlate.setHgap(10);
 		basePlate.setVgap(10);
 		GridPane listFormGrid = new GridPane();
 		final ObservableList<String> strings = FXCollections.observableArrayList();
-		ListView<String> listView = new ListView<String>(strings);  
+		ListView<String> listView = new ListView<String>(strings); 
+		Text phText = new Text("Items will live here");
+		listView.setPlaceholder(phText);
+		listView.setMinWidth(300);
+		if(tempProject.getListOfItems().length != 0){
+			for(int i = 0; i < tempProject.getListOfItems().length; i++){
+				strings.add(tempProject.getListOfItems()[i].toString());
+			}
+		}
 		
 		//item name setup
 	    Text itemName = new Text("Item Name:");
@@ -869,7 +923,98 @@ public class FXMain extends Application {
 		return basePlate;
 	}
 
+/**		
+ * This allows you to edit an already created project.
+ * @param tempProject, the project you want to change
+ * @return 
+ */
+private StackPane editProjectView(Project tempProject) {
 		
+		//my pane
+		StackPane editProjectPane = new StackPane();
+    
+		//the grid layout
+	    GridPane editProjectGrid = new GridPane();
+	    TilePane titlePane = new TilePane();
+	    titlePane.setHgap(20);
+	    titlePane.setVgap(20);
+	    editProjectGrid.setAlignment(Pos.TOP_LEFT);
+	    editProjectGrid.setVgap(10);
+	    editProjectGrid.setHgap(10);
+	    editProjectGrid.setPadding(new Insets(25)); 
+	    
+	    //my heading
+	    Text editProjectMessage = new Text("\n	Edit Your Project\n");
+	    editProjectMessage.setFont(HEADER_FONT);
+
+	    //project name setup
+	    Text projectName = new Text("Project Name:");
+	    projectName.setFont(Font.font("Arial", FontWeight.NORMAL, 10));
+	    TextField projectNameField = new TextField();
+	    if(tempProject.getName() != ""){
+	    	projectNameField.setText(tempProject.getName());
+	    }
+	    projectNameField.setAlignment(Pos.BASELINE_LEFT);
+	    
+	    //project desc setup
+	    Text projectDesc = new Text("Project Description:");
+	    projectDesc.setFont(Font.font("Arial", FontWeight.NORMAL, 10));
+	    TextField projectDescField = new TextField();
+	    if(tempProject.getDesc() != ""){
+	    	projectDescField.setText(tempProject.getDesc());
+	    }
+	    projectDescField.setAlignment(Pos.BASELINE_LEFT);
+	    
+	    
+	    
+	    //my submit button
+	    Button submitButton = new Button("Submit");
+	    submitButton.setOnAction(new EventHandler<ActionEvent>(){
+	    	@Override
+            public void handle(ActionEvent event) {  
+            	tempProject.changeName(projectNameField.getText());
+            	tempProject.changeDesc(projectDescField.getText());
+            	homeTab.setContent(addProjectView());
+            }
+	    });
+	    
+	    //my back button
+	    Button backButton = new Button("Back");
+	    backButton.setOnAction(new EventHandler<ActionEvent>() {
+		    	 
+	            @Override
+	            public void handle(ActionEvent event) {  
+	            	homeTab.setContent(addProjectView());
+	            }
+	            
+	    });
+	    
+	    BorderPane border = new BorderPane();
+	    
+	    border.setLeft(editProjectGrid);
+	    border.setCenter(makingTheList(tempProject));
+	    border.setTop(titlePane);
+	    //border.setRight();
+	    
+	    titlePane.getChildren().add(editProjectMessage); 
+	    
+	    editProjectGrid.add(projectName, 0, 1, 2, 1);
+	    editProjectGrid.add(projectNameField, 0, 2, 2, 1);
+	    
+	    editProjectGrid.add(projectDesc, 0, 3, 2, 1);
+	    editProjectGrid.add(projectDescField, 0, 4, 2, 1);
+	    
+	    editProjectGrid.add(submitButton, 0, 5); 
+	    editProjectGrid.add(backButton, 0, 30); 
+	    
+	    editProjectPane.setMaxHeight(SCENE_HEIGHT);
+       	editProjectPane.setMaxWidth(SCENE_WIDTH);
+       	editProjectPane.getChildren().add(border);
+       	StackPane.setAlignment(border, Pos.CENTER);
+       	
+		return editProjectPane;
+	    
+	}   
 	
 
 }
