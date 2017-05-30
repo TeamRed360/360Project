@@ -43,6 +43,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import model.Calculator;
 import model.Item;
 import model.Project;
 import model.User;
@@ -105,7 +106,7 @@ public class FXMain extends Application {
     	StackPane root = new StackPane();
         root.getChildren().add(getTabs());
         // messing around with css effects
-        // root.getStylesheets().add("gui/GUICss.css");
+        root.getStylesheets().add("gui/GUICss.css");
         
         mainScreen.setMinHeight(SCENE_HEIGHT);
         mainScreen.setMinWidth(SCENE_WIDTH);
@@ -457,6 +458,7 @@ public class FXMain extends Application {
 		calculatorGrid.setHgap(10);
 		calculatorGrid.setPadding(new Insets(25)); 
 	    TextField total = new TextField();
+	    ArrayList<String> equation = new ArrayList<String>();
 	    total.setPrefWidth(225);
 		total.setAlignment(Pos.CENTER_RIGHT);
 		
@@ -468,6 +470,7 @@ public class FXMain extends Application {
 	            @Override
 	            public void handle(ActionEvent event) {    
 	            	total.setText(total.getText() + ((Button) event.getSource()).getText());
+	            	equation.add(((Button) event.getSource()).getText());
 	            } 
 			});
 			currButton.setMinSize(50, 50);
@@ -488,33 +491,41 @@ public class FXMain extends Application {
             @Override
             public void handle(ActionEvent event) {    
             	total.setText(total.getText() + ((Button) event.getSource()).getText());
+            	equation.add(((Button) event.getSource()).getText());
             }        
 		});
 		addButton.setMinSize(50, 50);
+		
 		Button subtractButton = new Button(" - ");
 		subtractButton.setOnAction(new EventHandler<ActionEvent>() {    	
             @Override
             public void handle(ActionEvent event) {    
             	total.setText(total.getText() + ((Button) event.getSource()).getText());
+            	equation.add(((Button) event.getSource()).getText());
             }        
 		});
 		subtractButton.setMinSize(50, 50);
+		
 		Button multiplyButton = new Button(" * ");
 		multiplyButton.setOnAction(new EventHandler<ActionEvent>() {    	
             @Override
             public void handle(ActionEvent event) {    
             	total.setText(total.getText() + ((Button) event.getSource()).getText());
+            	equation.add(((Button) event.getSource()).getText());
             }        
 		});
 		multiplyButton.setMinSize(50, 50);
+		
 		Button divideButton = new Button(" / ");
 		divideButton.setOnAction(new EventHandler<ActionEvent>() {    	
             @Override
             public void handle(ActionEvent event) {    
             	total.setText(total.getText() + ((Button) event.getSource()).getText());
+            	equation.add(((Button) event.getSource()).getText());
             }        
 		});
 		divideButton.setMinSize(50, 50);
+		
 		Button carrotButton = new Button("^");
 		carrotButton.setOnAction(new EventHandler<ActionEvent>() {    	
             @Override
@@ -523,38 +534,48 @@ public class FXMain extends Application {
             }        
 		});
 		carrotButton.setMinSize(50, 50);
-		Button openParenButton = new Button(" ( ");
+		
+		/*Button openParenButton = new Button(" ( ");
 		openParenButton.setOnAction(new EventHandler<ActionEvent>() {    	
             @Override
             public void handle(ActionEvent event) {    
             	total.setText(total.getText() + ((Button) event.getSource()).getText());
+            	equation.add(((Button) event.getSource()).getText());
             }        
 		});
-		openParenButton.setMinSize(50, 50);
-		Button closeParenButton = new Button(" ) ");
-		divideButton.setOnAction(new EventHandler<ActionEvent>() {    	
+		openParenButton.setMinSize(50, 50);*/
+		
+		/*Button closeParenButton = new Button(" ) ");
+		closeParenButton.setOnAction(new EventHandler<ActionEvent>() {    	
             @Override
             public void handle(ActionEvent event) {    
             	total.setText(total.getText() + ((Button) event.getSource()).getText());
+            	equation.add(((Button) event.getSource()).getText());
             }        
 		});
-		closeParenButton.setMinSize(50, 50);
+		closeParenButton.setMinSize(50, 50);*/
+		
 		Button decimalButton = new Button(".");
 		decimalButton.setOnAction(new EventHandler<ActionEvent>() {    	
             @Override
             public void handle(ActionEvent event) {    
             	total.setText(total.getText() + ((Button) event.getSource()).getText());
+            	equation.add(((Button) event.getSource()).getText());
             }        
 		});
 		decimalButton.setMinSize(50, 50);
+		
 		Button equalButton = new Button("=");
-		decimalButton.setOnAction(new EventHandler<ActionEvent>() {    	
+		equalButton.setOnAction(new EventHandler<ActionEvent>() {    	
             @Override
             public void handle(ActionEvent event) {    
-            	total.setText(total.getText() + ((Button) event.getSource()).getText());
+            	//total.setText(total.getText() + ((Button) event.getSource()).getText());
+            	Calculator calc = new Calculator(equation);
+            	total.setText(calc.getFinalResult());
             }        
 		});
-		equalButton.setMinSize(50, 50);
+		equalButton.setMinSize(110, 50);
+		
 		Button clearButton = new Button("C/E");
 		clearButton.setOnAction(new EventHandler<ActionEvent>() {    	
             @Override
@@ -562,18 +583,19 @@ public class FXMain extends Application {
             	total.setText("");
             }        
 		});
-		clearButton.setMinSize(50, 50);
+		clearButton.setMinSize(110, 50);
+		
 		calculatorGrid.add(total, 0, 0, 4, 1);
 	    calculatorGrid.add(addButton, 3, 4);
 	    calculatorGrid.add(subtractButton, 3, 3);
 	    calculatorGrid.add(divideButton, 3, 1);
 	    calculatorGrid.add(multiplyButton, 3, 2);
-	    calculatorGrid.add(carrotButton, 3, 5);
-	    calculatorGrid.add(openParenButton, 0, 4);
-	    calculatorGrid.add(closeParenButton, 2, 4);
-	    calculatorGrid.add(decimalButton, 1, 5);
-	    calculatorGrid.add(equalButton, 2, 5);
-	    calculatorGrid.add(clearButton, 0, 5);
+	    calculatorGrid.add(carrotButton, 0, 4/*3, 5*/);
+	    //calculatorGrid.add(openParenButton, 0, 4);
+	    //calculatorGrid.add(closeParenButton, 2, 4);
+	    calculatorGrid.add(decimalButton, 2, 4/*1, 5*/);
+	    calculatorGrid.add(equalButton, 2, 5, 2, 1);
+	    calculatorGrid.add(clearButton, 0, 5, 2, 1);
 	    
 	    
 	    calculatorGrid.setBorder(BORDER);
@@ -728,7 +750,7 @@ public class FXMain extends Application {
             	new JOptionPane();
 				// update database if needed
             	int doubleCheck = JOptionPane.showConfirmDialog(null, 
-            			"Do you want to go back to the login screen?", "Login Screen?", 
+            			"Do you want to Log out?", "Log Out?", 
             			JOptionPane.YES_NO_OPTION);
             	if(doubleCheck == JOptionPane.YES_OPTION){
             		homeTab.setContent(getLoginPane());
@@ -900,6 +922,8 @@ public class FXMain extends Application {
 		basePlate.setHgap(10);
 		basePlate.setVgap(10);
 		GridPane listFormGrid = new GridPane();
+		listFormGrid.setHgap(10);
+		listFormGrid.setVgap(10);
 		final ObservableList<String> strings = FXCollections.observableArrayList();
 		ListView<String> listView = new ListView<String>(strings); 
 		Text phText = new Text("Items will live here");
