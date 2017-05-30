@@ -1,7 +1,16 @@
-.button { 
-    -fx-background-color: #DDFFA4;
+
+.tab:selected {
+    -fx-background-color: #9197ae;
 }
 
-.button:hover {
-    -fx-background-color: #9ACD32;
+.tab {
+    -fx-background-color: #f02d3a;
+}
+
+.tab-pane {
+    -fx-background-color: #9197ae;
+}
+
+.tab .tab-pane .tab-label {
+	-fx-text-fill: #eff6ee;
 }

@@ -73,7 +73,7 @@ public class FXMain extends Application {
 	private final int SCENE_HEIGHT = 600;
 	
 	/** A constant for the font of header text. */
-	private final Font HEADER_FONT = Font.font("Arial", FontWeight.NORMAL, 20);
+	private final Font HEADER_FONT = Font.font("Century Gothic", FontWeight.NORMAL, 20);
 
 	/** A constant for the borders. */
 	private final Border BORDER = new Border(new BorderStroke(Color.DARKGRAY,
@@ -136,7 +136,7 @@ public class FXMain extends Application {
     	
     	aboutTab.setContent(getAboutContent());
     	settingsTab.setContent(getSettingContent());
-
+    	tabPane.getStylesheets().add("gui/GUICss.css");
     	tabPane.getTabs().add(homeTab);
     	tabPane.getTabs().add(settingsTab);
     	tabPane.getTabs().add(aboutTab);
