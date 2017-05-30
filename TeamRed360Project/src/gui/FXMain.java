@@ -27,6 +27,7 @@ import javafx.scene.control.TablePosition;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundImage;
 import javafx.scene.layout.BackgroundPosition;
@@ -137,6 +138,12 @@ public class FXMain extends Application {
     	
     }
 
+    /**
+     * Creates the About Tab.
+     * 
+     * @author Taylor Riccetti
+     * @return aboutPane, the base for this page of the UI
+     */
 	private StackPane getAboutContent() {
 		StackPane aboutPane = new StackPane();
 		
@@ -155,7 +162,7 @@ public class FXMain extends Application {
 
 		for(int i = 1; i < NAMES.length + 1; i++) {
 			Text currentName = new Text(NAMES[i - 1]);
-			contributorGrid.add(currentName, 1, i);
+			contributorGrid.add(currentName, 1, i*2, 2, 2); //tried to make the weird gap leave -Amanda
 		}
 		
 		
@@ -200,7 +207,10 @@ public class FXMain extends Application {
 		    
 	    TextField email = new TextField();	
 	    TextField password = new PasswordField();
-	
+	    
+	    continueButton.defaultButtonProperty().bind(continueButton.focusedProperty()); 
+	    //if you tab over the button now, it will work on ENTER press -Amanda
+	    
 	    continueButton.setOnAction(new EventHandler<ActionEvent>() {
 	    	/**
     	 	* Attempts to submit the information.
@@ -655,7 +665,9 @@ public class FXMain extends Application {
         signoutButton.setOnAction(new EventHandler<ActionEvent>() {
 	    	 
             @Override
-            public void handle(ActionEvent event) {  
+            public void handle(ActionEvent event) { 
+            	
+            	
             	homeTab.setContent(getLoginPane());
             	//should select the tab at index zero.. not working..
             	// user still has to navigate back to the home tab to log back in
