@@ -72,7 +72,8 @@ public class Item implements Comparable<Item> {
 	
 	/**
 	 * Returns a string representation of the item.
-     * @author Taylor Riccetti
+     * @author Taylor Riccetti, edited by Amanda Aldrich
+     * 
 	 */
 	@Override
 	public String toString() {
@@ -82,6 +83,8 @@ public class Item implements Comparable<Item> {
 		bs.append(NumberFormat.getCurrencyInstance().format(price));
 		bs.append(" - ");
 		bs.append(quantity);
+		bs.append(" - ");
+		bs.append(NumberFormat.getCurrencyInstance().format(this.getTotalPrice()));
 		return bs.toString();
 	}
 

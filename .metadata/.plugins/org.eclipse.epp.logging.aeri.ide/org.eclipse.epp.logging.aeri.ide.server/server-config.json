@@ -1,7 +1,11 @@
 {
   "version": "v1",
   "title": "Eclipse",
+<<<<<<< HEAD
+  "timestamp": 1496005927687,
+=======
   "timestamp": 1495860362762,
+>>>>>>> 7529fa1d2685cf40c3976fe7b055de6420b63307
   "ttl": 10080,
   "helpUrl": "https://dev.eclipse.org/recommenders/community/aeri/v2/help/",
   "feedbackUrl": "http://ctrlflow.com/automated-error-reporting",
@@ -10,6 +14,7 @@
   "maxReportSize": 262144,
   "problemsUrl": "https://www.eclipse.org/downloads/download.php?r\u003d1\u0026file\u003d/technology/epp/logging/problems.zip",
   "problemsTtl": 20160,
+  "interestUrl": "https://dev.eclipse.org/recommenders/community/confess/v2/interest",
   "connectTimeout": 10,
   "socketTimeout": 10,
   "acceptedProducts": [
