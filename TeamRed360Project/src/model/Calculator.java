@@ -1,18 +1,23 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.Stack;
 
 public class Calculator {
-
+	
+	
 	Double val1;
 	
 	Double val2;
 	
 	String finalResult;
 	
-	public Calculator(ArrayList<String> equation){
+	public Calculator(ArrayList equation){
 		ArrayList<String> myEquation = new ArrayList<String>(equation);
-		finalResult = magicSwitchCalc(myEquation);
+
+		
+		
+		
 	}
 	
 	private String magicSwitchCalc(ArrayList<String> equation){
@@ -20,7 +25,7 @@ public class Calculator {
 		String result = "0.0";
 		int index = 1;
 		
-		while(equation.size() != 0){
+		while(equation.size() - 3 >= 0){
 			
 			if(equation.contains("*")){
 				index = equation.indexOf("*");
