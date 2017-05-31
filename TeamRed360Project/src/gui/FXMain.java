@@ -6,6 +6,7 @@ import javax.swing.JOptionPane;
 
 import connection.SQL;
 import javafx.application.Application;
+import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -655,6 +656,11 @@ public class FXMain extends Application {
 			}
 		});
 
+<<<<<<< HEAD
+=======
+		removeButton.disableProperty().bind(Bindings.isEmpty(projectList.getItems()));
+
+>>>>>>> 68d2eaca5e763a99395e9020b48f403265ee0aa3
 		Button backButton = new Button("Back");
 
 		backButton.setOnAction(new EventHandler<ActionEvent>() {
@@ -922,7 +928,11 @@ public class FXMain extends Application {
 		itemQtyField.setAlignment(Pos.BASELINE_LEFT);
 
 		Text totalPrice = new Text("Total Price: " + tempProject.getOverallPrice());
+<<<<<<< HEAD
 		totalPrice.setFont(Font.font("Arial", FontWeight.NORMAL, 10));
+=======
+		totalPrice.setFont(Font.font("Arial", FontWeight.NORMAL, 15));
+>>>>>>> 68d2eaca5e763a99395e9020b48f403265ee0aa3
 
 		Button addButton = new Button("Add Item");
 		addButton.setOnAction(new EventHandler<ActionEvent>() {
@@ -952,12 +962,23 @@ public class FXMain extends Application {
 		removeButton.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
+<<<<<<< HEAD
+=======
+
+>>>>>>> 68d2eaca5e763a99395e9020b48f403265ee0aa3
 				int myIndex = listView.getSelectionModel().getSelectedIndex();
 				listView.getItems().remove(myIndex);
 				tempProject.remove(tempProject.getListOfItems()[myIndex]);
 				totalPrice.setText("Total Price: " + tempProject.getOverallPrice());
+<<<<<<< HEAD
 			}
 		});
+=======
+
+			}
+		});
+		removeButton.disableProperty().bind(Bindings.isEmpty(listView.getItems()));
+>>>>>>> 68d2eaca5e763a99395e9020b48f403265ee0aa3
 
 		// adding create object form
 		listFormGrid.add(itemName, 0, 1, 2, 1);
