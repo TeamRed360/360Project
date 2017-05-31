@@ -1,5 +1,6 @@
 package gui;
 
+import java.io.File;
 import java.util.ArrayList;
 
 import javax.swing.JOptionPane;
@@ -42,6 +43,8 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
+import javafx.stage.FileChooser;
+import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Stage;
 import model.Calculator;
 import model.Item;
@@ -401,8 +404,13 @@ public class FXMain extends Application {
 
 			@Override
 			public void handle(ActionEvent event) {
-				// get projects from users list of project
-				// convert project to "text" format.
+				FileChooser fileChooser = new FileChooser();
+				fileChooser.setTitle("Open Project File");
+				fileChooser.getExtensionFilters().addAll(new ExtensionFilter("Text Files", "*.txt"));
+				File selectedFile = fileChooser.showOpenDialog(mainScreen);
+				if (selectedFile != null) {
+					// do something
+				}
 			}
 		});
 
@@ -416,7 +424,8 @@ public class FXMain extends Application {
 		exportButton.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
-				// saves
+				// exports projects
+
 			}
 		});
 
@@ -755,7 +764,7 @@ public class FXMain extends Application {
 			// TO-DO action event handler for changing email
 			@Override
 			public void handle(ActionEvent event) {
-
+				// TO DO
 				changeEmailText.setFill(Color.LIMEGREEN);
 				changeEmailText.setText("E-Mail Changed!");
 			}
