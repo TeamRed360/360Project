@@ -820,17 +820,23 @@ public class FXMain extends Application {
 	    projectDescField.setAlignment(Pos.BASELINE_LEFT);
 	    
 	    
+	    Text errorSubmitMessage = new Text();
+	    errorSubmitMessage.setFill(Color.FIREBRICK);
 	    
 	    //my submit button
 	    Button submitButton = new Button("Submit");
 	    submitButton.setOnAction(new EventHandler<ActionEvent>(){
 	    	@Override
             public void handle(ActionEvent event) {  
-            	tempProject.changeName(projectNameField.getText());
-            	tempProject.changeDesc(projectDescField.getText());
-            	projects.add(tempProject);
-            	//System.out.println(projects.indexOf(tempProject));
-            	homeTab.setContent(addProjectView());
+	    		if(projectNameField.getText().length() > 0) {
+	            	tempProject.changeName(projectNameField.getText());
+	            	tempProject.changeDesc(projectDescField.getText());
+	            	projects.add(tempProject);
+	            	//System.out.println(projects.indexOf(tempProject));
+	            	homeTab.setContent(addProjectView());
+	    		} else {
+	    			errorSubmitMessage.setText("Please enter a project name.");
+	    		}
             }
 	    });
 	    
@@ -871,6 +877,7 @@ public class FXMain extends Application {
 	    addProjectGrid.add(projectDescField, 0, 4, 2, 1);
 	    
 	    addProjectGrid.add(submitButton, 0, 5); 
+		addProjectGrid.add(errorSubmitMessage, 0, 6);	
 	    addProjectGrid.add(backButton, 0, 30); 
 	    
 	    addProjectPane.setMaxHeight(SCENE_HEIGHT);
@@ -884,7 +891,7 @@ public class FXMain extends Application {
 
 	/**
 	 * This method creates the listview and its buttons
-	 * @author Amanda Aldrich
+	 * @author Amanda Aldrich, edited by Taylor Riccetti
 	 * @return basePlate, the the pane everything was laid out on.
 	 */
 	private TilePane makingTheList(Project tempProject){
@@ -937,13 +944,13 @@ public class FXMain extends Application {
             			Integer.parseUnsignedInt(itemQtyField.getText()));
 	    			tempProject.add(myItem);
 		    		
-	    			
+	    			strings.add(myItem.toString());
+		    		totalPrice.setText("Total Price: " + tempProject.getOverallPrice());
+		    		
 	    		}
 	    		catch (NumberFormatException e){
-	    			myItem = new Item("Oops, Something Goofed", 0.0, 0);
+	    			// does not add empty item
 	    		}
-	    		strings.add(myItem.toString());
-	    		totalPrice.setText("Total Price: " + tempProject.getOverallPrice());
 	    		
 	    		itemNameField.clear();
 	    		itemPriceField.clear();

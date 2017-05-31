@@ -134,5 +134,12 @@
 =======
 >>>>>>> 52a9cc80ea7ff88564822c05fc3fc8d00ecf2001
 2017-05-30 17:34:35,068 [Worker-0] INFO  c.g.t.t.d.PublishedGradleVersions - Gradle version information cache is up-to-date. Trying to read.
+<<<<<<< HEAD
+2017-05-30 18:00:15,766 [Worker-1] INFO  c.g.t.t.d.PublishedGradleVersions - Gradle version information cache is up-to-date. Trying to read.
+=======
 >>>>>>> 10a6b9895af14c528e26a06220473344579e28a3
+<<<<<<< HEAD
 2017-05-30 18:32:48,873 [Worker-1] INFO  c.g.t.t.d.PublishedGradleVersions - Gradle version information cache is up-to-date. Trying to read.
+=======
+>>>>>>> 7f865bf927c721a412a5e2dedb8222d7d1d52cd0
+>>>>>>> 96f9f7b646b170f5c10a1ec138eb10ab9d1cf22a
