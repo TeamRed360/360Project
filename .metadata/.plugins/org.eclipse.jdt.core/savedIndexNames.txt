@@ -1,20 +1,19 @@
-<<<<<<< HEAD
 INDEX VERSION 1.129+C:\Users\wilso\git\360Project\.metadata\.plugins\org.eclipse.jdt.core
 3681335767.index
 2831536327.index
 364340199.index
 2167310551.index
-1580429618.index
-3878457715.index
 1245964571.index
+3878457715.index
+1580429618.index
 1847969816.index
-1904741536.index
 4166838873.index
 3172068124.index
 375126478.index
 3308702180.index
 3119455041.index
 2410619493.index
+3616299343.index
 188619105.index
 1004716384.index
 486699731.index
@@ -24,11 +23,3 @@ INDEX VERSION 1.129+C:\Users\wilso\git\360Project\.metadata\.plugins\org.eclipse
 3015089110.index
 3256285438.index
 2927524569.index
-=======
-INDEX VERSION 1.129+C:\Users\Taylor\Documents\UW\ComputerScience\CSS360\360Git\360Project\.metadata\.plugins\org.eclipse.jdt.core
-1245964571.index
-1580429618.index
-364340199.index
-3308702180.index
-3616299343.index
->>>>>>> d83b6c2b52ba66e2e6089f2ff5b6fedc77220499
