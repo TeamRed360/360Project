@@ -3,15 +3,15 @@ INDEX VERSION 1.129+C:\Users\wilso\git\360Project\.metadata\.plugins\org.eclipse
 2831536327.index
 364340199.index
 2167310551.index
-1245964571.index
-3878457715.index
 1580429618.index
+3878457715.index
+1245964571.index
 1847969816.index
+1904741536.index
 4166838873.index
 3172068124.index
 375126478.index
 3308702180.index
-<<<<<<< HEAD
 3119455041.index
 2410619493.index
 188619105.index
@@ -23,16 +23,3 @@ INDEX VERSION 1.129+C:\Users\wilso\git\360Project\.metadata\.plugins\org.eclipse
 3015089110.index
 3256285438.index
 2927524569.index
-=======
-2390611605.index
-152825638.index
-804316808.index
-3188672650.index
-364573743.index
-746882245.index
-2601064411.index
-1245964571.index
-619857608.index
-1873081030.index
-3616299343.index
->>>>>>> 96f9f7b646b170f5c10a1ec138eb10ab9d1cf22a
