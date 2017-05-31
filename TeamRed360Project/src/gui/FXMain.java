@@ -446,7 +446,7 @@ public class FXMain extends Application {
 	/**
 	 * Returns a pane displaying the calculator.
 	 * @return a grid pane
-	 * @author Taylor Riccetti
+	 * @author Taylor Riccetti, eduted by Amanda Aldrich
 	 */
 	private GridPane getCalculatorPane() {
 		GridPane calculatorGrid = new GridPane();
@@ -458,7 +458,7 @@ public class FXMain extends Application {
 		calculatorGrid.setHgap(10);
 		calculatorGrid.setPadding(new Insets(25)); 
 	    TextField total = new TextField();
-	    ArrayList<String> equation = new ArrayList<String>();
+	    total.setEditable(false);
 	    total.setPrefWidth(225);
 		total.setAlignment(Pos.CENTER_RIGHT);
 		
@@ -470,7 +470,7 @@ public class FXMain extends Application {
 	            @Override
 	            public void handle(ActionEvent event) {    
 	            	total.setText(total.getText() + ((Button) event.getSource()).getText());
-	            	equation.add(((Button) event.getSource()).getText());
+	            	
 	            } 
 			});
 			currButton.setMinSize(50, 50);
@@ -491,7 +491,7 @@ public class FXMain extends Application {
             @Override
             public void handle(ActionEvent event) {    
             	total.setText(total.getText() + ((Button) event.getSource()).getText());
-            	equation.add(((Button) event.getSource()).getText());
+            	
             }        
 		});
 		addButton.setMinSize(50, 50);
@@ -501,7 +501,7 @@ public class FXMain extends Application {
             @Override
             public void handle(ActionEvent event) {    
             	total.setText(total.getText() + ((Button) event.getSource()).getText());
-            	equation.add(((Button) event.getSource()).getText());
+            	
             }        
 		});
 		subtractButton.setMinSize(50, 50);
@@ -511,7 +511,7 @@ public class FXMain extends Application {
             @Override
             public void handle(ActionEvent event) {    
             	total.setText(total.getText() + ((Button) event.getSource()).getText());
-            	equation.add(((Button) event.getSource()).getText());
+            	
             }        
 		});
 		multiplyButton.setMinSize(50, 50);
@@ -521,12 +521,12 @@ public class FXMain extends Application {
             @Override
             public void handle(ActionEvent event) {    
             	total.setText(total.getText() + ((Button) event.getSource()).getText());
-            	equation.add(((Button) event.getSource()).getText());
+            	
             }        
 		});
 		divideButton.setMinSize(50, 50);
 		
-		Button carrotButton = new Button("^");
+		Button carrotButton = new Button(" ^ ");
 		carrotButton.setOnAction(new EventHandler<ActionEvent>() {    	
             @Override
             public void handle(ActionEvent event) {    
@@ -539,19 +539,20 @@ public class FXMain extends Application {
 		decimalButton.setOnAction(new EventHandler<ActionEvent>() {    	
             @Override
             public void handle(ActionEvent event) {    
-            	total.setText(total.getText() + ((Button) event.getSource()).getText());
-            	equation.add(((Button) event.getSource()).getText());
+            	total.setText(total.getText() + " " + ((Button) event.getSource()).getText() + " ");
+            	
             }        
 		});
 		decimalButton.setMinSize(50, 50);
 		
-		Button equalButton = new Button("=");
+		Button equalButton = new Button(" = ");
 		equalButton.setOnAction(new EventHandler<ActionEvent>() {    	
             @Override
             public void handle(ActionEvent event) {    
             	//total.setText(total.getText() + ((Button) event.getSource()).getText());
-            	Calculator calc = new Calculator(equation);
-            	total.setText(calc.getFinalResult());
+            	Calculator calc = new Calculator(total.getText());
+            	total.setText(calc.getResult() + "");
+            	
             }        
 		});
 		equalButton.setMinSize(110, 50);

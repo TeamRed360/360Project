@@ -1,119 +1,117 @@
 package model;
 
-import java.util.ArrayList;
-import java.util.Stack;
+import java.util.regex.*;
 
+/**
+ * This is the back end class to the calculator method
+ * 
+ * @author Amanda Aldrich, with large help from Boann of StackOverflow
+ *
+ */
 public class Calculator {
 	
+	Double result;
 	
-	Double val1;
-	
-	Double val2;
-	
-	String finalResult;
-	
-	public Calculator(ArrayList equation){
-		ArrayList<String> myEquation = new ArrayList<String>(equation);
-
-		
-		
-		
+	public Calculator(String equation){
+		//System.out.println(equation);
+		//System.out.println(eval(equation));
+		result = eval(equation);
 	}
 	
-	private String magicSwitchCalc(ArrayList<String> equation){
-		
-		String result = "0.0";
-		int index = 1;
-		
-		while(equation.size() - 3 >= 0){
-			
-			if(equation.contains("*")){
-				index = equation.indexOf("*");
-			}
-			else if(equation.contains("/")){
-				index = equation.indexOf("/");
-			}
-			
-			try{
-			Double val1 = Double.parseDouble(equation.get(index - 1));
-			}
-			catch(Exception e){
-				return result = "-1.0";
-			}
-			
-			String modifier = equation.get(index); //odd things happening here
-
-			try{
-			Double val2 = Double.parseDouble(equation.get(index + 1));
-			}
-			catch (Exception e){
-				return result = "-1.0";
-			}
-			
-			switch (modifier){
-				
-				case "+": equation.set(index - 1, add(val1, val2));
-				
-				case "-": equation.set(index - 1, subtract(val1, val2));
-				
-				case "*": equation.set(index - 1, multiply(val1, val2));
-				
-				case "/": equation.set(index - 1, divide(val1, val2));
-				
-				case "^": equation.set(index - 1, power(val1, val2));
-			
-			}
-			
-			for(int i = 0; i < 2; i++){
-				equation.remove(index);
-			}
-		}
-
+	/**
+	 * Getter for the result
+	 * 
+	 * @author Amanda Aldrich
+	 * @return result, the final answer
+	 */
+	public Double getResult(){
 		return result;
 	}
+	
+	/**
+	 * This is the parser for the equations
+	 * 
+	 * @author Boann, with tweaks and modifications my Amanda Aldrich
+	 * @param str, the string
+	 * @return returns the finished equation
+	 */
+	public static double eval(final String stringEq) {
+	    return new Object() {
+	        int pos = -1, ch;
 
-	private String add(Double val1, Double val2){
-		
-		Double result = val1 + val2;
-		String strRes = "" + result;
-		return strRes;
-		
-	}
-	
-	private String subtract(Double val1, Double val2){
-		
-		Double result = val1 - val2;
-		String strRes = "" + result;
-		return strRes;
-		
-	}
-	
-	private String multiply(Double val1, Double val2){
-		
-		Double result = val1 * val2;
-		String strRes = "" + result;
-		return strRes;
-		
-	}
+	        void nextChar() {
+	            ch = (++pos < stringEq.length()) ? stringEq.charAt(pos) : -1;
+	        }
 
-	private String divide(Double val1, Double val2){
-		
-		Double result = val1 / val2;
-		String strRes = "" + result;
-		return strRes;
-		
+	        boolean eat(int charToEat) {
+	            while (ch == ' ') nextChar();
+	            if (ch == charToEat) {
+	                nextChar();
+	                return true;
+	            }
+	            return false;
+	        }
+
+	        double parse() {
+	            nextChar();
+	            double x = parseExpression();
+	            if (pos < stringEq.length()) throw new RuntimeException("Unexpected: " + (char)ch);
+	            return x;
+	        }
+	        // Grammar:
+	        // expression = term | expression `+` term | expression `-` term
+	        // term = factor | term `*` factor | term `/` factor
+	        // factor = `+` factor | `-` factor | `(` expression `)`
+	        //        | number | functionName factor | factor `^` factor
+
+	        double parseExpression() {
+	            double x = parseTerm();
+	            for (;;) {
+	                if      (eat('+')) x += parseTerm(); // addition
+	                else if (eat('-')) x -= parseTerm(); // subtraction
+	                else return x;
+	            }
+	        }
+	        
+	        double parseTerm() {
+	            double x = parseFactor();
+	            for (;;) {
+	                if      (eat('*')) x *= parseFactor(); // multiplication
+	                else if (eat('/')) x /= parseFactor(); // division
+	                else return x;
+	            }
+	        }
+
+	        double parseFactor() {
+	            if (eat('+')) return parseFactor(); // unary plus
+	            if (eat('-')) return -parseFactor(); // unary minus
+
+	            double x;
+	            int startPos = this.pos;
+	            if (eat('(')) { // parentheses
+	                x = parseExpression();
+	                eat(')');
+	            } else if ((ch >= '0' && ch <= '9') || ch == '.') { // numbers
+	                while ((ch >= '0' && ch <= '9') || ch == '.') nextChar();
+	                x = Double.parseDouble(stringEq.substring(startPos, this.pos));
+	            } else if (ch >= 'a' && ch <= 'z') { // functions
+	                while (ch >= 'a' && ch <= 'z') nextChar();
+	                String func = stringEq.substring(startPos, this.pos);
+	                x = parseFactor();
+	                if (func.equals("sqrt")) x = Math.sqrt(x);
+	                else if (func.equals("sin")) x = Math.sin(Math.toRadians(x));
+	                else if (func.equals("cos")) x = Math.cos(Math.toRadians(x));
+	                else if (func.equals("tan")) x = Math.tan(Math.toRadians(x));
+	                else throw new RuntimeException("Unknown function: " + func);
+	            } else {
+	                throw new RuntimeException("Unexpected: " + (char)ch);
+	            }
+	            if (eat('^')) x = Math.pow(x, parseFactor()); // exponentiation
+
+	            return x;
+	        }
+	    }.parse();
 	}
 	
-	private String power(Double val1, Double val2){
-		
-		Double result = Math.pow(val1, val2);
-		String strRes = "" + result;
-		return strRes;
-		
-	}
-	
-	public String getFinalResult(){
-		return finalResult;
-	}
 }
 
