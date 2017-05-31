@@ -10,10 +10,18 @@ public class Calculator {
 	
 	Double result;
 	
+	String stringResult; 
+	
 	public Calculator(String equation){
 		//System.out.println(equation);
 		//System.out.println(eval(equation));
-		result = eval(equation);
+		if(breakingTheUniverse(equation)){
+			result = 0.0;
+		}
+		else{
+			result = eval(checkingDots(equation));
+			
+		}
 	}
 	
 	/**
@@ -27,15 +35,51 @@ public class Calculator {
 	}
 	
 	/**
+	 * Chekes for hanging dots
+	 * 
+	 * @author Amanda Aldrich
+	 * @param eq, the equation
+	 * @return the string with zeros
+	 */
+	public static String checkingDots(String eq){
+		//if(eq.startsWith(".")){
+			eq = "0" + eq;
+		//}
+		
+		if(eq.endsWith(".")){
+			eq = eq + "0";
+		}
+		return eq;
+	}
+	
+	public static Boolean breakingTheUniverse(String eq){
+		Boolean broken = false;
+		if(eq.contains("/0")){
+			broken = true;
+		}
+		else{
+			broken = false;
+		}
+		return broken;
+	}
+	
+	/**
 	 * This is the parser for the equations
 	 * 
-	 * @author Boann, with tweaks and modifications my Amanda Aldrich
+	 * @author Boann, with tweaks and modifications by Amanda Aldrich
 	 * @param str, the string
 	 * @return returns the finished equation
 	 */
 	public static double eval(final String stringEq) {
+<<<<<<< HEAD
+		System.out.println(stringEq);
+		
+		if(stringEq.length() > 3 && Character.isDigit(stringEq.charAt(0))
+				&& Character.isDigit(stringEq.charAt(stringEq.length()-1))){
+=======
 
 		if(stringEq.length() > 0){
+>>>>>>> 10a6b9895af14c528e26a06220473344579e28a3
 		
 			return new Object() {
 				int pos = -1, ch;
