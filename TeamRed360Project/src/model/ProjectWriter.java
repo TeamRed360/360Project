@@ -4,9 +4,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.PrintWriter;
-import java.util.HashSet;
 import java.util.Scanner;
-import java.util.Set;
 
 public class ProjectWriter { // implements Serializable {
 
@@ -48,27 +46,28 @@ public class ProjectWriter { // implements Serializable {
 	 * @param theFile
 	 * @param userId
 	 * @return
+	 * @author Taylor Riccetti
 	 */
 	public static Project importFile(File theFile, int userId) {
 		Scanner scanner;
+		Project readProject = null;
 		try {
 			scanner = new Scanner(theFile);
-			Set<Item> items = new HashSet<>();
 			String[] projectName = new String[2];
 			while (scanner.hasNextLine()) {
 				String line = scanner.nextLine();
 				// first line should have name"project description
 				if (line.contains(":") && !line.contains(">")) {
 					projectName = line.split(":");
+					readProject = new Project(userId, projectName[0], projectName[1]);
 				} else if (line.contains(">items:")) {
 					line = line.substring(7);
 				} else {
 					String[] readItem = line.split(",");
-					items.add(new Item(readItem[0], Double.parseDouble(readItem[1]), Integer.parseInt(readItem[2])));
+					readProject
+							.add(new Item(readItem[0], Double.parseDouble(readItem[1]), Integer.parseInt(readItem[2])));
 				}
 			}
-			Project readProject = new Project(userId, projectName[0], projectName[1]);
-			readProject.setListOfItems(items);
 			return readProject;
 		} catch (FileNotFoundException e) {
 			return null;
