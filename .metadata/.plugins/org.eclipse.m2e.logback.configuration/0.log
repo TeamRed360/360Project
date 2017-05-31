@@ -119,3 +119,4 @@
 '
 >>>>>>> 3bfaa99ee5d8ff60c7f6bc81494fde7d0ea17f96
 >>>>>>> affaef911d2516da759011f03656733c8b9a6b4f
+2017-05-30 15:46:53,121 [Worker-0] INFO  c.g.t.t.d.PublishedGradleVersions - Gradle version information cache is up-to-date. Trying to read.

@@ -1,9 +1,1 @@
-<<<<<<< HEAD
-{}
-=======
-<<<<<<< HEAD
-{}
-=======
-[[{"location":"C:\\Program Files\\Java\\jre1.8.0_111\\lib\\ext\\jfxrt.jar","type":"JAR","hints":{}},"ABSENT"],[{"location":"C:\\Users\\Maggie\\Documents\\GitHub\\NEW\\360Project\\TeamRed360Project","type":"PROJECT","hints":{"PROJECT_NAME":"TeamRed360Project"}},"ABSENT"],[{"location":"C:\\Program Files\\Java\\jre1.8.0_111","type":"JRE","hints":{"EXECUTION_ENVIRONMENT":"JavaSE-1.8"}},"jre:jre:1.8.0"],[{"location":"C:\\Users\\wilso\\git\\360Project\\TeamRed360Project","type":"PROJECT","hints":{"PROJECT_NAME":"TeamRed360Project"}},"ABSENT"]]
->>>>>>> 3bfaa99ee5d8ff60c7f6bc81494fde7d0ea17f96
->>>>>>> affaef911d2516da759011f03656733c8b9a6b4f
+[[{"location":"C:\\Program Files\\Java\\New folder","type":"JRE","hints":{"EXECUTION_ENVIRONMENT":"JavaSE-1.8"}},"jre:jre:1.8.0"],[{"location":"C:\\Program Files\\Java\\New folder\\lib\\ext\\jfxrt.jar","type":"JAR","hints":{}},"ABSENT"]]
