@@ -6,11 +6,25 @@
 		<item value="false" key="expanded2"/>
 		<item value="true" key="expanded1"/>
 		<item value="false" key="expanded4"/>
-		<item value="false" key="expanded3"/>
+		<item value="true" key="expanded3"/>
 		<item value="false" key="expanded6"/>
 		<item value="false" key="expanded5"/>
 		<item value="false" key="expanded7"/>
 		<item value="false" key="expanded0"/>
+	</section>
+	<section name="FatJarPackageWizard">
+		<item value="C:\Users\Taylor\Documents\UW\ComputerScience\CSS360\360Git\360Project" key="FatJarPackageWizardPage.ANTSCRIPT_LOCATION"/>
+		<item value="FXMain - TeamRed360Project" key="FatJarPackageWizardPage.LAUNCH_CONFIGURATION_SELECTION_NAME"/>
+		<item value="C:\Users\Taylor\Desktop\NailedIt.jar" key="FatJarPackageWizardPage.DESTINATION_PATH_SELECTION"/>
+		<item value="false" key="FatJarPackageWizardPage.ANTSCRIPT_SAVE"/>
+		<item value="2" key="FatJarPackageWizardPage.LIBRARY_HANDLING"/>
+		<list key="FatJarPackageWizardPage.DESTINATION_NAMES_ID">
+			<item value="C:\Users\Taylor\Desktop\NailedIt.jar"/>
+		</list>
+		<list key="FatJarPackageWizardPage.ANTSCRIPT_LOCATION_HISTORY">
+			<item value="C:\Users\Taylor\Documents\UW\ComputerScience\CSS360\360Git\360Project.xml"/>
+			<item value=".xml"/>
+		</list>
 	</section>
 	<section name="org.eclipse.jdt.internal.ui.packageview.PackageExplorerPart">
 		<item value="2" key="layout"/>
@@ -27,8 +41,12 @@
 	</section>
 	<section name="OptionalMessageDialog.hide.">
 		<item value="true" key="org.eclipse.jdt.ui.typecomment.deprecated"/>
+		<item value="false" key="RunnableJar.export.ipwarning"/>
 	</section>
 	<section name="quick_assist_proposal_size">
+	</section>
+	<section name="BuildPathsPropertyPage">
+		<item value="2" key="pageIndex"/>
 	</section>
 	<section name="completion_proposal_size">
 	</section>
