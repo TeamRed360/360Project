@@ -49,6 +49,7 @@ import javafx.stage.Stage;
 import model.Calculator;
 import model.Item;
 import model.Project;
+import model.ProjectWriter;
 import model.User;
 
 /**
@@ -389,7 +390,7 @@ public class FXMain extends Application {
 		projectButton.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
-				homeTab.setContent(addProjectView());
+				homeTab.setContent(getProjectView());
 			}
 		});
 
@@ -406,10 +407,16 @@ public class FXMain extends Application {
 			public void handle(ActionEvent event) {
 				FileChooser fileChooser = new FileChooser();
 				fileChooser.setTitle("Open Project File");
-				fileChooser.getExtensionFilters().addAll(new ExtensionFilter("Text Files", "*.txt"));
+				fileChooser.setInitialDirectory(new File("C://"));
+				fileChooser.getExtensionFilters().addAll(new ExtensionFilter("Text Files", "*.prj"));
 				File selectedFile = fileChooser.showOpenDialog(mainScreen);
 				if (selectedFile != null) {
-					// do something
+					Project importedProject = ProjectWriter.importFile(selectedFile, currentUser.getId());
+					if (importedProject != null) {
+						projects.add(importedProject);
+					} else {
+						// error text
+					}
 				}
 			}
 		});
@@ -424,8 +431,8 @@ public class FXMain extends Application {
 		exportButton.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
-				// exports projects
-
+				// display
+				homeTab.setContent(getProjectList());
 			}
 		});
 
@@ -468,6 +475,69 @@ public class FXMain extends Application {
 		aboutTab.disableProperty().set(false);
 		settingsTab.disableProperty().set(false);
 		return homePane;
+	}
+
+	protected TilePane getProjectList() {
+		TilePane projectPane = new TilePane();
+		GridPane projectGrid = new GridPane();
+
+		projectGrid.setAlignment(Pos.TOP_LEFT);
+		projectGrid.setVgap(10);
+		projectGrid.setHgap(10);
+		projectGrid.setPadding(new Insets(25));
+		Text projectMessage = new Text("Pick a project to export.");
+		projectMessage.setFont(Font.font("Arial", FontWeight.NORMAL, 20));
+
+		Text placeHolderText = new Text("No Projects");
+		placeHolderText.setFont(Font.font("Arial", FontWeight.NORMAL, 20));
+
+		final ObservableList<Project> projectObsList = FXCollections.observableArrayList(projects);
+
+		ListView<Project> projectList = new ListView<Project>(projectObsList);
+		projectList.setPlaceholder(placeHolderText);
+		projectList.setMinHeight(350);
+		projectList.setMinWidth(400);
+
+		Button exportButton = new Button("Export Project");
+		exportButton.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event) {
+				// calls the project export code... and exports the selected
+				// project.
+				Project currentProject = projectList.getSelectionModel().getSelectedItem();
+				if (currentProject == null) {
+					// displays error
+				} else {
+					int result = ProjectWriter.export(currentProject);
+					if (result > 0) {
+						// success text
+					} else {
+
+					}
+				}
+			}
+		});
+		exportButton.disableProperty().bind(Bindings.isEmpty(projectList.getItems()));
+
+		Button backButton = new Button("Back");
+		backButton.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event) {
+				homeTab.setContent(getHomeContent(welcomeText.getText()));
+			}
+
+		});
+
+		projectGrid.add(projectMessage, 0, 0, 2, 1);
+		projectGrid.add(exportButton, 0, 9, 2, 1);
+		projectGrid.add(backButton, 0, 40);
+
+		projectPane.setMaxHeight(SCENE_HEIGHT);
+		projectPane.setMaxWidth(SCENE_WIDTH);
+		projectPane.getChildren().add(projectGrid);
+		projectPane.getChildren().add(projectList);
+		StackPane.setAlignment(projectPane, Pos.CENTER);
+		return projectPane;
 	}
 
 	/**
@@ -615,7 +685,7 @@ public class FXMain extends Application {
 	 * @author Taylor Riccetti, heavily modified Amanda Aldrich
 	 * @return projectPane, the base the UI is on
 	 */
-	private TilePane addProjectView() {
+	private TilePane getProjectView() {
 		TilePane projectPane = new TilePane();
 
 		GridPane projectGrid = new GridPane();
@@ -834,7 +904,7 @@ public class FXMain extends Application {
 					tempProject.changeDesc(projectDescField.getText());
 					projects.add(tempProject);
 					// System.out.println(projects.indexOf(tempProject));
-					homeTab.setContent(addProjectView());
+					homeTab.setContent(getProjectView());
 				} else {
 					errorSubmitMessage.setText("Please enter a project name.");
 				}
@@ -846,7 +916,7 @@ public class FXMain extends Application {
 		backButton.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
-				homeTab.setContent(addProjectView());
+				homeTab.setContent(getProjectView());
 			}
 		});
 
@@ -999,8 +1069,7 @@ public class FXMain extends Application {
 	 * This allows you to edit an already created project.
 	 * 
 	 * @param tempProject,
-	 *            the project you want to change
-	 * @return
+	 * @return the project you want to change
 	 */
 	private StackPane editProjectView(Project tempProject) {
 
@@ -1046,7 +1115,7 @@ public class FXMain extends Application {
 			public void handle(ActionEvent event) {
 				tempProject.changeName(projectNameField.getText());
 				tempProject.changeDesc(projectDescField.getText());
-				homeTab.setContent(addProjectView());
+				homeTab.setContent(getProjectView());
 			}
 		});
 
@@ -1056,7 +1125,7 @@ public class FXMain extends Application {
 
 			@Override
 			public void handle(ActionEvent event) {
-				homeTab.setContent(addProjectView());
+				homeTab.setContent(getProjectView());
 			}
 
 		});

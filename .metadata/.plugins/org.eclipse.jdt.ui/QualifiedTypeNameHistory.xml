@@ -3,4 +3,8 @@
 <fullyQualifiedTypeName name="javafx.beans.binding.Bindings"/>
 <fullyQualifiedTypeName name="javafx.stage.FileChooser"/>
 <fullyQualifiedTypeName name="javafx.stage.FileChooser.ExtensionFilter"/>
+<fullyQualifiedTypeName name="model.ProjectExport"/>
+<fullyQualifiedTypeName name="java.io.OutputStream"/>
+<fullyQualifiedTypeName name="java.io.PrintWriter"/>
+<fullyQualifiedTypeName name="model.Project"/>
 </qualifiedTypeNameHistroy>
