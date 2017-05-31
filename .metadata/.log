@@ -9322,18 +9322,31 @@ Caused by: java.lang.IllegalStateException: Expected BEGIN_OBJECT but was STRING
 	at com.google.gson.Gson.fromJson(Gson.java:803)
 	... 6 more
 >>>>>>> 3b0d24a449d25258352ff7f6968db773c275b6ee
+<<<<<<< HEAD
 !SESSION 2017-05-30 17:05:38.294 -----------------------------------------------
 eclipse.buildId=4.6.1.M20160907-1200
 java.version=1.8.0_131
+=======
+!SESSION 2017-05-30 17:15:23.822 -----------------------------------------------
+eclipse.buildId=4.6.2.M20161124-1400
+java.version=1.8.0_111
+>>>>>>> 52a9cc80ea7ff88564822c05fc3fc8d00ecf2001
 java.vendor=Oracle Corporation
 BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=en_US
 Framework arguments:  -product org.eclipse.epp.package.java.product
 Command-line arguments:  -os win32 -ws win32 -arch x86_64 -product org.eclipse.epp.package.java.product
 
+<<<<<<< HEAD
 !ENTRY org.eclipse.e4.ui.workbench 4 0 2017-05-30 17:05:42.699
 !MESSAGE Unable to load resource file:/C:/Users/Taylor/Documents/UW/ComputerScience/CSS360/360Git/360Project/.metadata/.plugins/org.eclipse.e4.workbench/workbench.xmi
 !STACK 0
 org.eclipse.emf.ecore.resource.impl.ResourceSetImpl$1DiagnosticWrappedException: org.xml.sax.SAXParseExceptionpublicId: file:/C:/Users/Taylor/Documents/UW/ComputerScience/CSS360/360Git/360Project/.metadata/.plugins/org.eclipse.e4.workbench/workbench.xmi; systemId: file:/C:/Users/Taylor/Documents/UW/ComputerScience/CSS360/360Git/360Project/.metadata/.plugins/org.eclipse.e4.workbench/workbench.xmi; lineNumber: 2; columnNumber: 2; The markup in the document preceding the root element must be well-formed.
+=======
+!ENTRY org.eclipse.e4.ui.workbench 4 0 2017-05-30 17:15:29.475
+!MESSAGE Unable to load resource file:/C:/Users/wilso/git/360Project/.metadata/.plugins/org.eclipse.e4.workbench/workbench.xmi
+!STACK 0
+org.eclipse.emf.ecore.resource.impl.ResourceSetImpl$1DiagnosticWrappedException: org.xml.sax.SAXParseExceptionpublicId: file:/C:/Users/wilso/git/360Project/.metadata/.plugins/org.eclipse.e4.workbench/workbench.xmi; systemId: file:/C:/Users/wilso/git/360Project/.metadata/.plugins/org.eclipse.e4.workbench/workbench.xmi; lineNumber: 2; columnNumber: 2; The markup in the document preceding the root element must be well-formed.
+>>>>>>> 52a9cc80ea7ff88564822c05fc3fc8d00ecf2001
 	at org.eclipse.emf.ecore.resource.impl.ResourceSetImpl.handleDemandLoadException(ResourceSetImpl.java:319)
 	at org.eclipse.emf.ecore.resource.impl.ResourceSetImpl.demandLoadHelper(ResourceSetImpl.java:278)
 	at org.eclipse.emf.ecore.resource.impl.ResourceSetImpl.getResource(ResourceSetImpl.java:406)
@@ -9342,9 +9355,15 @@ org.eclipse.emf.ecore.resource.impl.ResourceSetImpl$1DiagnosticWrappedException:
 	at org.eclipse.e4.ui.internal.workbench.ResourceHandler.loadMostRecentModel(ResourceHandler.java:169)
 	at org.eclipse.e4.ui.internal.workbench.swt.E4Application.loadApplicationModel(E4Application.java:377)
 	at org.eclipse.e4.ui.internal.workbench.swt.E4Application.createE4Workbench(E4Application.java:252)
+<<<<<<< HEAD
 	at org.eclipse.ui.internal.Workbench$5.run(Workbench.java:626)
 	at org.eclipse.core.databinding.observable.Realm.runWithDefault(Realm.java:336)
 	at org.eclipse.ui.internal.Workbench.createAndRunWorkbench(Workbench.java:604)
+=======
+	at org.eclipse.ui.internal.Workbench$5.run(Workbench.java:632)
+	at org.eclipse.core.databinding.observable.Realm.runWithDefault(Realm.java:336)
+	at org.eclipse.ui.internal.Workbench.createAndRunWorkbench(Workbench.java:610)
+>>>>>>> 52a9cc80ea7ff88564822c05fc3fc8d00ecf2001
 	at org.eclipse.ui.PlatformUI.createAndRunWorkbench(PlatformUI.java:148)
 	at org.eclipse.ui.internal.ide.application.IDEApplication.start(IDEApplication.java:138)
 	at org.eclipse.equinox.internal.app.EclipseAppHandle.run(EclipseAppHandle.java:196)
@@ -9359,7 +9378,11 @@ org.eclipse.emf.ecore.resource.impl.ResourceSetImpl$1DiagnosticWrappedException:
 	at org.eclipse.equinox.launcher.Main.invokeFramework(Main.java:673)
 	at org.eclipse.equinox.launcher.Main.basicRun(Main.java:610)
 	at org.eclipse.equinox.launcher.Main.run(Main.java:1519)
+<<<<<<< HEAD
 Caused by: org.xml.sax.SAXParseExceptionpublicId: file:/C:/Users/Taylor/Documents/UW/ComputerScience/CSS360/360Git/360Project/.metadata/.plugins/org.eclipse.e4.workbench/workbench.xmi; systemId: file:/C:/Users/Taylor/Documents/UW/ComputerScience/CSS360/360Git/360Project/.metadata/.plugins/org.eclipse.e4.workbench/workbench.xmi; lineNumber: 2; columnNumber: 2; The markup in the document preceding the root element must be well-formed.
+=======
+Caused by: org.xml.sax.SAXParseExceptionpublicId: file:/C:/Users/wilso/git/360Project/.metadata/.plugins/org.eclipse.e4.workbench/workbench.xmi; systemId: file:/C:/Users/wilso/git/360Project/.metadata/.plugins/org.eclipse.e4.workbench/workbench.xmi; lineNumber: 2; columnNumber: 2; The markup in the document preceding the root element must be well-formed.
+>>>>>>> 52a9cc80ea7ff88564822c05fc3fc8d00ecf2001
 	at com.sun.org.apache.xerces.internal.util.ErrorHandlerWrapper.createSAXParseException(Unknown Source)
 	at com.sun.org.apache.xerces.internal.util.ErrorHandlerWrapper.fatalError(Unknown Source)
 	at com.sun.org.apache.xerces.internal.impl.XMLErrorReporter.reportError(Unknown Source)
@@ -9383,16 +9406,26 @@ Caused by: org.xml.sax.SAXParseExceptionpublicId: file:/C:/Users/Taylor/Document
 	at org.eclipse.emf.ecore.resource.impl.ResourceSetImpl.demandLoadHelper(ResourceSetImpl.java:274)
 	... 23 more
 
+<<<<<<< HEAD
 !ENTRY org.eclipse.e4.ui.workbench 4 0 2017-05-30 17:05:42.817
+=======
+!ENTRY org.eclipse.e4.ui.workbench 4 0 2017-05-30 17:15:29.477
+>>>>>>> 52a9cc80ea7ff88564822c05fc3fc8d00ecf2001
 !MESSAGE The persisted workbench has no top-level windows, so reinitializing with defaults.
 !STACK 0
 java.lang.Exception
 	at org.eclipse.e4.ui.internal.workbench.ResourceHandler.loadMostRecentModel(ResourceHandler.java:174)
 	at org.eclipse.e4.ui.internal.workbench.swt.E4Application.loadApplicationModel(E4Application.java:377)
 	at org.eclipse.e4.ui.internal.workbench.swt.E4Application.createE4Workbench(E4Application.java:252)
+<<<<<<< HEAD
 	at org.eclipse.ui.internal.Workbench$5.run(Workbench.java:626)
 	at org.eclipse.core.databinding.observable.Realm.runWithDefault(Realm.java:336)
 	at org.eclipse.ui.internal.Workbench.createAndRunWorkbench(Workbench.java:604)
+=======
+	at org.eclipse.ui.internal.Workbench$5.run(Workbench.java:632)
+	at org.eclipse.core.databinding.observable.Realm.runWithDefault(Realm.java:336)
+	at org.eclipse.ui.internal.Workbench.createAndRunWorkbench(Workbench.java:610)
+>>>>>>> 52a9cc80ea7ff88564822c05fc3fc8d00ecf2001
 	at org.eclipse.ui.PlatformUI.createAndRunWorkbench(PlatformUI.java:148)
 	at org.eclipse.ui.internal.ide.application.IDEApplication.start(IDEApplication.java:138)
 	at org.eclipse.equinox.internal.app.EclipseAppHandle.run(EclipseAppHandle.java:196)
@@ -9408,7 +9441,21 @@ java.lang.Exception
 	at org.eclipse.equinox.launcher.Main.basicRun(Main.java:610)
 	at org.eclipse.equinox.launcher.Main.run(Main.java:1519)
 
+<<<<<<< HEAD
 !ENTRY org.eclipse.ui 4 0 2017-05-30 17:05:47.340
+=======
+!ENTRY org.eclipse.ui 2 0 2017-05-30 17:15:29.560
+!MESSAGE Warnings while parsing the commands from the 'org.eclipse.ui.commands' and 'org.eclipse.ui.actionDefinitions' extension points.
+!SUBENTRY 1 org.eclipse.ui 2 0 2017-05-30 17:15:29.560
+!MESSAGE Commands should really have a category: plug-in='net.sf.eclipsecs.ui', id='CheckstylePlugin.PurgeCaches', categoryId='net.sf.eclipsecs'
+
+!ENTRY org.eclipse.ui 2 0 2017-05-30 17:15:29.987
+!MESSAGE Warnings while parsing the commands from the 'org.eclipse.ui.commands' and 'org.eclipse.ui.actionDefinitions' extension points.
+!SUBENTRY 1 org.eclipse.ui 2 0 2017-05-30 17:15:29.987
+!MESSAGE Commands should really have a category: plug-in='net.sf.eclipsecs.ui', id='CheckstylePlugin.PurgeCaches', categoryId='net.sf.eclipsecs'
+
+!ENTRY org.eclipse.ui 4 0 2017-05-30 17:15:33.165
+>>>>>>> 52a9cc80ea7ff88564822c05fc3fc8d00ecf2001
 !MESSAGE Unable to restore working set state.
 !STACK 1
 org.eclipse.ui.WorkbenchException: The content of elements must consist of well-formed character data or markup.
@@ -9421,7 +9468,11 @@ org.eclipse.ui.WorkbenchException: The content of elements must consist of well-
 	at org.eclipse.e4.core.internal.contexts.EclipseContext.get(EclipseContext.java:215)
 	at org.eclipse.e4.core.internal.contexts.EclipseContext.get(EclipseContext.java:588)
 	at org.eclipse.ui.internal.WorkbenchPlugin.getWorkingSetManager(WorkbenchPlugin.java:541)
+<<<<<<< HEAD
 	at org.eclipse.ui.internal.Workbench.getWorkingSetManager(Workbench.java:1607)
+=======
+	at org.eclipse.ui.internal.Workbench.getWorkingSetManager(Workbench.java:1613)
+>>>>>>> 52a9cc80ea7ff88564822c05fc3fc8d00ecf2001
 	at org.eclipse.jdt.internal.ui.workingsets.WorkingSetFilterActionGroup.<init>(WorkingSetFilterActionGroup.java:91)
 	at org.eclipse.jdt.internal.ui.workingsets.ViewActionGroup.<init>(ViewActionGroup.java:63)
 	at org.eclipse.jdt.internal.ui.packageview.PackageExplorerActionGroup.<init>(PackageExplorerActionGroup.java:148)
@@ -9462,7 +9513,11 @@ org.eclipse.ui.WorkbenchException: The content of elements must consist of well-
 	at org.eclipse.e4.ui.services.internal.events.UIEventHandler$1.run(UIEventHandler.java:40)
 	at org.eclipse.swt.widgets.Synchronizer.syncExec(Synchronizer.java:233)
 	at org.eclipse.ui.internal.UISynchronizer.syncExec(UISynchronizer.java:145)
+<<<<<<< HEAD
 	at org.eclipse.swt.widgets.Display.syncExec(Display.java:4813)
+=======
+	at org.eclipse.swt.widgets.Display.syncExec(Display.java:4821)
+>>>>>>> 52a9cc80ea7ff88564822c05fc3fc8d00ecf2001
 	at org.eclipse.e4.ui.internal.workbench.swt.E4Application$1.syncExec(E4Application.java:211)
 	at org.eclipse.e4.ui.services.internal.events.UIEventHandler.handleEvent(UIEventHandler.java:36)
 	at org.eclipse.equinox.internal.event.EventHandlerWrapper.handleEvent(EventHandlerWrapper.java:201)
@@ -9513,7 +9568,11 @@ org.eclipse.ui.WorkbenchException: The content of elements must consist of well-
 	at org.eclipse.e4.ui.services.internal.events.UIEventHandler$1.run(UIEventHandler.java:40)
 	at org.eclipse.swt.widgets.Synchronizer.syncExec(Synchronizer.java:233)
 	at org.eclipse.ui.internal.UISynchronizer.syncExec(UISynchronizer.java:145)
+<<<<<<< HEAD
 	at org.eclipse.swt.widgets.Display.syncExec(Display.java:4813)
+=======
+	at org.eclipse.swt.widgets.Display.syncExec(Display.java:4821)
+>>>>>>> 52a9cc80ea7ff88564822c05fc3fc8d00ecf2001
 	at org.eclipse.e4.ui.internal.workbench.swt.E4Application$1.syncExec(E4Application.java:211)
 	at org.eclipse.e4.ui.services.internal.events.UIEventHandler.handleEvent(UIEventHandler.java:36)
 	at org.eclipse.equinox.internal.event.EventHandlerWrapper.handleEvent(EventHandlerWrapper.java:201)
@@ -9540,8 +9599,13 @@ org.eclipse.ui.WorkbenchException: The content of elements must consist of well-
 	at org.eclipse.e4.core.internal.di.InjectorImpl.inject(InjectorImpl.java:151)
 	at org.eclipse.e4.core.internal.di.InjectorImpl.inject(InjectorImpl.java:118)
 	at org.eclipse.e4.core.contexts.ContextInjectionFactory.inject(ContextInjectionFactory.java:73)
+<<<<<<< HEAD
 	at org.eclipse.ui.internal.Workbench.createWorkbenchWindow(Workbench.java:1525)
 	at org.eclipse.ui.internal.Workbench.getActiveWorkbenchWindow(Workbench.java:1499)
+=======
+	at org.eclipse.ui.internal.Workbench.createWorkbenchWindow(Workbench.java:1531)
+	at org.eclipse.ui.internal.Workbench.getActiveWorkbenchWindow(Workbench.java:1505)
+>>>>>>> 52a9cc80ea7ff88564822c05fc3fc8d00ecf2001
 	at org.eclipse.ui.internal.services.WorkbenchSourceProvider.updateActiveShell(WorkbenchSourceProvider.java:923)
 	at org.eclipse.ui.internal.services.WorkbenchSourceProvider.getCurrentState(WorkbenchSourceProvider.java:117)
 	at org.eclipse.ui.internal.services.WorkbenchSourceProvider$6.handleEvent(WorkbenchSourceProvider.java:683)
@@ -9552,11 +9616,19 @@ org.eclipse.ui.WorkbenchException: The content of elements must consist of well-
 	at org.eclipse.swt.widgets.Widget.sendEvent(Widget.java:1088)
 	at org.eclipse.swt.widgets.Decorations.WM_ACTIVATE(Decorations.java:1697)
 	at org.eclipse.swt.widgets.Shell.WM_ACTIVATE(Shell.java:2277)
+<<<<<<< HEAD
 	at org.eclipse.swt.widgets.Control.windowProc(Control.java:4788)
 	at org.eclipse.swt.widgets.Canvas.windowProc(Canvas.java:359)
 	at org.eclipse.swt.widgets.Decorations.windowProc(Decorations.java:1656)
 	at org.eclipse.swt.widgets.Shell.windowProc(Shell.java:2199)
 	at org.eclipse.swt.widgets.Display.windowProc(Display.java:5102)
+=======
+	at org.eclipse.swt.widgets.Control.windowProc(Control.java:4796)
+	at org.eclipse.swt.widgets.Canvas.windowProc(Canvas.java:359)
+	at org.eclipse.swt.widgets.Decorations.windowProc(Decorations.java:1656)
+	at org.eclipse.swt.widgets.Shell.windowProc(Shell.java:2199)
+	at org.eclipse.swt.widgets.Display.windowProc(Display.java:5110)
+>>>>>>> 52a9cc80ea7ff88564822c05fc3fc8d00ecf2001
 	at org.eclipse.swt.internal.win32.OS.BringWindowToTop(Native Method)
 	at org.eclipse.swt.widgets.Decorations.bringToTop(Decorations.java:231)
 	at org.eclipse.swt.widgets.Shell.open(Shell.java:1270)
@@ -9571,9 +9643,15 @@ org.eclipse.ui.WorkbenchException: The content of elements must consist of well-
 	at org.eclipse.core.databinding.observable.Realm.runWithDefault(Realm.java:336)
 	at org.eclipse.e4.ui.internal.workbench.swt.PartRenderingEngine.run(PartRenderingEngine.java:1022)
 	at org.eclipse.e4.ui.internal.workbench.E4Workbench.createAndRunUI(E4Workbench.java:150)
+<<<<<<< HEAD
 	at org.eclipse.ui.internal.Workbench$5.run(Workbench.java:687)
 	at org.eclipse.core.databinding.observable.Realm.runWithDefault(Realm.java:336)
 	at org.eclipse.ui.internal.Workbench.createAndRunWorkbench(Workbench.java:604)
+=======
+	at org.eclipse.ui.internal.Workbench$5.run(Workbench.java:693)
+	at org.eclipse.core.databinding.observable.Realm.runWithDefault(Realm.java:336)
+	at org.eclipse.ui.internal.Workbench.createAndRunWorkbench(Workbench.java:610)
+>>>>>>> 52a9cc80ea7ff88564822c05fc3fc8d00ecf2001
 	at org.eclipse.ui.PlatformUI.createAndRunWorkbench(PlatformUI.java:148)
 	at org.eclipse.ui.internal.ide.application.IDEApplication.start(IDEApplication.java:138)
 	at org.eclipse.equinox.internal.app.EclipseAppHandle.run(EclipseAppHandle.java:196)
@@ -9605,7 +9683,11 @@ Caused by: org.xml.sax.SAXParseException; lineNumber: 6; columnNumber: 2; The co
 	at com.sun.org.apache.xerces.internal.jaxp.DocumentBuilderImpl.parse(Unknown Source)
 	at org.eclipse.ui.XMLMemento.createReadRoot(XMLMemento.java:120)
 	... 175 more
+<<<<<<< HEAD
 !SUBENTRY 1 org.eclipse.ui 4 0 2017-05-30 17:05:47.343
+=======
+!SUBENTRY 1 org.eclipse.ui 4 0 2017-05-30 17:15:33.181
+>>>>>>> 52a9cc80ea7ff88564822c05fc3fc8d00ecf2001
 !MESSAGE The content of elements must consist of well-formed character data or markup.
 !STACK 0
 org.xml.sax.SAXParseException; lineNumber: 6; columnNumber: 2; The content of elements must consist of well-formed character data or markup.
@@ -9632,7 +9714,11 @@ org.xml.sax.SAXParseException; lineNumber: 6; columnNumber: 2; The content of el
 	at org.eclipse.e4.core.internal.contexts.EclipseContext.get(EclipseContext.java:215)
 	at org.eclipse.e4.core.internal.contexts.EclipseContext.get(EclipseContext.java:588)
 	at org.eclipse.ui.internal.WorkbenchPlugin.getWorkingSetManager(WorkbenchPlugin.java:541)
+<<<<<<< HEAD
 	at org.eclipse.ui.internal.Workbench.getWorkingSetManager(Workbench.java:1607)
+=======
+	at org.eclipse.ui.internal.Workbench.getWorkingSetManager(Workbench.java:1613)
+>>>>>>> 52a9cc80ea7ff88564822c05fc3fc8d00ecf2001
 	at org.eclipse.jdt.internal.ui.workingsets.WorkingSetFilterActionGroup.<init>(WorkingSetFilterActionGroup.java:91)
 	at org.eclipse.jdt.internal.ui.workingsets.ViewActionGroup.<init>(ViewActionGroup.java:63)
 	at org.eclipse.jdt.internal.ui.packageview.PackageExplorerActionGroup.<init>(PackageExplorerActionGroup.java:148)
@@ -9673,7 +9759,11 @@ org.xml.sax.SAXParseException; lineNumber: 6; columnNumber: 2; The content of el
 	at org.eclipse.e4.ui.services.internal.events.UIEventHandler$1.run(UIEventHandler.java:40)
 	at org.eclipse.swt.widgets.Synchronizer.syncExec(Synchronizer.java:233)
 	at org.eclipse.ui.internal.UISynchronizer.syncExec(UISynchronizer.java:145)
+<<<<<<< HEAD
 	at org.eclipse.swt.widgets.Display.syncExec(Display.java:4813)
+=======
+	at org.eclipse.swt.widgets.Display.syncExec(Display.java:4821)
+>>>>>>> 52a9cc80ea7ff88564822c05fc3fc8d00ecf2001
 	at org.eclipse.e4.ui.internal.workbench.swt.E4Application$1.syncExec(E4Application.java:211)
 	at org.eclipse.e4.ui.services.internal.events.UIEventHandler.handleEvent(UIEventHandler.java:36)
 	at org.eclipse.equinox.internal.event.EventHandlerWrapper.handleEvent(EventHandlerWrapper.java:201)
@@ -9724,7 +9814,11 @@ org.xml.sax.SAXParseException; lineNumber: 6; columnNumber: 2; The content of el
 	at org.eclipse.e4.ui.services.internal.events.UIEventHandler$1.run(UIEventHandler.java:40)
 	at org.eclipse.swt.widgets.Synchronizer.syncExec(Synchronizer.java:233)
 	at org.eclipse.ui.internal.UISynchronizer.syncExec(UISynchronizer.java:145)
+<<<<<<< HEAD
 	at org.eclipse.swt.widgets.Display.syncExec(Display.java:4813)
+=======
+	at org.eclipse.swt.widgets.Display.syncExec(Display.java:4821)
+>>>>>>> 52a9cc80ea7ff88564822c05fc3fc8d00ecf2001
 	at org.eclipse.e4.ui.internal.workbench.swt.E4Application$1.syncExec(E4Application.java:211)
 	at org.eclipse.e4.ui.services.internal.events.UIEventHandler.handleEvent(UIEventHandler.java:36)
 	at org.eclipse.equinox.internal.event.EventHandlerWrapper.handleEvent(EventHandlerWrapper.java:201)
@@ -9751,8 +9845,13 @@ org.xml.sax.SAXParseException; lineNumber: 6; columnNumber: 2; The content of el
 	at org.eclipse.e4.core.internal.di.InjectorImpl.inject(InjectorImpl.java:151)
 	at org.eclipse.e4.core.internal.di.InjectorImpl.inject(InjectorImpl.java:118)
 	at org.eclipse.e4.core.contexts.ContextInjectionFactory.inject(ContextInjectionFactory.java:73)
+<<<<<<< HEAD
 	at org.eclipse.ui.internal.Workbench.createWorkbenchWindow(Workbench.java:1525)
 	at org.eclipse.ui.internal.Workbench.getActiveWorkbenchWindow(Workbench.java:1499)
+=======
+	at org.eclipse.ui.internal.Workbench.createWorkbenchWindow(Workbench.java:1531)
+	at org.eclipse.ui.internal.Workbench.getActiveWorkbenchWindow(Workbench.java:1505)
+>>>>>>> 52a9cc80ea7ff88564822c05fc3fc8d00ecf2001
 	at org.eclipse.ui.internal.services.WorkbenchSourceProvider.updateActiveShell(WorkbenchSourceProvider.java:923)
 	at org.eclipse.ui.internal.services.WorkbenchSourceProvider.getCurrentState(WorkbenchSourceProvider.java:117)
 	at org.eclipse.ui.internal.services.WorkbenchSourceProvider$6.handleEvent(WorkbenchSourceProvider.java:683)
@@ -9763,11 +9862,19 @@ org.xml.sax.SAXParseException; lineNumber: 6; columnNumber: 2; The content of el
 	at org.eclipse.swt.widgets.Widget.sendEvent(Widget.java:1088)
 	at org.eclipse.swt.widgets.Decorations.WM_ACTIVATE(Decorations.java:1697)
 	at org.eclipse.swt.widgets.Shell.WM_ACTIVATE(Shell.java:2277)
+<<<<<<< HEAD
 	at org.eclipse.swt.widgets.Control.windowProc(Control.java:4788)
 	at org.eclipse.swt.widgets.Canvas.windowProc(Canvas.java:359)
 	at org.eclipse.swt.widgets.Decorations.windowProc(Decorations.java:1656)
 	at org.eclipse.swt.widgets.Shell.windowProc(Shell.java:2199)
 	at org.eclipse.swt.widgets.Display.windowProc(Display.java:5102)
+=======
+	at org.eclipse.swt.widgets.Control.windowProc(Control.java:4796)
+	at org.eclipse.swt.widgets.Canvas.windowProc(Canvas.java:359)
+	at org.eclipse.swt.widgets.Decorations.windowProc(Decorations.java:1656)
+	at org.eclipse.swt.widgets.Shell.windowProc(Shell.java:2199)
+	at org.eclipse.swt.widgets.Display.windowProc(Display.java:5110)
+>>>>>>> 52a9cc80ea7ff88564822c05fc3fc8d00ecf2001
 	at org.eclipse.swt.internal.win32.OS.BringWindowToTop(Native Method)
 	at org.eclipse.swt.widgets.Decorations.bringToTop(Decorations.java:231)
 	at org.eclipse.swt.widgets.Shell.open(Shell.java:1270)
@@ -9782,9 +9889,15 @@ org.xml.sax.SAXParseException; lineNumber: 6; columnNumber: 2; The content of el
 	at org.eclipse.core.databinding.observable.Realm.runWithDefault(Realm.java:336)
 	at org.eclipse.e4.ui.internal.workbench.swt.PartRenderingEngine.run(PartRenderingEngine.java:1022)
 	at org.eclipse.e4.ui.internal.workbench.E4Workbench.createAndRunUI(E4Workbench.java:150)
+<<<<<<< HEAD
 	at org.eclipse.ui.internal.Workbench$5.run(Workbench.java:687)
 	at org.eclipse.core.databinding.observable.Realm.runWithDefault(Realm.java:336)
 	at org.eclipse.ui.internal.Workbench.createAndRunWorkbench(Workbench.java:604)
+=======
+	at org.eclipse.ui.internal.Workbench$5.run(Workbench.java:693)
+	at org.eclipse.core.databinding.observable.Realm.runWithDefault(Realm.java:336)
+	at org.eclipse.ui.internal.Workbench.createAndRunWorkbench(Workbench.java:610)
+>>>>>>> 52a9cc80ea7ff88564822c05fc3fc8d00ecf2001
 	at org.eclipse.ui.PlatformUI.createAndRunWorkbench(PlatformUI.java:148)
 	at org.eclipse.ui.internal.ide.application.IDEApplication.start(IDEApplication.java:138)
 	at org.eclipse.equinox.internal.app.EclipseAppHandle.run(EclipseAppHandle.java:196)
@@ -9800,8 +9913,20 @@ org.xml.sax.SAXParseException; lineNumber: 6; columnNumber: 2; The content of el
 	at org.eclipse.equinox.launcher.Main.basicRun(Main.java:610)
 	at org.eclipse.equinox.launcher.Main.run(Main.java:1519)
 
+<<<<<<< HEAD
 !ENTRY org.eclipse.epp.logging.aeri.ide 2 16 2017-05-30 17:05:49.096
 !MESSAGE Server ‘org.eclipse.epp.logging.aeri.ide.server’ failed with exception: com.google.gson.stream.MalformedJsonException: Expected ':' at line 4 column 10. ; version: 2.0.3.v20160905-1331
+=======
+!ENTRY org.eclipse.egit.ui 2 0 2017-05-30 17:15:36.001
+!MESSAGE Warning: The environment variable HOME is not set. The following directory will be used to store the Git
+user global configuration and to define the default location to store repositories: 'C:\Users\wilso'. If this is
+not correct please set the HOME environment variable and restart Eclipse. Otherwise Git for Windows and
+EGit might behave differently since they see different configuration options.
+This warning can be switched off on the Team > Git > Confirmations and Warnings preference page.
+
+!ENTRY org.eclipse.epp.logging.aeri.ide 2 17 2017-05-30 17:15:36.174
+!MESSAGE Server ‘org.eclipse.epp.logging.aeri.ide.server’ failed with exception: com.google.gson.stream.MalformedJsonException: Expected ':' at line 4 column 10. ; version: 2.0.3.v20161205-0933
+>>>>>>> 52a9cc80ea7ff88564822c05fc3fc8d00ecf2001
 !STACK 0
 com.google.gson.JsonSyntaxException: com.google.gson.stream.MalformedJsonException: Expected ':' at line 4 column 10
 	at com.google.gson.Gson.fromJson(Gson.java:818)
@@ -9809,7 +9934,11 @@ com.google.gson.JsonSyntaxException: com.google.gson.stream.MalformedJsonExcepti
 	at org.eclipse.epp.internal.logging.aeri.ide.server.json.Json.deserialize(Json.java:102)
 	at org.eclipse.epp.internal.logging.aeri.ide.server.json.Json.deserialize(Json.java:111)
 	at org.eclipse.epp.internal.logging.aeri.ide.server.mars.IO.loadConfiguration(IO.java:75)
+<<<<<<< HEAD
 	at org.eclipse.epp.internal.logging.aeri.ide.server.mars.ServerConnection.startUp(ServerConnection.java:100)
+=======
+	at org.eclipse.epp.internal.logging.aeri.ide.server.mars.ServerConnection.startUp(ServerConnection.java:121)
+>>>>>>> 52a9cc80ea7ff88564822c05fc3fc8d00ecf2001
 	at com.google.common.util.concurrent.AbstractIdleService$2$1.run(AbstractIdleService.java:54)
 	at com.google.common.util.concurrent.Callables$3.run(Callables.java:93)
 	at java.lang.Thread.run(Unknown Source)
@@ -9821,6 +9950,7 @@ Caused by: com.google.gson.stream.MalformedJsonException: Expected ':' at line 4
 	at com.google.gson.Gson.fromJson(Gson.java:803)
 	... 8 more
 
+<<<<<<< HEAD
 !ENTRY org.eclipse.egit.ui 2 0 2017-05-30 17:05:49.437
 !MESSAGE Warning: The environment variable HOME is not set. The following directory will be used to store the Git
 user global configuration and to define the default location to store repositories: 'C:\Users\Taylor'. If this is
@@ -9829,6 +9959,27 @@ EGit might behave differently since they see different configuration options.
 This warning can be switched off on the Team > Git > Confirmations and Warnings preference page.
 
 !ENTRY org.eclipse.jdt.ui 4 10001 2017-05-30 17:31:09.040
+=======
+!ENTRY org.eclipse.recommenders.coordinates.rcp 4 5 2017-05-30 17:22:44.400
+!MESSAGE Failed to read cached coordinates from file ‘C:\Users\wilso\git\360Project\.recommenders\caches\identified-project-coordinates.json’
+!STACK 0
+com.google.gson.JsonSyntaxException: java.lang.IllegalStateException: Expected BEGIN_OBJECT but was STRING at line 1 column 1
+	at com.google.gson.Gson.fromJson(Gson.java:815)
+	at com.google.gson.Gson.fromJson(Gson.java:768)
+	at com.google.gson.Gson.fromJson(Gson.java:717)
+	at org.eclipse.recommenders.coordinates.rcp.EclipseProjectCoordinateAdvisorService.startUp(EclipseProjectCoordinateAdvisorService.java:172)
+	at com.google.common.util.concurrent.AbstractIdleService$2$1.run(AbstractIdleService.java:54)
+	at com.google.common.util.concurrent.Callables$3.run(Callables.java:93)
+	at java.lang.Thread.run(Unknown Source)
+Caused by: java.lang.IllegalStateException: Expected BEGIN_OBJECT but was STRING at line 1 column 1
+	at com.google.gson.stream.JsonReader.beginObject(JsonReader.java:374)
+	at com.google.gson.internal.bind.MapTypeAdapterFactory$Adapter.read(MapTypeAdapterFactory.java:183)
+	at com.google.gson.internal.bind.MapTypeAdapterFactory$Adapter.read(MapTypeAdapterFactory.java:145)
+	at com.google.gson.Gson.fromJson(Gson.java:803)
+	... 6 more
+
+!ENTRY org.eclipse.jdt.ui 4 10001 2017-05-30 17:28:29.943
+>>>>>>> 52a9cc80ea7ff88564822c05fc3fc8d00ecf2001
 !MESSAGE Internal Error
 !STACK 1
 org.eclipse.jdt.internal.ui.JavaUIException: Problems reading information from XML 'QualifiedTypeNameHistory.xml'
@@ -9872,7 +10023,11 @@ Caused by: org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; The co
 	at com.sun.org.apache.xerces.internal.jaxp.DocumentBuilderImpl.parse(Unknown Source)
 	at org.eclipse.jdt.internal.corext.util.History.load(History.java:261)
 	... 21 more
+<<<<<<< HEAD
 !SUBENTRY 1 org.eclipse.jdt.ui 4 4 2017-05-30 17:31:09.040
+=======
+!SUBENTRY 1 org.eclipse.jdt.ui 4 4 2017-05-30 17:28:29.943
+>>>>>>> 52a9cc80ea7ff88564822c05fc3fc8d00ecf2001
 !MESSAGE Problems reading information from XML 'QualifiedTypeNameHistory.xml'
 !STACK 0
 org.xml.sax.SAXParseException; lineNumber: 3; columnNumber: 2; The content of elements must consist of well-formed character data or markup.

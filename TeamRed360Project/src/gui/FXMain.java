@@ -485,7 +485,7 @@ public class FXMain extends Application {
 			}		
 		}
 		
-		Button addButton = new Button(" + ");
+		Button addButton = new Button("+");
 		addButton.setOnAction(new EventHandler<ActionEvent>() {    	
             @Override
             public void handle(ActionEvent event) {    
@@ -495,7 +495,7 @@ public class FXMain extends Application {
 		});
 		addButton.setMinSize(50, 50);
 		
-		Button subtractButton = new Button(" - ");
+		Button subtractButton = new Button("-");
 		subtractButton.setOnAction(new EventHandler<ActionEvent>() {    	
             @Override
             public void handle(ActionEvent event) {    
@@ -505,7 +505,7 @@ public class FXMain extends Application {
 		});
 		subtractButton.setMinSize(50, 50);
 		
-		Button multiplyButton = new Button(" * ");
+		Button multiplyButton = new Button("*");
 		multiplyButton.setOnAction(new EventHandler<ActionEvent>() {    	
             @Override
             public void handle(ActionEvent event) {    
@@ -515,7 +515,7 @@ public class FXMain extends Application {
 		});
 		multiplyButton.setMinSize(50, 50);
 		
-		Button divideButton = new Button(" / ");
+		Button divideButton = new Button("/");
 		divideButton.setOnAction(new EventHandler<ActionEvent>() {    	
             @Override
             public void handle(ActionEvent event) {    
@@ -525,7 +525,7 @@ public class FXMain extends Application {
 		});
 		divideButton.setMinSize(50, 50);
 		
-		Button carrotButton = new Button(" ^ ");
+		Button carrotButton = new Button("^");
 		carrotButton.setOnAction(new EventHandler<ActionEvent>() {    	
             @Override
             public void handle(ActionEvent event) {    
@@ -538,13 +538,13 @@ public class FXMain extends Application {
 		decimalButton.setOnAction(new EventHandler<ActionEvent>() {    	
             @Override
             public void handle(ActionEvent event) {    
-            	total.setText(total.getText() + " " + ((Button) event.getSource()).getText() + " ");
+            	total.setText(total.getText() + ((Button) event.getSource()).getText());
             	
             }        
 		});
 		decimalButton.setMinSize(50, 50);
 		
-		Button equalButton = new Button(" = ");
+		Button equalButton = new Button("=");
 		equalButton.setOnAction(new EventHandler<ActionEvent>() {    	
             @Override
             public void handle(ActionEvent event) {    
