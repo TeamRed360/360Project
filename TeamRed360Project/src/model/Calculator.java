@@ -55,7 +55,9 @@ public class Calculator {
 	        double parse() {
 	            nextChar();
 	            double x = parseExpression();
-	            if (pos < stringEq.length()) throw new RuntimeException("Unexpected: " + (char)ch);
+	            if (pos < stringEq.length()) {
+	            	throw new RuntimeException("Unexpected: " + (char)ch);
+	            }
 	            return x;
 	        }
 	        // Grammar:

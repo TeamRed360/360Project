@@ -35,7 +35,6 @@ import javafx.scene.layout.BorderStrokeStyle;
 import javafx.scene.layout.BorderWidths;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.TilePane;
 import javafx.scene.paint.Color;
@@ -648,8 +647,6 @@ public class FXMain extends Application {
 	    });
 	    
 	    projectGrid.add(projectMessage, 0, 0, 2, 1);
-	    
-	    Project testProject = new Project(-1, "Fence", "a fence");
 	    
 	    projectGrid.add(addNewButton, 0, 5, 2, 1);
 	    projectGrid.add(editButton, 0, 7, 2, 1);
