@@ -1,7 +1,5 @@
 package model;
 
-import java.util.regex.*;
-
 /**
  * This is the back end class to the calculator method
  * 
@@ -73,10 +71,15 @@ public class Calculator {
 	 * @return returns the finished equation
 	 */
 	public static double eval(final String stringEq) {
+<<<<<<< HEAD
 		System.out.println(stringEq);
 		
 		if(stringEq.length() > 3 && Character.isDigit(stringEq.charAt(0))
 				&& Character.isDigit(stringEq.charAt(stringEq.length()-1))){
+=======
+
+		if(stringEq.length() > 0){
+>>>>>>> 10a6b9895af14c528e26a06220473344579e28a3
 		
 			return new Object() {
 				int pos = -1, ch;
@@ -85,6 +88,7 @@ public class Calculator {
 					ch = (++pos < stringEq.length()) ? stringEq.charAt(pos) : -1;
 				}
 
+	       
 		        boolean eat(int charToEat) {
 		            while (ch == ' ') nextChar();
 		            if (ch == charToEat) {
@@ -148,13 +152,12 @@ public class Calculator {
 		            } else {
 		                throw new RuntimeException("Unexpected: " + (char)ch);
 		            }
-		            if (eat('^')) x = Math.pow(x, parseFactor()); // exponentiation
-	
+		            if (eat('^')) x = Math.pow(x, parseFactor()); // exponentiation 
+		            
 		            return x;
 		        }
 		    }.parse();
-		}
-		else{
+		} else {
 			return 0.0;
 		}
 		

@@ -35,7 +35,6 @@ import javafx.scene.layout.BorderStrokeStyle;
 import javafx.scene.layout.BorderWidths;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.TilePane;
 import javafx.scene.paint.Color;
@@ -400,7 +399,7 @@ public class FXMain extends Application {
         }); 
                 
         // code and design for import button
-        Button importButton = new Button("Upload Projects");
+        Button importButton = new Button("Import Projects");
 	    BackgroundImage importImage = new BackgroundImage(new Image("./upload.png"), 
 	    													  BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, 
 	    													  BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
@@ -417,7 +416,7 @@ public class FXMain extends Application {
         }); 
         
         // code and design for export button
-        Button exportButton = new Button("Save Projects");
+        Button exportButton = new Button("Export Projects");
 	    BackgroundImage exportImage = new BackgroundImage(new Image("./save.png"), 
 	    													  BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, 
 	    													  BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
@@ -431,11 +430,42 @@ public class FXMain extends Application {
 	            }        
         }); 
         
+        
+        Button signoutButton = new Button("Sign Out");
+	    BackgroundImage signoutImage = new BackgroundImage(new Image("./chainsaw.png"), 
+	    													  BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, 
+	    													  BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
+        Background signout = new Background(signoutImage); 
+        signoutButton.setBackground(signout);
+        signoutButton.setMinSize(64, 64);
+        
+        signoutButton.setOnAction(new EventHandler<ActionEvent>() {
+	    	 
+            @Override
+            public void handle(ActionEvent event) { 
+            
+            	// should select the tab at index zero.. not working..
+            	// user still has to navigate back to the home tab to log back in
+            	currentUser = null;
+            	new JOptionPane();
+				// update database if needed
+            	int doubleCheck = JOptionPane.showConfirmDialog(null, 
+            			"Do you want to Log out?", "Log Out?", 
+            			JOptionPane.YES_NO_OPTION);
+            	if(doubleCheck == JOptionPane.YES_OPTION){
+            		homeTab.setContent(getLoginPane());
+            		currentUser = null;
+            	}
+            }
+    
+        }); 
+        
 	    homeGrid.add(welcome, 0, 0, 2, 1); 
 		homeGrid.add(projectButton, 1, 1); 
 		homeGrid.add(importButton, 1, 2); 
 		homeGrid.add(exportButton, 1, 3); 
 	    homeGrid.add(getCalculatorPane(), 2, 1, 2, 4); 
+	    homeGrid.add(signoutButton, 5, 3);
 		homePane.getChildren().add(homeGrid);
 
 		aboutTab.disableProperty().set(false);
@@ -646,10 +676,8 @@ public class FXMain extends Application {
 	            }
 	            
 	    });
-	    
+	        
 	    projectGrid.add(projectMessage, 0, 0, 2, 1);
-	    
-	    Project testProject = new Project(-1, "Fence", "a fence");
 	    
 	    projectGrid.add(addNewButton, 0, 5, 2, 1);
 	    projectGrid.add(editButton, 0, 7, 2, 1);
@@ -706,43 +734,7 @@ public class FXMain extends Application {
             		
             }
 	    });
-	    
-	    
-	     
-	    //signout button
-        Button signoutButton = new Button("Sign Out");
-	    BackgroundImage signoutImage = new BackgroundImage(new Image("./chainsaw.png"), 
-	    													  BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, 
-	    													  BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
-        Background signout = new Background(signoutImage); 
-        signoutButton.setBackground(signout);
-        signoutButton.setMinSize(64, 64);
-        
-        signoutButton.setOnAction(new EventHandler<ActionEvent>() {
-	    	 
-            @Override
-            public void handle(ActionEvent event) { 
-            
-            	// should select the tab at index zero.. not working..
-            	// user still has to navigate back to the home tab to log back in
-            	currentUser = null;
-            	new JOptionPane();
-				// update database if needed
-            	int doubleCheck = JOptionPane.showConfirmDialog(null, 
-            			"Do you want to Log out?", "Log Out?", 
-            			JOptionPane.YES_NO_OPTION);
-            	if(doubleCheck == JOptionPane.YES_OPTION){
-            		homeTab.setContent(getLoginPane());
-            		//tabPane.getSelectionModel().select(0);
-            		//System.out.print(tabPane.getTabs().size());
-            		//tabPane.getTabs().remove(settingsTab);
-            		//tabPane.getTabs().add(settingsTab); I give up - Amanda
-            		currentUser = null;
-            	}
-            }
-    
-        }); 
-	    
+	       
 	    account.add(changePassMessage, 0, 0, 2, 1);
 	    account.add(currPassLabel, 0, 1);
 	    account.add(currPassword, 1, 1);
@@ -784,7 +776,7 @@ public class FXMain extends Application {
 	    account.add(newEmail, 4, 2);
 	    account.add(changeEmailButton, 4, 3);
 	    account.add(changeEmailText, 4, 4, 2, 1);
-        account.add(signoutButton, 5, 5, 3, 2);     
+      //  account.add(signoutButton, 5, 5, 3, 2);     
 		return account;
 	}
 		
