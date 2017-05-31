@@ -8861,18 +8861,31 @@ javax.net.ssl.SSLHandshakeException: Received fatal alert: handshake_failure
 '
 >>>>>>> 3bfaa99ee5d8ff60c7f6bc81494fde7d0ea17f96
 >>>>>>> affaef911d2516da759011f03656733c8b9a6b4f
+<<<<<<< HEAD
 !SESSION 2017-05-30 15:47:14.531 -----------------------------------------------
 eclipse.buildId=4.6.2.M20161124-1400
 java.version=1.8.0_111
+=======
+!SESSION 2017-05-30 15:45:58.455 -----------------------------------------------
+eclipse.buildId=4.6.1.M20160907-1200
+java.version=1.8.0_131
+>>>>>>> 3b0d24a449d25258352ff7f6968db773c275b6ee
 java.vendor=Oracle Corporation
 BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=en_US
 Framework arguments:  -product org.eclipse.epp.package.java.product
 Command-line arguments:  -os win32 -ws win32 -arch x86_64 -product org.eclipse.epp.package.java.product
 
+<<<<<<< HEAD
 !ENTRY org.eclipse.e4.ui.workbench 4 0 2017-05-30 15:47:18.877
 !MESSAGE Unable to load resource file:/C:/Users/wilso/git/360Project/.metadata/.plugins/org.eclipse.e4.workbench/workbench.xmi
 !STACK 0
 org.eclipse.emf.ecore.resource.impl.ResourceSetImpl$1DiagnosticWrappedException: org.xml.sax.SAXParseExceptionpublicId: file:/C:/Users/wilso/git/360Project/.metadata/.plugins/org.eclipse.e4.workbench/workbench.xmi; systemId: file:/C:/Users/wilso/git/360Project/.metadata/.plugins/org.eclipse.e4.workbench/workbench.xmi; lineNumber: 3; columnNumber: 2; The content of elements must consist of well-formed character data or markup.
+=======
+!ENTRY org.eclipse.e4.ui.workbench 4 0 2017-05-30 15:46:45.384
+!MESSAGE Unable to load resource file:/C:/Users/Taylor/Documents/UW/ComputerScience/CSS360/360Git/360Project/.metadata/.plugins/org.eclipse.e4.workbench/workbench.xmi
+!STACK 0
+org.eclipse.emf.ecore.resource.impl.ResourceSetImpl$1DiagnosticWrappedException: org.xml.sax.SAXParseExceptionpublicId: file:/C:/Users/Taylor/Documents/UW/ComputerScience/CSS360/360Git/360Project/.metadata/.plugins/org.eclipse.e4.workbench/workbench.xmi; systemId: file:/C:/Users/Taylor/Documents/UW/ComputerScience/CSS360/360Git/360Project/.metadata/.plugins/org.eclipse.e4.workbench/workbench.xmi; lineNumber: 3; columnNumber: 2; The content of elements must consist of well-formed character data or markup.
+>>>>>>> 3b0d24a449d25258352ff7f6968db773c275b6ee
 	at org.eclipse.emf.ecore.resource.impl.ResourceSetImpl.handleDemandLoadException(ResourceSetImpl.java:319)
 	at org.eclipse.emf.ecore.resource.impl.ResourceSetImpl.demandLoadHelper(ResourceSetImpl.java:278)
 	at org.eclipse.emf.ecore.resource.impl.ResourceSetImpl.getResource(ResourceSetImpl.java:406)
@@ -8881,9 +8894,15 @@ org.eclipse.emf.ecore.resource.impl.ResourceSetImpl$1DiagnosticWrappedException:
 	at org.eclipse.e4.ui.internal.workbench.ResourceHandler.loadMostRecentModel(ResourceHandler.java:169)
 	at org.eclipse.e4.ui.internal.workbench.swt.E4Application.loadApplicationModel(E4Application.java:377)
 	at org.eclipse.e4.ui.internal.workbench.swt.E4Application.createE4Workbench(E4Application.java:252)
+<<<<<<< HEAD
 	at org.eclipse.ui.internal.Workbench$5.run(Workbench.java:632)
 	at org.eclipse.core.databinding.observable.Realm.runWithDefault(Realm.java:336)
 	at org.eclipse.ui.internal.Workbench.createAndRunWorkbench(Workbench.java:610)
+=======
+	at org.eclipse.ui.internal.Workbench$5.run(Workbench.java:626)
+	at org.eclipse.core.databinding.observable.Realm.runWithDefault(Realm.java:336)
+	at org.eclipse.ui.internal.Workbench.createAndRunWorkbench(Workbench.java:604)
+>>>>>>> 3b0d24a449d25258352ff7f6968db773c275b6ee
 	at org.eclipse.ui.PlatformUI.createAndRunWorkbench(PlatformUI.java:148)
 	at org.eclipse.ui.internal.ide.application.IDEApplication.start(IDEApplication.java:138)
 	at org.eclipse.equinox.internal.app.EclipseAppHandle.run(EclipseAppHandle.java:196)
@@ -8898,7 +8917,11 @@ org.eclipse.emf.ecore.resource.impl.ResourceSetImpl$1DiagnosticWrappedException:
 	at org.eclipse.equinox.launcher.Main.invokeFramework(Main.java:673)
 	at org.eclipse.equinox.launcher.Main.basicRun(Main.java:610)
 	at org.eclipse.equinox.launcher.Main.run(Main.java:1519)
+<<<<<<< HEAD
 Caused by: org.xml.sax.SAXParseExceptionpublicId: file:/C:/Users/wilso/git/360Project/.metadata/.plugins/org.eclipse.e4.workbench/workbench.xmi; systemId: file:/C:/Users/wilso/git/360Project/.metadata/.plugins/org.eclipse.e4.workbench/workbench.xmi; lineNumber: 3; columnNumber: 2; The content of elements must consist of well-formed character data or markup.
+=======
+Caused by: org.xml.sax.SAXParseExceptionpublicId: file:/C:/Users/Taylor/Documents/UW/ComputerScience/CSS360/360Git/360Project/.metadata/.plugins/org.eclipse.e4.workbench/workbench.xmi; systemId: file:/C:/Users/Taylor/Documents/UW/ComputerScience/CSS360/360Git/360Project/.metadata/.plugins/org.eclipse.e4.workbench/workbench.xmi; lineNumber: 3; columnNumber: 2; The content of elements must consist of well-formed character data or markup.
+>>>>>>> 3b0d24a449d25258352ff7f6968db773c275b6ee
 	at com.sun.org.apache.xerces.internal.util.ErrorHandlerWrapper.createSAXParseException(Unknown Source)
 	at com.sun.org.apache.xerces.internal.util.ErrorHandlerWrapper.fatalError(Unknown Source)
 	at com.sun.org.apache.xerces.internal.impl.XMLErrorReporter.reportError(Unknown Source)
@@ -8923,16 +8946,26 @@ Caused by: org.xml.sax.SAXParseExceptionpublicId: file:/C:/Users/wilso/git/360Pr
 	at org.eclipse.emf.ecore.resource.impl.ResourceSetImpl.demandLoadHelper(ResourceSetImpl.java:274)
 	... 23 more
 
+<<<<<<< HEAD
 !ENTRY org.eclipse.e4.ui.workbench 4 0 2017-05-30 15:47:18.880
+=======
+!ENTRY org.eclipse.e4.ui.workbench 4 0 2017-05-30 15:46:45.499
+>>>>>>> 3b0d24a449d25258352ff7f6968db773c275b6ee
 !MESSAGE The persisted workbench has no top-level windows, so reinitializing with defaults.
 !STACK 0
 java.lang.Exception
 	at org.eclipse.e4.ui.internal.workbench.ResourceHandler.loadMostRecentModel(ResourceHandler.java:174)
 	at org.eclipse.e4.ui.internal.workbench.swt.E4Application.loadApplicationModel(E4Application.java:377)
 	at org.eclipse.e4.ui.internal.workbench.swt.E4Application.createE4Workbench(E4Application.java:252)
+<<<<<<< HEAD
 	at org.eclipse.ui.internal.Workbench$5.run(Workbench.java:632)
 	at org.eclipse.core.databinding.observable.Realm.runWithDefault(Realm.java:336)
 	at org.eclipse.ui.internal.Workbench.createAndRunWorkbench(Workbench.java:610)
+=======
+	at org.eclipse.ui.internal.Workbench$5.run(Workbench.java:626)
+	at org.eclipse.core.databinding.observable.Realm.runWithDefault(Realm.java:336)
+	at org.eclipse.ui.internal.Workbench.createAndRunWorkbench(Workbench.java:604)
+>>>>>>> 3b0d24a449d25258352ff7f6968db773c275b6ee
 	at org.eclipse.ui.PlatformUI.createAndRunWorkbench(PlatformUI.java:148)
 	at org.eclipse.ui.internal.ide.application.IDEApplication.start(IDEApplication.java:138)
 	at org.eclipse.equinox.internal.app.EclipseAppHandle.run(EclipseAppHandle.java:196)
@@ -8948,6 +8981,7 @@ java.lang.Exception
 	at org.eclipse.equinox.launcher.Main.basicRun(Main.java:610)
 	at org.eclipse.equinox.launcher.Main.run(Main.java:1519)
 
+<<<<<<< HEAD
 !ENTRY org.eclipse.ui 2 0 2017-05-30 15:47:18.968
 !MESSAGE Warnings while parsing the commands from the 'org.eclipse.ui.commands' and 'org.eclipse.ui.actionDefinitions' extension points.
 !SUBENTRY 1 org.eclipse.ui 2 0 2017-05-30 15:47:18.968
@@ -8967,6 +9001,10 @@ This warning can be switched off on the Team > Git > Confirmations and Warnings 
 
 !ENTRY org.eclipse.epp.logging.aeri.ide 2 17 2017-05-30 15:47:25.559
 !MESSAGE Server ‘org.eclipse.epp.logging.aeri.ide.server’ failed with exception: com.google.gson.stream.MalformedJsonException: Expected ':' at line 4 column 10. ; version: 2.0.3.v20161205-0933
+=======
+!ENTRY org.eclipse.epp.logging.aeri.ide 2 16 2017-05-30 15:46:53.815
+!MESSAGE Server ‘org.eclipse.epp.logging.aeri.ide.server’ failed with exception: com.google.gson.stream.MalformedJsonException: Expected ':' at line 4 column 10. ; version: 2.0.3.v20160905-1331
+>>>>>>> 3b0d24a449d25258352ff7f6968db773c275b6ee
 !STACK 0
 com.google.gson.JsonSyntaxException: com.google.gson.stream.MalformedJsonException: Expected ':' at line 4 column 10
 	at com.google.gson.Gson.fromJson(Gson.java:818)
@@ -8974,7 +9012,11 @@ com.google.gson.JsonSyntaxException: com.google.gson.stream.MalformedJsonExcepti
 	at org.eclipse.epp.internal.logging.aeri.ide.server.json.Json.deserialize(Json.java:102)
 	at org.eclipse.epp.internal.logging.aeri.ide.server.json.Json.deserialize(Json.java:111)
 	at org.eclipse.epp.internal.logging.aeri.ide.server.mars.IO.loadConfiguration(IO.java:75)
+<<<<<<< HEAD
 	at org.eclipse.epp.internal.logging.aeri.ide.server.mars.ServerConnection.startUp(ServerConnection.java:121)
+=======
+	at org.eclipse.epp.internal.logging.aeri.ide.server.mars.ServerConnection.startUp(ServerConnection.java:100)
+>>>>>>> 3b0d24a449d25258352ff7f6968db773c275b6ee
 	at com.google.common.util.concurrent.AbstractIdleService$2$1.run(AbstractIdleService.java:54)
 	at com.google.common.util.concurrent.Callables$3.run(Callables.java:93)
 	at java.lang.Thread.run(Unknown Source)
@@ -8986,6 +9028,7 @@ Caused by: com.google.gson.stream.MalformedJsonException: Expected ':' at line 4
 	at com.google.gson.Gson.fromJson(Gson.java:803)
 	... 8 more
 
+<<<<<<< HEAD
 !ENTRY org.eclipse.recommenders.coordinates.rcp 4 5 2017-05-30 15:53:43.436
 !MESSAGE Failed to read cached coordinates from file ‘C:\Users\wilso\git\360Project\.recommenders\caches\identified-project-coordinates.json’
 !STACK 0
@@ -9005,6 +9048,16 @@ Caused by: java.lang.IllegalStateException: Expected BEGIN_OBJECT but was STRING
 	... 6 more
 
 !ENTRY org.eclipse.jdt.ui 4 10001 2017-05-30 16:14:25.468
+=======
+!ENTRY org.eclipse.egit.ui 2 0 2017-05-30 15:46:54.009
+!MESSAGE Warning: The environment variable HOME is not set. The following directory will be used to store the Git
+user global configuration and to define the default location to store repositories: 'C:\Users\Taylor'. If this is
+not correct please set the HOME environment variable and restart Eclipse. Otherwise Git for Windows and
+EGit might behave differently since they see different configuration options.
+This warning can be switched off on the Team > Git > Confirmations and Warnings preference page.
+
+!ENTRY org.eclipse.jdt.ui 4 10001 2017-05-30 16:52:18.312
+>>>>>>> 3b0d24a449d25258352ff7f6968db773c275b6ee
 !MESSAGE Internal Error
 !STACK 1
 org.eclipse.jdt.internal.ui.JavaUIException: Problems reading information from XML 'QualifiedTypeNameHistory.xml'
@@ -9029,15 +9082,26 @@ org.eclipse.jdt.internal.ui.JavaUIException: Problems reading information from X
 	at org.eclipse.jface.text.contentassist.CompletionProposalPopup$1.run(CompletionProposalPopup.java:362)
 	at org.eclipse.swt.widgets.RunnableLock.run(RunnableLock.java:35)
 	at org.eclipse.swt.widgets.Synchronizer.runAsyncMessages(Synchronizer.java:182)
+<<<<<<< HEAD
 	at org.eclipse.swt.widgets.Display.runAsyncMessages(Display.java:4211)
 	at org.eclipse.swt.widgets.Display.readAndDispatch(Display.java:3827)
+=======
+	at org.eclipse.swt.widgets.Display.runAsyncMessages(Display.java:4203)
+	at org.eclipse.swt.widgets.Display.readAndDispatch(Display.java:3819)
+>>>>>>> 3b0d24a449d25258352ff7f6968db773c275b6ee
 	at org.eclipse.e4.ui.internal.workbench.swt.PartRenderingEngine$4.run(PartRenderingEngine.java:1121)
 	at org.eclipse.core.databinding.observable.Realm.runWithDefault(Realm.java:336)
 	at org.eclipse.e4.ui.internal.workbench.swt.PartRenderingEngine.run(PartRenderingEngine.java:1022)
 	at org.eclipse.e4.ui.internal.workbench.E4Workbench.createAndRunUI(E4Workbench.java:150)
+<<<<<<< HEAD
 	at org.eclipse.ui.internal.Workbench$5.run(Workbench.java:693)
 	at org.eclipse.core.databinding.observable.Realm.runWithDefault(Realm.java:336)
 	at org.eclipse.ui.internal.Workbench.createAndRunWorkbench(Workbench.java:610)
+=======
+	at org.eclipse.ui.internal.Workbench$5.run(Workbench.java:687)
+	at org.eclipse.core.databinding.observable.Realm.runWithDefault(Realm.java:336)
+	at org.eclipse.ui.internal.Workbench.createAndRunWorkbench(Workbench.java:604)
+>>>>>>> 3b0d24a449d25258352ff7f6968db773c275b6ee
 	at org.eclipse.ui.PlatformUI.createAndRunWorkbench(PlatformUI.java:148)
 	at org.eclipse.ui.internal.ide.application.IDEApplication.start(IDEApplication.java:138)
 	at org.eclipse.equinox.internal.app.EclipseAppHandle.run(EclipseAppHandle.java:196)
@@ -9069,7 +9133,11 @@ Caused by: org.xml.sax.SAXParseException; lineNumber: 61; columnNumber: 2; The c
 	at com.sun.org.apache.xerces.internal.jaxp.DocumentBuilderImpl.parse(Unknown Source)
 	at org.eclipse.jdt.internal.corext.util.History.load(History.java:261)
 	... 42 more
+<<<<<<< HEAD
 !SUBENTRY 1 org.eclipse.jdt.ui 4 4 2017-05-30 16:14:25.469
+=======
+!SUBENTRY 1 org.eclipse.jdt.ui 4 4 2017-05-30 16:52:18.313
+>>>>>>> 3b0d24a449d25258352ff7f6968db773c275b6ee
 !MESSAGE Problems reading information from XML 'QualifiedTypeNameHistory.xml'
 !STACK 0
 org.xml.sax.SAXParseException; lineNumber: 61; columnNumber: 2; The content of elements must consist of well-formed character data or markup.
@@ -9107,15 +9175,26 @@ org.xml.sax.SAXParseException; lineNumber: 61; columnNumber: 2; The content of e
 	at org.eclipse.jface.text.contentassist.CompletionProposalPopup$1.run(CompletionProposalPopup.java:362)
 	at org.eclipse.swt.widgets.RunnableLock.run(RunnableLock.java:35)
 	at org.eclipse.swt.widgets.Synchronizer.runAsyncMessages(Synchronizer.java:182)
+<<<<<<< HEAD
 	at org.eclipse.swt.widgets.Display.runAsyncMessages(Display.java:4211)
 	at org.eclipse.swt.widgets.Display.readAndDispatch(Display.java:3827)
+=======
+	at org.eclipse.swt.widgets.Display.runAsyncMessages(Display.java:4203)
+	at org.eclipse.swt.widgets.Display.readAndDispatch(Display.java:3819)
+>>>>>>> 3b0d24a449d25258352ff7f6968db773c275b6ee
 	at org.eclipse.e4.ui.internal.workbench.swt.PartRenderingEngine$4.run(PartRenderingEngine.java:1121)
 	at org.eclipse.core.databinding.observable.Realm.runWithDefault(Realm.java:336)
 	at org.eclipse.e4.ui.internal.workbench.swt.PartRenderingEngine.run(PartRenderingEngine.java:1022)
 	at org.eclipse.e4.ui.internal.workbench.E4Workbench.createAndRunUI(E4Workbench.java:150)
+<<<<<<< HEAD
 	at org.eclipse.ui.internal.Workbench$5.run(Workbench.java:693)
 	at org.eclipse.core.databinding.observable.Realm.runWithDefault(Realm.java:336)
 	at org.eclipse.ui.internal.Workbench.createAndRunWorkbench(Workbench.java:610)
+=======
+	at org.eclipse.ui.internal.Workbench$5.run(Workbench.java:687)
+	at org.eclipse.core.databinding.observable.Realm.runWithDefault(Realm.java:336)
+	at org.eclipse.ui.internal.Workbench.createAndRunWorkbench(Workbench.java:604)
+>>>>>>> 3b0d24a449d25258352ff7f6968db773c275b6ee
 	at org.eclipse.ui.PlatformUI.createAndRunWorkbench(PlatformUI.java:148)
 	at org.eclipse.ui.internal.ide.application.IDEApplication.start(IDEApplication.java:138)
 	at org.eclipse.equinox.internal.app.EclipseAppHandle.run(EclipseAppHandle.java:196)
@@ -9131,6 +9210,7 @@ org.xml.sax.SAXParseException; lineNumber: 61; columnNumber: 2; The content of e
 	at org.eclipse.equinox.launcher.Main.basicRun(Main.java:610)
 	at org.eclipse.equinox.launcher.Main.run(Main.java:1519)
 
+<<<<<<< HEAD
 !ENTRY org.eclipse.equinox.p2.transport.ecf 4 1002 2017-05-30 16:24:35.916
 !MESSAGE Unable to read repository at http://sourceforge.net/projects/pmd/files/pmd-eclipse/update-site/content.xml.
 !STACK 0
@@ -9223,3 +9303,22 @@ javax.net.ssl.SSLHandshakeException: Received fatal alert: handshake_failure
 	at org.eclipse.ecf.provider.filetransfer.httpclient4.HttpClientFileSystemBrowser.runRequest(HttpClientFileSystemBrowser.java:263)
 	at org.eclipse.ecf.provider.filetransfer.browse.AbstractFileSystemBrowser$DirectoryJob.run(AbstractFileSystemBrowser.java:69)
 	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:55)
+=======
+!ENTRY org.eclipse.recommenders.coordinates.rcp 4 5 2017-05-30 16:56:15.802
+!MESSAGE Failed to read cached coordinates from file ‘C:\Users\Taylor\Documents\UW\ComputerScience\CSS360\360Git\360Project\.recommenders\caches\identified-project-coordinates.json’
+!STACK 0
+com.google.gson.JsonSyntaxException: java.lang.IllegalStateException: Expected BEGIN_OBJECT but was STRING at line 1 column 1
+	at com.google.gson.Gson.fromJson(Gson.java:815)
+	at com.google.gson.Gson.fromJson(Gson.java:768)
+	at com.google.gson.Gson.fromJson(Gson.java:717)
+	at org.eclipse.recommenders.coordinates.rcp.EclipseProjectCoordinateAdvisorService.startUp(EclipseProjectCoordinateAdvisorService.java:172)
+	at com.google.common.util.concurrent.AbstractIdleService$2$1.run(AbstractIdleService.java:54)
+	at com.google.common.util.concurrent.Callables$3.run(Callables.java:93)
+	at java.lang.Thread.run(Unknown Source)
+Caused by: java.lang.IllegalStateException: Expected BEGIN_OBJECT but was STRING at line 1 column 1
+	at com.google.gson.stream.JsonReader.beginObject(JsonReader.java:374)
+	at com.google.gson.internal.bind.MapTypeAdapterFactory$Adapter.read(MapTypeAdapterFactory.java:183)
+	at com.google.gson.internal.bind.MapTypeAdapterFactory$Adapter.read(MapTypeAdapterFactory.java:145)
+	at com.google.gson.Gson.fromJson(Gson.java:803)
+	... 6 more
+>>>>>>> 3b0d24a449d25258352ff7f6968db773c275b6ee

@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
+<<<<<<< HEAD
 <fullyQualifiedTypeName name="jdk.nashorn.internal.runtime.regexp.joni.Regex"/>
 <fullyQualifiedTypeName name="java.util.regex.Pattern"/>
 <fullyQualifiedTypeName name="jdk.internal.org.objectweb.asm.tree.analysis.Interpreter"/>
+=======
+<fullyQualifiedTypeName name="javafx.scene.paint.Color"/>
+<fullyQualifiedTypeName name="java.awt.Color"/>
+>>>>>>> 3b0d24a449d25258352ff7f6968db773c275b6ee
 </qualifiedTypeNameHistroy>

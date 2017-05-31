@@ -107,7 +107,7 @@ public class FXMain extends Application {
         root.getChildren().add(getTabs());
         // messing around with css effects
         root.getStylesheets().add("gui/GUICss.css");
-        
+       
         mainScreen.setMinHeight(SCENE_HEIGHT);
         mainScreen.setMinWidth(SCENE_WIDTH);
         mainScreen.setScene(new Scene(root, SCENE_WIDTH, SCENE_HEIGHT, Color.MISTYROSE));
@@ -127,7 +127,7 @@ public class FXMain extends Application {
 		
     	homeTab.closableProperty().set(false);
     	settingsTab.closableProperty().set(false);
-    	aboutTab.closableProperty().set(false); 
+    	aboutTab.closableProperty().set(false);
     	
     	// Moved to getLoginPane
     	// Initially all other tabs are disabled until the user logs in.
