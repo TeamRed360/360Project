@@ -128,11 +128,6 @@ public class Project {
 	 * @return theTotalPrice, the total price....
 	 */
 	public String getOverallPrice() {
-		BigDecimal price = new BigDecimal(0.0);
-		for (Item item : contents) {
-			price.add(item.getTotalPrice());
-		}
-		totalPrice = price;
 		return NumberFormat.getCurrencyInstance().format(totalPrice);
 	}
 

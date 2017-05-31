@@ -511,6 +511,7 @@ public class FXMain extends Application {
 					int result = ProjectWriter.export(currentProject);
 					if (result > 0) {
 						// success text
+						homeTab.setContent(getHomeContent(welcomeText.getText()));
 					} else {
 
 					}
