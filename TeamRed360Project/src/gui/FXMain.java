@@ -432,6 +432,7 @@ public class FXMain extends Application {
 			@Override
 			public void handle(ActionEvent event) {
 				// display
+
 				homeTab.setContent(getProjectList());
 			}
 		});
@@ -507,13 +508,15 @@ public class FXMain extends Application {
 				Project currentProject = projectList.getSelectionModel().getSelectedItem();
 				if (currentProject == null) {
 					// displays error
+					System.err.println("No project to export.");
+
 				} else {
 					int result = ProjectWriter.export(currentProject);
 					if (result > 0) {
 						// success text
 						homeTab.setContent(getHomeContent(welcomeText.getText()));
 					} else {
-
+						System.err.println("Export Failed");
 					}
 				}
 			}
