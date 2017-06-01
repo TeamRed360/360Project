@@ -725,6 +725,7 @@ public class FXMain extends Application {
 
 			}
 		});
+		editButton.disableProperty().bind(Bindings.isEmpty(projectList.getItems()));
 
 		Button removeButton = new Button("Remove Project");
 		removeButton.setOnAction(new EventHandler<ActionEvent>() {

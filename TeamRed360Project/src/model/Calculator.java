@@ -72,7 +72,7 @@ public class Calculator {
 	 */
 	public static double eval(final String stringEq) {
 
-		System.out.println(stringEq);
+		// System.out.println(stringEq);
 
 		if (stringEq.length() > 3 && Character.isDigit(stringEq.charAt(0))
 				&& Character.isDigit(stringEq.charAt(stringEq.length() - 1))) {
@@ -140,28 +140,11 @@ public class Calculator {
 
 					double x;
 					int startPos = this.pos;
-					if (eat('(')) { // parentheses
-						x = parseExpression();
-						eat(')');
-					} else if ((ch >= '0' && ch <= '9') || ch == '.') { // numbers
+
+					if ((ch >= '0' && ch <= '9') || ch == '.') { // numbers
 						while ((ch >= '0' && ch <= '9') || ch == '.')
 							nextChar();
 						x = Double.parseDouble(stringEq.substring(startPos, this.pos));
-					} else if (ch >= 'a' && ch <= 'z') { // functions
-						while (ch >= 'a' && ch <= 'z')
-							nextChar();
-						String func = stringEq.substring(startPos, this.pos);
-						x = parseFactor();
-						if (func.equals("sqrt"))
-							x = Math.sqrt(x);
-						else if (func.equals("sin"))
-							x = Math.sin(Math.toRadians(x));
-						else if (func.equals("cos"))
-							x = Math.cos(Math.toRadians(x));
-						else if (func.equals("tan"))
-							x = Math.tan(Math.toRadians(x));
-						else
-							throw new RuntimeException("Unknown function: " + func);
 					} else {
 						throw new RuntimeException("Unexpected: " + (char) ch);
 					}
@@ -172,9 +155,7 @@ public class Calculator {
 				}
 			}.parse();
 
-		} else
-
-		{
+		} else {
 			return 0.0;
 		}
 	}
