@@ -407,7 +407,7 @@ public class FXMain extends Application {
 			public void handle(ActionEvent event) {
 				FileChooser fileChooser = new FileChooser();
 				fileChooser.setTitle("Open Project File");
-				fileChooser.setInitialDirectory(new File("C://"));
+				fileChooser.setInitialDirectory(new File(System.getProperty("user.dir")));
 				fileChooser.getExtensionFilters().addAll(new ExtensionFilter("Text Files", "*.prj"));
 				File selectedFile = fileChooser.showOpenDialog(mainScreen);
 				if (selectedFile != null) {
@@ -839,9 +839,17 @@ public class FXMain extends Application {
 			// TO-DO action event handler for changing email
 			@Override
 			public void handle(ActionEvent event) {
-				// TO DO
-				changeEmailText.setFill(Color.LIMEGREEN);
-				changeEmailText.setText("E-Mail Changed!");
+				if (currEmail.getText().equals(currentUser.getEmail())) {
+					if (!SQL.emailExists(newEmail.getText())) {
+						SQL.updateUser(currentUser, newEmail.getText());
+						currentUser.setEmail(newEmail.getText());
+					}
+					changeEmailText.setFill(Color.LIMEGREEN);
+					changeEmailText.setText("E-Mail Changed!");
+				} else {
+					changePassText.setFill(Color.RED);
+					changePassText.setText("Current email is incorrect!");
+				}
 			}
 		});
 		// adds change email components to the account tab.
