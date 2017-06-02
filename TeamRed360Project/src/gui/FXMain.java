@@ -382,7 +382,7 @@ public class FXMain extends Application {
 		Text welcome = new Text(welcomeText);
 		welcome.setFont(Font.font("Arial", FontWeight.NORMAL, 20));
 		Button projectButton = new Button("Projects");
-		BackgroundImage backgroundImage = new BackgroundImage(new Image("./saw.png"), BackgroundRepeat.NO_REPEAT,
+		BackgroundImage backgroundImage = new BackgroundImage(new Image("/saw.png"), BackgroundRepeat.NO_REPEAT,
 				BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
 		Background background = new Background(backgroundImage);
 		projectButton.setBackground(background);
@@ -396,7 +396,7 @@ public class FXMain extends Application {
 
 		// code and design for import button
 		Button importButton = new Button("Import Projects");
-		BackgroundImage importImage = new BackgroundImage(new Image("./upload.png"), BackgroundRepeat.NO_REPEAT,
+		BackgroundImage importImage = new BackgroundImage(new Image("/upload.png"), BackgroundRepeat.NO_REPEAT,
 				BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
 		Background importBackground = new Background(importImage);
 		importButton.setBackground(importBackground);
@@ -423,7 +423,7 @@ public class FXMain extends Application {
 
 		// code and design for export button
 		Button exportButton = new Button("Export Projects");
-		BackgroundImage exportImage = new BackgroundImage(new Image("./save.png"), BackgroundRepeat.NO_REPEAT,
+		BackgroundImage exportImage = new BackgroundImage(new Image("/save.png"), BackgroundRepeat.NO_REPEAT,
 				BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
 		Background exportBackground = new Background(exportImage);
 		exportButton.setBackground(exportBackground);
@@ -438,7 +438,7 @@ public class FXMain extends Application {
 		});
 
 		Button signoutButton = new Button("Sign Out");
-		BackgroundImage signoutImage = new BackgroundImage(new Image("./chainsaw.png"), BackgroundRepeat.NO_REPEAT,
+		BackgroundImage signoutImage = new BackgroundImage(new Image("/chainsaw.png"), BackgroundRepeat.NO_REPEAT,
 				BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
 		Background signout = new Background(signoutImage);
 		signoutButton.setBackground(signout);

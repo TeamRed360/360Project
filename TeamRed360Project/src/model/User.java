@@ -42,15 +42,17 @@ public class User {
 	public void setId(final int id) {
 		this.id = id;
 	}
-	
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+	//Needs to throw exception - Jimmy
 	public void setEmail(final String email) {
 		myEmail = email;
 	}
-	
+	//Needs to throw exception - Jimmy
 	public void setPassword(final String password) {
 		myPassword = password;
 	}
-
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+	
 	/**
 	 * Returns the ID of the user.
 	 * @param id The id of the user in the database.
