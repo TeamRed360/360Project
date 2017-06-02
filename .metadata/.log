@@ -633,18 +633,31 @@ not correct please set the HOME environment variable and restart Eclipse. Otherw
 EGit might behave differently since they see different configuration options.
 This warning can be switched off on the Team > Git > Confirmations and Warnings preference page.
 >>>>>>> 5c927831360425abbc6bdad7b29739e7d5ebbe6c
+<<<<<<< HEAD
+!SESSION 2017-06-01 10:34:41.392 -----------------------------------------------
+eclipse.buildId=4.6.2.M20161124-1400
+java.version=1.8.0_111
+=======
 !SESSION 2017-06-01 10:36:11.189 -----------------------------------------------
 eclipse.buildId=4.6.1.M20160907-1200
 java.version=1.8.0_131
+>>>>>>> 6386569b07e47af6147a45db67b38606091227fc
 java.vendor=Oracle Corporation
 BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=en_US
 Framework arguments:  -product org.eclipse.epp.package.java.product
 Command-line arguments:  -os win32 -ws win32 -arch x86_64 -product org.eclipse.epp.package.java.product
 
+<<<<<<< HEAD
+!ENTRY org.eclipse.e4.ui.workbench 4 0 2017-06-01 10:34:47.819
+!MESSAGE Unable to load resource file:/C:/Users/wilso/git/360Project/.metadata/.plugins/org.eclipse.e4.workbench/workbench.xmi
+!STACK 0
+org.eclipse.emf.ecore.resource.impl.ResourceSetImpl$1DiagnosticWrappedException: org.xml.sax.SAXParseExceptionpublicId: file:/C:/Users/wilso/git/360Project/.metadata/.plugins/org.eclipse.e4.workbench/workbench.xmi; systemId: file:/C:/Users/wilso/git/360Project/.metadata/.plugins/org.eclipse.e4.workbench/workbench.xmi; lineNumber: 3; columnNumber: 2; The content of elements must consist of well-formed character data or markup.
+=======
 !ENTRY org.eclipse.e4.ui.workbench 4 0 2017-06-01 10:36:17.812
 !MESSAGE Unable to load resource file:/C:/Users/Taylor/Documents/UW/ComputerScience/CSS360/360Git/360Project/.metadata/.plugins/org.eclipse.e4.workbench/workbench.xmi
 !STACK 0
 org.eclipse.emf.ecore.resource.impl.ResourceSetImpl$1DiagnosticWrappedException: org.xml.sax.SAXParseExceptionpublicId: file:/C:/Users/Taylor/Documents/UW/ComputerScience/CSS360/360Git/360Project/.metadata/.plugins/org.eclipse.e4.workbench/workbench.xmi; systemId: file:/C:/Users/Taylor/Documents/UW/ComputerScience/CSS360/360Git/360Project/.metadata/.plugins/org.eclipse.e4.workbench/workbench.xmi; lineNumber: 3; columnNumber: 2; The content of elements must consist of well-formed character data or markup.
+>>>>>>> 6386569b07e47af6147a45db67b38606091227fc
 	at org.eclipse.emf.ecore.resource.impl.ResourceSetImpl.handleDemandLoadException(ResourceSetImpl.java:319)
 	at org.eclipse.emf.ecore.resource.impl.ResourceSetImpl.demandLoadHelper(ResourceSetImpl.java:278)
 	at org.eclipse.emf.ecore.resource.impl.ResourceSetImpl.getResource(ResourceSetImpl.java:406)
@@ -653,9 +666,15 @@ org.eclipse.emf.ecore.resource.impl.ResourceSetImpl$1DiagnosticWrappedException:
 	at org.eclipse.e4.ui.internal.workbench.ResourceHandler.loadMostRecentModel(ResourceHandler.java:169)
 	at org.eclipse.e4.ui.internal.workbench.swt.E4Application.loadApplicationModel(E4Application.java:377)
 	at org.eclipse.e4.ui.internal.workbench.swt.E4Application.createE4Workbench(E4Application.java:252)
+<<<<<<< HEAD
+	at org.eclipse.ui.internal.Workbench$5.run(Workbench.java:632)
+	at org.eclipse.core.databinding.observable.Realm.runWithDefault(Realm.java:336)
+	at org.eclipse.ui.internal.Workbench.createAndRunWorkbench(Workbench.java:610)
+=======
 	at org.eclipse.ui.internal.Workbench$5.run(Workbench.java:626)
 	at org.eclipse.core.databinding.observable.Realm.runWithDefault(Realm.java:336)
 	at org.eclipse.ui.internal.Workbench.createAndRunWorkbench(Workbench.java:604)
+>>>>>>> 6386569b07e47af6147a45db67b38606091227fc
 	at org.eclipse.ui.PlatformUI.createAndRunWorkbench(PlatformUI.java:148)
 	at org.eclipse.ui.internal.ide.application.IDEApplication.start(IDEApplication.java:138)
 	at org.eclipse.equinox.internal.app.EclipseAppHandle.run(EclipseAppHandle.java:196)
@@ -670,7 +689,11 @@ org.eclipse.emf.ecore.resource.impl.ResourceSetImpl$1DiagnosticWrappedException:
 	at org.eclipse.equinox.launcher.Main.invokeFramework(Main.java:673)
 	at org.eclipse.equinox.launcher.Main.basicRun(Main.java:610)
 	at org.eclipse.equinox.launcher.Main.run(Main.java:1519)
+<<<<<<< HEAD
+Caused by: org.xml.sax.SAXParseExceptionpublicId: file:/C:/Users/wilso/git/360Project/.metadata/.plugins/org.eclipse.e4.workbench/workbench.xmi; systemId: file:/C:/Users/wilso/git/360Project/.metadata/.plugins/org.eclipse.e4.workbench/workbench.xmi; lineNumber: 3; columnNumber: 2; The content of elements must consist of well-formed character data or markup.
+=======
 Caused by: org.xml.sax.SAXParseExceptionpublicId: file:/C:/Users/Taylor/Documents/UW/ComputerScience/CSS360/360Git/360Project/.metadata/.plugins/org.eclipse.e4.workbench/workbench.xmi; systemId: file:/C:/Users/Taylor/Documents/UW/ComputerScience/CSS360/360Git/360Project/.metadata/.plugins/org.eclipse.e4.workbench/workbench.xmi; lineNumber: 3; columnNumber: 2; The content of elements must consist of well-formed character data or markup.
+>>>>>>> 6386569b07e47af6147a45db67b38606091227fc
 	at com.sun.org.apache.xerces.internal.util.ErrorHandlerWrapper.createSAXParseException(Unknown Source)
 	at com.sun.org.apache.xerces.internal.util.ErrorHandlerWrapper.fatalError(Unknown Source)
 	at com.sun.org.apache.xerces.internal.impl.XMLErrorReporter.reportError(Unknown Source)
@@ -695,16 +718,26 @@ Caused by: org.xml.sax.SAXParseExceptionpublicId: file:/C:/Users/Taylor/Document
 	at org.eclipse.emf.ecore.resource.impl.ResourceSetImpl.demandLoadHelper(ResourceSetImpl.java:274)
 	... 23 more
 
+<<<<<<< HEAD
+!ENTRY org.eclipse.e4.ui.workbench 4 0 2017-06-01 10:34:47.822
+=======
 !ENTRY org.eclipse.e4.ui.workbench 4 0 2017-06-01 10:36:17.819
+>>>>>>> 6386569b07e47af6147a45db67b38606091227fc
 !MESSAGE The persisted workbench has no top-level windows, so reinitializing with defaults.
 !STACK 0
 java.lang.Exception
 	at org.eclipse.e4.ui.internal.workbench.ResourceHandler.loadMostRecentModel(ResourceHandler.java:174)
 	at org.eclipse.e4.ui.internal.workbench.swt.E4Application.loadApplicationModel(E4Application.java:377)
 	at org.eclipse.e4.ui.internal.workbench.swt.E4Application.createE4Workbench(E4Application.java:252)
+<<<<<<< HEAD
+	at org.eclipse.ui.internal.Workbench$5.run(Workbench.java:632)
+	at org.eclipse.core.databinding.observable.Realm.runWithDefault(Realm.java:336)
+	at org.eclipse.ui.internal.Workbench.createAndRunWorkbench(Workbench.java:610)
+=======
 	at org.eclipse.ui.internal.Workbench$5.run(Workbench.java:626)
 	at org.eclipse.core.databinding.observable.Realm.runWithDefault(Realm.java:336)
 	at org.eclipse.ui.internal.Workbench.createAndRunWorkbench(Workbench.java:604)
+>>>>>>> 6386569b07e47af6147a45db67b38606091227fc
 	at org.eclipse.ui.PlatformUI.createAndRunWorkbench(PlatformUI.java:148)
 	at org.eclipse.ui.internal.ide.application.IDEApplication.start(IDEApplication.java:138)
 	at org.eclipse.equinox.internal.app.EclipseAppHandle.run(EclipseAppHandle.java:196)
@@ -720,8 +753,30 @@ java.lang.Exception
 	at org.eclipse.equinox.launcher.Main.basicRun(Main.java:610)
 	at org.eclipse.equinox.launcher.Main.run(Main.java:1519)
 
+<<<<<<< HEAD
+!ENTRY org.eclipse.ui 2 0 2017-06-01 10:34:47.907
+!MESSAGE Warnings while parsing the commands from the 'org.eclipse.ui.commands' and 'org.eclipse.ui.actionDefinitions' extension points.
+!SUBENTRY 1 org.eclipse.ui 2 0 2017-06-01 10:34:47.907
+!MESSAGE Commands should really have a category: plug-in='net.sf.eclipsecs.ui', id='CheckstylePlugin.PurgeCaches', categoryId='net.sf.eclipsecs'
+
+!ENTRY org.eclipse.ui 2 0 2017-06-01 10:34:48.340
+!MESSAGE Warnings while parsing the commands from the 'org.eclipse.ui.commands' and 'org.eclipse.ui.actionDefinitions' extension points.
+!SUBENTRY 1 org.eclipse.ui 2 0 2017-06-01 10:34:48.340
+!MESSAGE Commands should really have a category: plug-in='net.sf.eclipsecs.ui', id='CheckstylePlugin.PurgeCaches', categoryId='net.sf.eclipsecs'
+
+!ENTRY org.eclipse.egit.ui 2 0 2017-06-01 10:34:54.807
+!MESSAGE Warning: The environment variable HOME is not set. The following directory will be used to store the Git
+user global configuration and to define the default location to store repositories: 'C:\Users\wilso'. If this is
+not correct please set the HOME environment variable and restart Eclipse. Otherwise Git for Windows and
+EGit might behave differently since they see different configuration options.
+This warning can be switched off on the Team > Git > Confirmations and Warnings preference page.
+
+!ENTRY org.eclipse.epp.logging.aeri.ide 2 17 2017-06-01 10:34:54.930
+!MESSAGE Server ‘org.eclipse.epp.logging.aeri.ide.server’ failed with exception: com.google.gson.stream.MalformedJsonException: Expected ':' at line 4 column 10. ; version: 2.0.3.v20161205-0933
+=======
 !ENTRY org.eclipse.epp.logging.aeri.ide 2 16 2017-06-01 10:36:23.666
 !MESSAGE Server ‘org.eclipse.epp.logging.aeri.ide.server’ failed with exception: com.google.gson.stream.MalformedJsonException: Expected ':' at line 4 column 10. ; version: 2.0.3.v20160905-1331
+>>>>>>> 6386569b07e47af6147a45db67b38606091227fc
 !STACK 0
 com.google.gson.JsonSyntaxException: com.google.gson.stream.MalformedJsonException: Expected ':' at line 4 column 10
 	at com.google.gson.Gson.fromJson(Gson.java:818)
@@ -729,7 +784,11 @@ com.google.gson.JsonSyntaxException: com.google.gson.stream.MalformedJsonExcepti
 	at org.eclipse.epp.internal.logging.aeri.ide.server.json.Json.deserialize(Json.java:102)
 	at org.eclipse.epp.internal.logging.aeri.ide.server.json.Json.deserialize(Json.java:111)
 	at org.eclipse.epp.internal.logging.aeri.ide.server.mars.IO.loadConfiguration(IO.java:75)
+<<<<<<< HEAD
+	at org.eclipse.epp.internal.logging.aeri.ide.server.mars.ServerConnection.startUp(ServerConnection.java:121)
+=======
 	at org.eclipse.epp.internal.logging.aeri.ide.server.mars.ServerConnection.startUp(ServerConnection.java:100)
+>>>>>>> 6386569b07e47af6147a45db67b38606091227fc
 	at com.google.common.util.concurrent.AbstractIdleService$2$1.run(AbstractIdleService.java:54)
 	at com.google.common.util.concurrent.Callables$3.run(Callables.java:93)
 	at java.lang.Thread.run(Unknown Source)
@@ -740,6 +799,35 @@ Caused by: com.google.gson.stream.MalformedJsonException: Expected ':' at line 4
 	at com.google.gson.internal.bind.ReflectiveTypeAdapterFactory$Adapter.read(ReflectiveTypeAdapterFactory.java:170)
 	at com.google.gson.Gson.fromJson(Gson.java:803)
 	... 8 more
+<<<<<<< HEAD
+!SESSION 2017-06-01 16:44:26.601 -----------------------------------------------
+eclipse.buildId=4.6.2.M20161124-1400
+java.version=1.8.0_111
+java.vendor=Oracle Corporation
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=en_US
+Framework arguments:  -product org.eclipse.epp.package.java.product
+Command-line arguments:  -os win32 -ws win32 -arch x86_64 -product org.eclipse.epp.package.java.product
+
+!ENTRY org.eclipse.ui 2 0 2017-06-01 16:44:33.666
+!MESSAGE Warnings while parsing the commands from the 'org.eclipse.ui.commands' and 'org.eclipse.ui.actionDefinitions' extension points.
+!SUBENTRY 1 org.eclipse.ui 2 0 2017-06-01 16:44:33.666
+!MESSAGE Commands should really have a category: plug-in='net.sf.eclipsecs.ui', id='CheckstylePlugin.PurgeCaches', categoryId='net.sf.eclipsecs'
+
+!ENTRY org.eclipse.ui 2 0 2017-06-01 16:44:34.148
+!MESSAGE Warnings while parsing the commands from the 'org.eclipse.ui.commands' and 'org.eclipse.ui.actionDefinitions' extension points.
+!SUBENTRY 1 org.eclipse.ui 2 0 2017-06-01 16:44:34.149
+!MESSAGE Commands should really have a category: plug-in='net.sf.eclipsecs.ui', id='CheckstylePlugin.PurgeCaches', categoryId='net.sf.eclipsecs'
+
+!ENTRY org.eclipse.egit.ui 2 0 2017-06-01 16:44:41.183
+!MESSAGE Warning: The environment variable HOME is not set. The following directory will be used to store the Git
+user global configuration and to define the default location to store repositories: 'C:\Users\wilso'. If this is
+not correct please set the HOME environment variable and restart Eclipse. Otherwise Git for Windows and
+EGit might behave differently since they see different configuration options.
+This warning can be switched off on the Team > Git > Confirmations and Warnings preference page.
+
+!ENTRY org.eclipse.epp.logging.aeri.ide 2 17 2017-06-01 16:44:41.504
+!MESSAGE Server ‘org.eclipse.epp.logging.aeri.ide.server’ failed with exception: com.google.gson.stream.MalformedJsonException: Expected ':' at line 4 column 10. ; version: 2.0.3.v20161205-0933
+=======
 
 !ENTRY org.eclipse.egit.ui 2 0 2017-06-01 10:36:23.861
 !MESSAGE Warning: The environment variable HOME is not set. The following directory will be used to store the Git
@@ -757,6 +845,7 @@ Command-line arguments:  -os win32 -ws win32 -arch x86_64 -product org.eclipse.e
 
 !ENTRY org.eclipse.epp.logging.aeri.ide 2 16 2017-06-01 11:01:26.675
 !MESSAGE Server ‘org.eclipse.epp.logging.aeri.ide.server’ failed with exception: com.google.gson.stream.MalformedJsonException: Expected ':' at line 4 column 10. ; version: 2.0.3.v20160905-1331
+>>>>>>> 6386569b07e47af6147a45db67b38606091227fc
 !STACK 0
 com.google.gson.JsonSyntaxException: com.google.gson.stream.MalformedJsonException: Expected ':' at line 4 column 10
 	at com.google.gson.Gson.fromJson(Gson.java:818)
@@ -764,7 +853,11 @@ com.google.gson.JsonSyntaxException: com.google.gson.stream.MalformedJsonExcepti
 	at org.eclipse.epp.internal.logging.aeri.ide.server.json.Json.deserialize(Json.java:102)
 	at org.eclipse.epp.internal.logging.aeri.ide.server.json.Json.deserialize(Json.java:111)
 	at org.eclipse.epp.internal.logging.aeri.ide.server.mars.IO.loadConfiguration(IO.java:75)
+<<<<<<< HEAD
+	at org.eclipse.epp.internal.logging.aeri.ide.server.mars.ServerConnection.startUp(ServerConnection.java:121)
+=======
 	at org.eclipse.epp.internal.logging.aeri.ide.server.mars.ServerConnection.startUp(ServerConnection.java:100)
+>>>>>>> 6386569b07e47af6147a45db67b38606091227fc
 	at com.google.common.util.concurrent.AbstractIdleService$2$1.run(AbstractIdleService.java:54)
 	at com.google.common.util.concurrent.Callables$3.run(Callables.java:93)
 	at java.lang.Thread.run(Unknown Source)
@@ -775,6 +868,35 @@ Caused by: com.google.gson.stream.MalformedJsonException: Expected ':' at line 4
 	at com.google.gson.internal.bind.ReflectiveTypeAdapterFactory$Adapter.read(ReflectiveTypeAdapterFactory.java:170)
 	at com.google.gson.Gson.fromJson(Gson.java:803)
 	... 8 more
+<<<<<<< HEAD
+!SESSION 2017-06-01 16:46:17.502 -----------------------------------------------
+eclipse.buildId=4.6.2.M20161124-1400
+java.version=1.8.0_111
+java.vendor=Oracle Corporation
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=en_US
+Framework arguments:  -product org.eclipse.epp.package.java.product
+Command-line arguments:  -os win32 -ws win32 -arch x86_64 -product org.eclipse.epp.package.java.product
+
+!ENTRY org.eclipse.ui 2 0 2017-06-01 16:46:22.656
+!MESSAGE Warnings while parsing the commands from the 'org.eclipse.ui.commands' and 'org.eclipse.ui.actionDefinitions' extension points.
+!SUBENTRY 1 org.eclipse.ui 2 0 2017-06-01 16:46:22.656
+!MESSAGE Commands should really have a category: plug-in='net.sf.eclipsecs.ui', id='CheckstylePlugin.PurgeCaches', categoryId='net.sf.eclipsecs'
+
+!ENTRY org.eclipse.ui 2 0 2017-06-01 16:46:23.095
+!MESSAGE Warnings while parsing the commands from the 'org.eclipse.ui.commands' and 'org.eclipse.ui.actionDefinitions' extension points.
+!SUBENTRY 1 org.eclipse.ui 2 0 2017-06-01 16:46:23.095
+!MESSAGE Commands should really have a category: plug-in='net.sf.eclipsecs.ui', id='CheckstylePlugin.PurgeCaches', categoryId='net.sf.eclipsecs'
+
+!ENTRY org.eclipse.egit.ui 2 0 2017-06-01 16:46:29.369
+!MESSAGE Warning: The environment variable HOME is not set. The following directory will be used to store the Git
+user global configuration and to define the default location to store repositories: 'C:\Users\wilso'. If this is
+not correct please set the HOME environment variable and restart Eclipse. Otherwise Git for Windows and
+EGit might behave differently since they see different configuration options.
+This warning can be switched off on the Team > Git > Confirmations and Warnings preference page.
+
+!ENTRY org.eclipse.epp.logging.aeri.ide 2 17 2017-06-01 16:46:29.793
+!MESSAGE Server ‘org.eclipse.epp.logging.aeri.ide.server’ failed with exception: com.google.gson.stream.MalformedJsonException: Expected ':' at line 4 column 10. ; version: 2.0.3.v20161205-0933
+=======
 
 !ENTRY org.eclipse.egit.ui 2 0 2017-06-01 11:01:26.844
 !MESSAGE Warning: The environment variable HOME is not set. The following directory will be used to store the Git
@@ -792,6 +914,7 @@ Command-line arguments:  -os win32 -ws win32 -arch x86_64 -product org.eclipse.e
 
 !ENTRY org.eclipse.epp.logging.aeri.ide 2 16 2017-06-01 16:56:59.246
 !MESSAGE Server ‘org.eclipse.epp.logging.aeri.ide.server’ failed with exception: com.google.gson.stream.MalformedJsonException: Expected ':' at line 4 column 10. ; version: 2.0.3.v20160905-1331
+>>>>>>> 6386569b07e47af6147a45db67b38606091227fc
 !STACK 0
 com.google.gson.JsonSyntaxException: com.google.gson.stream.MalformedJsonException: Expected ':' at line 4 column 10
 	at com.google.gson.Gson.fromJson(Gson.java:818)
@@ -799,7 +922,11 @@ com.google.gson.JsonSyntaxException: com.google.gson.stream.MalformedJsonExcepti
 	at org.eclipse.epp.internal.logging.aeri.ide.server.json.Json.deserialize(Json.java:102)
 	at org.eclipse.epp.internal.logging.aeri.ide.server.json.Json.deserialize(Json.java:111)
 	at org.eclipse.epp.internal.logging.aeri.ide.server.mars.IO.loadConfiguration(IO.java:75)
+<<<<<<< HEAD
+	at org.eclipse.epp.internal.logging.aeri.ide.server.mars.ServerConnection.startUp(ServerConnection.java:121)
+=======
 	at org.eclipse.epp.internal.logging.aeri.ide.server.mars.ServerConnection.startUp(ServerConnection.java:100)
+>>>>>>> 6386569b07e47af6147a45db67b38606091227fc
 	at com.google.common.util.concurrent.AbstractIdleService$2$1.run(AbstractIdleService.java:54)
 	at com.google.common.util.concurrent.Callables$3.run(Callables.java:93)
 	at java.lang.Thread.run(Unknown Source)
@@ -811,6 +938,34 @@ Caused by: com.google.gson.stream.MalformedJsonException: Expected ':' at line 4
 	at com.google.gson.Gson.fromJson(Gson.java:803)
 	... 8 more
 
+<<<<<<< HEAD
+!ENTRY org.eclipse.equinox.p2.transport.ecf 4 1002 2017-06-01 17:04:49.574
+!MESSAGE Unable to read repository at http://sourceforge.net/projects/pmd/files/pmd-eclipse/update-site/content.xml.
+!STACK 0
+javax.net.ssl.SSLHandshakeException: Received fatal alert: handshake_failure
+	at sun.security.ssl.Alerts.getSSLException(Unknown Source)
+	at sun.security.ssl.Alerts.getSSLException(Unknown Source)
+	at sun.security.ssl.SSLSocketImpl.recvAlert(Unknown Source)
+	at sun.security.ssl.SSLSocketImpl.readRecord(Unknown Source)
+	at sun.security.ssl.SSLSocketImpl.performInitialHandshake(Unknown Source)
+	at sun.security.ssl.SSLSocketImpl.startHandshake(Unknown Source)
+	at sun.security.ssl.SSLSocketImpl.startHandshake(Unknown Source)
+	at org.apache.http.conn.ssl.SSLSocketFactory.connectSocket(SSLSocketFactory.java:535)
+	at org.eclipse.ecf.provider.filetransfer.httpclient4.SNIAwareHttpClient$1.connectSocket(SNIAwareHttpClient.java:63)
+	at org.apache.http.conn.ssl.SSLSocketFactory.connectSocket(SSLSocketFactory.java:403)
+	at org.apache.http.impl.conn.DefaultClientConnectionOperator.openConnection(DefaultClientConnectionOperator.java:177)
+	at org.apache.http.impl.conn.ManagedClientConnectionImpl.open(ManagedClientConnectionImpl.java:304)
+	at org.apache.http.impl.client.DefaultRequestDirector.tryConnect(DefaultRequestDirector.java:611)
+	at org.apache.http.impl.client.DefaultRequestDirector.execute(DefaultRequestDirector.java:446)
+	at org.apache.http.impl.client.AbstractHttpClient.doExecute(AbstractHttpClient.java:863)
+	at org.apache.http.impl.client.CloseableHttpClient.execute(CloseableHttpClient.java:82)
+	at org.eclipse.ecf.provider.filetransfer.httpclient4.HttpClientFileSystemBrowser.runRequest(HttpClientFileSystemBrowser.java:263)
+	at org.eclipse.ecf.provider.filetransfer.browse.AbstractFileSystemBrowser$DirectoryJob.run(AbstractFileSystemBrowser.java:69)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:55)
+!SESSION 2017-06-01 17:27:43.644 -----------------------------------------------
+eclipse.buildId=4.6.2.M20161124-1400
+java.version=1.8.0_111
+=======
 !ENTRY org.eclipse.egit.ui 2 0 2017-06-01 16:56:59.345
 !MESSAGE Warning: The environment variable HOME is not set. The following directory will be used to store the Git
 user global configuration and to define the default location to store repositories: 'C:\Users\Taylor'. If this is
@@ -844,19 +999,40 @@ java.version=1.8.0_131
 eclipse.buildId=4.6.2.M20161124-1400
 java.version=1.8.0_111
 >>>>>>> 22c497f532f83edc9c93f7b07737d916f2d29394
+>>>>>>> 6386569b07e47af6147a45db67b38606091227fc
 java.vendor=Oracle Corporation
 BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=en_US
 Framework arguments:  -product org.eclipse.epp.package.java.product
 Command-line arguments:  -os win32 -ws win32 -arch x86_64 -product org.eclipse.epp.package.java.product
 
 <<<<<<< HEAD
+!ENTRY org.eclipse.ui 2 0 2017-06-01 17:27:47.525
+!MESSAGE Warnings while parsing the commands from the 'org.eclipse.ui.commands' and 'org.eclipse.ui.actionDefinitions' extension points.
+!SUBENTRY 1 org.eclipse.ui 2 0 2017-06-01 17:27:47.525
+!MESSAGE Commands should really have a category: plug-in='net.sf.eclipsecs.ui', id='CheckstylePlugin.PurgeCaches', categoryId='net.sf.eclipsecs'
+
+!ENTRY org.eclipse.ui 2 0 2017-06-01 17:27:47.939
+!MESSAGE Warnings while parsing the commands from the 'org.eclipse.ui.commands' and 'org.eclipse.ui.actionDefinitions' extension points.
+!SUBENTRY 1 org.eclipse.ui 2 0 2017-06-01 17:27:47.940
+!MESSAGE Commands should really have a category: plug-in='net.sf.eclipsecs.ui', id='CheckstylePlugin.PurgeCaches', categoryId='net.sf.eclipsecs'
+
+!ENTRY org.eclipse.egit.ui 2 0 2017-06-01 17:27:57.447
+!MESSAGE Warning: The environment variable HOME is not set. The following directory will be used to store the Git
+user global configuration and to define the default location to store repositories: 'C:\Users\wilso'. If this is
+=======
+<<<<<<< HEAD
 !ENTRY org.eclipse.egit.ui 2 0 2017-06-01 17:22:35.026
 !MESSAGE Warning: The environment variable HOME is not set. The following directory will be used to store the Git
 user global configuration and to define the default location to store repositories: 'C:\Users\Taylor'. If this is
+>>>>>>> 6386569b07e47af6147a45db67b38606091227fc
 not correct please set the HOME environment variable and restart Eclipse. Otherwise Git for Windows and
 EGit might behave differently since they see different configuration options.
 This warning can be switched off on the Team > Git > Confirmations and Warnings preference page.
 
+<<<<<<< HEAD
+!ENTRY org.eclipse.epp.logging.aeri.ide 2 17 2017-06-01 17:27:58.377
+!MESSAGE Server ‘org.eclipse.epp.logging.aeri.ide.server’ failed with exception: com.google.gson.stream.MalformedJsonException: Expected ':' at line 4 column 10. ; version: 2.0.3.v20161205-0933
+=======
 !ENTRY org.eclipse.epp.logging.aeri.ide 2 16 2017-06-01 17:22:35.444
 !MESSAGE Server ‘org.eclipse.epp.logging.aeri.ide.server’ failed with exception: com.google.gson.stream.MalformedJsonException: Expected ':' at line 4 column 10. ; version: 2.0.3.v20160905-1331
 =======
@@ -1011,6 +1187,7 @@ org.eclipse.core.runtime.CoreException: Cannot determine URI for '/TeamRed360Pro
 !ENTRY org.eclipse.epp.logging.aeri.ide 2 17 2017-06-01 17:08:31.752
 !MESSAGE Server ‘org.eclipse.epp.logging.aeri.ide.server’ failed with exception: com.google.gson.stream.MalformedJsonException: Expected ':' at line 4 column 10. ; version: 2.0.3.v20161205-0933
 >>>>>>> 22c497f532f83edc9c93f7b07737d916f2d29394
+>>>>>>> 6386569b07e47af6147a45db67b38606091227fc
 !STACK 0
 com.google.gson.JsonSyntaxException: com.google.gson.stream.MalformedJsonException: Expected ':' at line 4 column 10
 	at com.google.gson.Gson.fromJson(Gson.java:818)
@@ -1019,10 +1196,14 @@ com.google.gson.JsonSyntaxException: com.google.gson.stream.MalformedJsonExcepti
 	at org.eclipse.epp.internal.logging.aeri.ide.server.json.Json.deserialize(Json.java:111)
 	at org.eclipse.epp.internal.logging.aeri.ide.server.mars.IO.loadConfiguration(IO.java:75)
 <<<<<<< HEAD
+	at org.eclipse.epp.internal.logging.aeri.ide.server.mars.ServerConnection.startUp(ServerConnection.java:121)
+=======
+<<<<<<< HEAD
 	at org.eclipse.epp.internal.logging.aeri.ide.server.mars.ServerConnection.startUp(ServerConnection.java:100)
 =======
 	at org.eclipse.epp.internal.logging.aeri.ide.server.mars.ServerConnection.startUp(ServerConnection.java:121)
 >>>>>>> 22c497f532f83edc9c93f7b07737d916f2d29394
+>>>>>>> 6386569b07e47af6147a45db67b38606091227fc
 	at com.google.common.util.concurrent.AbstractIdleService$2$1.run(AbstractIdleService.java:54)
 	at com.google.common.util.concurrent.Callables$3.run(Callables.java:93)
 	at java.lang.Thread.run(Unknown Source)
@@ -1033,6 +1214,8 @@ Caused by: com.google.gson.stream.MalformedJsonException: Expected ':' at line 4
 	at com.google.gson.internal.bind.ReflectiveTypeAdapterFactory$Adapter.read(ReflectiveTypeAdapterFactory.java:170)
 	at com.google.gson.Gson.fromJson(Gson.java:803)
 	... 8 more
+<<<<<<< HEAD
+=======
 <<<<<<< HEAD
 =======
 
@@ -1107,6 +1290,7 @@ This warning can be switched off on the Team > Git > Confirmations and Warnings 
 !MESSAGE Exception caught during execution of command '[bash, --login, -c, which git]' in 'C:\Users\Maggie', return code '1', error message 'which: no git in (/usr/local/bin:/usr/bin:/cygdrive/c/Program Files/Java/jre1.8.0_111/bin/server:/cygdrive/c/Program Files/Java/jre1.8.0_111/bin:/cygdrive/c/Program Files/Java/jre1.8.0_111/lib/amd64:/usr/bin:/cygdrive/c/ProgramData/Oracle/Java/javapath:/cygdrive/c/Program Files (x86)/NVIDIA Corporation/PhysX/Common:/cygdrive/c/WINDOWS/system32:/cygdrive/c/WINDOWS:/cygdrive/c/WINDOWS/System32/Wbem:/cygdrive/c/WINDOWS/System32/WindowsPowerShell/v1.0:/cygdrive/c/Program Files (x86)/ATI Technologies/ATI.ACE/Core-Static:/cygdrive/c/Program Files (x86)/Windows Live/Shared:/cygdrive/c/Program Files (x86)/Skype/Phone:/cygdrive/c/Users/Maggie/AppData/Local/Microsoft/WindowsApps:/cygdrive/e/java-neon/eclipse)
 '
 >>>>>>> 22c497f532f83edc9c93f7b07737d916f2d29394
+<<<<<<< HEAD
 !SESSION 2017-06-01 17:24:14.290 -----------------------------------------------
 eclipse.buildId=4.6.1.M20160907-1200
 java.version=1.8.0_131
@@ -1221,3 +1405,6 @@ user global configuration and to define the default location to store repositori
 not correct please set the HOME environment variable and restart Eclipse. Otherwise Git for Windows and
 EGit might behave differently since they see different configuration options.
 This warning can be switched off on the Team > Git > Confirmations and Warnings preference page.
+=======
+>>>>>>> 6386569b07e47af6147a45db67b38606091227fc
+>>>>>>> d0ca9384c9fabd43846339defbfcd7fb559ea778
