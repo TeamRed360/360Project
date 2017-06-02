@@ -72,6 +72,19 @@ public class SQL {
 	}
 
 	/**
+	 * Updates (or creates if it doesn't exist) the credentials of a user in the
+	 * database. Should be called upon any change to the user.
+	 * 
+	 * @param theClient
+	 *            The user to be added.
+	 */
+	public static synchronized void updateUser(User theClient, String theEmail) {
+		removeFromDB(theClient);
+		theClient.setEmail(theEmail);
+		addToDB(theClient);
+	}
+
+	/**
 	 * Updates (or creates if it doesn't exist) a project in the database.
 	 * Should be called upon any change to a project's properties (items not
 	 * included).
@@ -143,6 +156,28 @@ public class SQL {
 			return ""; // error
 		}
 		return sb.toString();
+	}
+
+	/**
+	 * Checks whether the given email address exists in the DB.
+	 * 
+	 * @param theEmail
+	 *            The email to check.
+	 * @return True if the email exists in the DB, false otherwise.
+	 */
+	public static synchronized boolean emailExists(final String theEmail) {
+		String query = "SELECT * FROM `users` WHERE email = \"" + theEmail + "\"";
+		Statement statement = null;
+		try {
+			statement = connection.createStatement();
+			ResultSet results = statement.executeQuery(query);
+			if (results.next())
+				return true;
+			return false;
+		} catch (SQLException e) {
+			System.out.println("Existing email check error: " + e);
+			return false; // error
+		}
 	}
 
 	/**
