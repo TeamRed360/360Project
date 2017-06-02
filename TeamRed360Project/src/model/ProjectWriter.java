@@ -19,7 +19,7 @@ public class ProjectWriter { // implements Serializable {
 		PrintWriter writer = null;
 		FileOutputStream fout = null;
 		try {
-			fout = new FileOutputStream("C://" + theProject.getName() + ".prj", true);
+			fout = new FileOutputStream(System.getProperty("user.dir") + theProject.getName() + ".prj", true);
 			writer = new PrintWriter(fout);
 			writer.println(theProject.getName() + ":" + theProject.getDesc());
 			Item[] items = theProject.getListOfItems();

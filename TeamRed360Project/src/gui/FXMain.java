@@ -407,7 +407,7 @@ public class FXMain extends Application {
 			public void handle(ActionEvent event) {
 				FileChooser fileChooser = new FileChooser();
 				fileChooser.setTitle("Open Project File");
-				fileChooser.setInitialDirectory(new File("C://"));
+				fileChooser.setInitialDirectory(new File(System.getProperty("user.dir")));
 				fileChooser.getExtensionFilters().addAll(new ExtensionFilter("Text Files", "*.prj"));
 				File selectedFile = fileChooser.showOpenDialog(mainScreen);
 				if (selectedFile != null) {
