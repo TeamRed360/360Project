@@ -104,7 +104,7 @@ public class FXMain extends Application {
 		StackPane root = new StackPane();
 		root.getChildren().add(getTabs());
 		// messing around with css effects
-		root.getStylesheets().add("gui/GUICss.css");
+		// root.getStylesheets().add("gui/GUICss.css");
 
 		mainScreen.setMinHeight(SCENE_HEIGHT);
 		mainScreen.setMinWidth(SCENE_WIDTH);
@@ -133,7 +133,7 @@ public class FXMain extends Application {
 
 		aboutTab.setContent(getAboutContent());
 		settingsTab.setContent(getSettingContent());
-		tabPane.getStylesheets().add("gui/GUICss.css");
+		// tabPane.getStylesheets().add("gui/GUICss.css");
 		tabPane.getTabs().add(homeTab);
 		tabPane.getTabs().add(settingsTab);
 		tabPane.getTabs().add(aboutTab);
