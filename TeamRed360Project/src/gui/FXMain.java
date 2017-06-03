@@ -79,6 +79,7 @@ public class FXMain extends Application {
 	/** A constant for the borders. */
 	private final Border BORDER = new Border(
 			new BorderStroke(Color.DARKGRAY, BorderStrokeStyle.SOLID, new CornerRadii(3), BorderWidths.DEFAULT));
+
 	private Stage mainScreen;
 	private final TabPane tabPane = new TabPane();
 	private final Tab homeTab = new Tab("Home");
