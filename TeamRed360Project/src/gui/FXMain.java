@@ -174,7 +174,7 @@ public class FXMain extends Application {
 
 		Text lightBulb = new Text("Icons made by: http://www.flaticon.com/authors/vectors-market"
 				+ "\nVectors Market http://www.flaticon.com is licensed by http://creativecommons.org/licenses/by/3.0/CC 3.0 BY");
-
+		// add Boann
 		contributorGrid.add(credits, 4, 0, 2, 1);
 		contributorGrid.add(lightBulb, 4, 1, 1, 2);
 		aboutPane.getChildren().add(contributorGrid);
