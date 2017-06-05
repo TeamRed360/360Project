@@ -7,8 +7,7 @@ package model;
  * 
  * @version 1.6 
  */
-public class User {
-	
+public final class User {
 	
 	private int id;
 

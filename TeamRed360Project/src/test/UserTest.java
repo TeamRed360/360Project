@@ -1,6 +1,6 @@
 package test;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -89,11 +89,13 @@ public class UserTest {
 	@Test(expected = IllegalArgumentException.class)
 	public void testException() {
 		User nullUser = new User("James", "Kirk", null, "qwe123");
+		
 	}
 	
 	@Test(expected = IllegalArgumentException.class)
 	public void testSetEmailNull() {
 		tester.setEmail(null);
+		
 	}
 	
 	@Test(expected = IllegalArgumentException.class)
