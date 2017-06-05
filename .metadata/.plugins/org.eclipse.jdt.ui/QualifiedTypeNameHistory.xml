@@ -14,4 +14,13 @@
 <fullyQualifiedTypeName name="org.junit.Before"/>
 <fullyQualifiedTypeName name="java.math.BigDecimal"/>
 <fullyQualifiedTypeName name="model.Calculator"/>
+<fullyQualifiedTypeName name="javax.print.attribute.standard.DialogTypeSelection"/>
+<fullyQualifiedTypeName name="javafx.scene.control.ChoiceDialog"/>
+<fullyQualifiedTypeName name="javafx.stage.StageStyle"/>
+<fullyQualifiedTypeName name="javafx.scene.control.Alert.AlertType"/>
+<fullyQualifiedTypeName name="javafx.scene.layout.FlowPane"/>
+<fullyQualifiedTypeName name="javafx.scene.control.Alert"/>
+<fullyQualifiedTypeName name="javafx.scene.layout.Pane"/>
+<fullyQualifiedTypeName name="javafx.scene.image.ImageView"/>
+<fullyQualifiedTypeName name="javafx.scene.image.Image"/>
 </qualifiedTypeNameHistroy>
