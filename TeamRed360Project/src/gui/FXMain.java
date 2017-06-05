@@ -419,9 +419,9 @@ public class FXMain extends Application {
 	 * @return the home pane
 	 * @author Taylor Riccetti
 	 */
-	private GridPane getHomeContent(String welcomeText) {
-		// BorderPane homePane = new BorderPane();
-		// homePane.setPadding(new Insets(25));
+	private BorderPane getHomeContent(String welcomeText) {
+		BorderPane homePane = new BorderPane();
+		homePane.setPadding(new Insets(25));
 
 		GridPane homeGrid = new GridPane();
 		homeGrid.setPadding(new Insets(25));
@@ -494,7 +494,7 @@ public class FXMain extends Application {
 				BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
 		Background signout = new Background(signoutImage);
 		signoutButton.setBackground(signout);
-		signoutButton.setMinSize(128, 128);
+		signoutButton.setMinSize(64, 64);
 
 		// Action listener for the signout button.
 		signoutButton.setOnAction(new EventHandler<ActionEvent>() {
@@ -516,11 +516,13 @@ public class FXMain extends Application {
 		homeGrid.add(importButton, 1, 2);
 		homeGrid.add(exportButton, 1, 3);
 		homeGrid.add(getCalculatorPane(), 2, 1, 2, 4);
-		homeGrid.add(signoutButton, 5, 3);
+		homeGrid.add(signoutButton, 11, 5);
 
 		aboutTab.disableProperty().set(false);
 		settingsTab.disableProperty().set(false);
-		return homeGrid;
+		homePane.setCenter(homeGrid);
+		homeGrid.setAlignment(Pos.CENTER);
+		return homePane;
 	}
 
 	/**
