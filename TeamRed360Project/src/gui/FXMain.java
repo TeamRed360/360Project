@@ -500,26 +500,10 @@ public class FXMain extends Application {
 		signoutButton.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
-<<<<<<< HEAD
 				Alert signoutAlert = new Alert(AlertType.CONFIRMATION, "Log out confirmation.", ButtonType.YES,
 						ButtonType.NO);
 				signoutAlert.setContentText("Are you sure you want to log out?");
 				if (ButtonType.YES == signoutAlert.showAndWait().get()) {
-=======
-
-				// should select the tab at index zero.. not working..
-				// user still has to navigate back to the home tab to log back
-				// in
-				currentUser = null;
-				
-				//not needed -Jimmy
-				//new JOptionPane();
-				
-				// update database if needed
-				int doubleCheck = JOptionPane.showConfirmDialog(null, "Do you want to Log out?", "Log Out?",
-						JOptionPane.YES_NO_OPTION);
-				if (doubleCheck == JOptionPane.YES_OPTION) {
->>>>>>> e7b8b66506125ab5d91a110cd0dd8f95dc5a0e67
 					homeTab.setContent(getLoginPane());
 					currentUser = null;
 				}
@@ -713,15 +697,14 @@ public class FXMain extends Application {
 			public void handle(ActionEvent event) {
 				// total.setText(total.getText() + ((Button)
 				// event.getSource()).getText());
-				
-				//Added try/catch to handle calculator errors - Jimmy
+
+				// Added try/catch to handle calculator errors - Jimmy
 				try {
 					Calculator calc = new Calculator(total.getText());
 					total.setText(calc.getResult() + "");
-					
+
 				} catch (RuntimeException e) {
-					JOptionPane.showMessageDialog(null, e.getMessage(), "Oops..",
-							JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(null, e.getMessage(), "Oops..", JOptionPane.ERROR_MESSAGE);
 				}
 
 			}
