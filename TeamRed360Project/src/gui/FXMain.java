@@ -454,7 +454,10 @@ public class FXMain extends Application {
 				// user still has to navigate back to the home tab to log back
 				// in
 				currentUser = null;
-				new JOptionPane();
+				
+				//not needed -Jimmy
+				//new JOptionPane();
+				
 				// update database if needed
 				int doubleCheck = JOptionPane.showConfirmDialog(null, "Do you want to Log out?", "Log Out?",
 						JOptionPane.YES_NO_OPTION);
@@ -654,8 +657,16 @@ public class FXMain extends Application {
 			public void handle(ActionEvent event) {
 				// total.setText(total.getText() + ((Button)
 				// event.getSource()).getText());
-				Calculator calc = new Calculator(total.getText());
-				total.setText(calc.getResult() + "");
+				
+				//Added try/catch to handle calculator errors - Jimmy
+				try {
+					Calculator calc = new Calculator(total.getText());
+					total.setText(calc.getResult() + "");
+					
+				} catch (RuntimeException e) {
+					JOptionPane.showMessageDialog(null, e.getMessage(), "Oops..",
+							JOptionPane.ERROR_MESSAGE);
+				}
 
 			}
 		});
