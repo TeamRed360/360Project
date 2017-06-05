@@ -516,7 +516,7 @@ public class FXMain extends Application {
 		homeGrid.add(importButton, 1, 2);
 		homeGrid.add(exportButton, 1, 3);
 		homeGrid.add(getCalculatorPane(), 2, 1, 2, 4);
-		homeGrid.add(signoutButton, 11, 5);
+		homeGrid.add(signoutButton, 4, 5);
 
 		aboutTab.disableProperty().set(false);
 		settingsTab.disableProperty().set(false);
