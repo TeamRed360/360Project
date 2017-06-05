@@ -4,7 +4,7 @@ package model;
  * This is the back end class to the calculator method
  * 
  * @author Amanda Aldrich, with large help from Boann of StackOverflow
- *
+ * 
  */
 public class Calculator {
 
@@ -16,7 +16,9 @@ public class Calculator {
 		// System.out.println(equation);
 		// System.out.println(eval(equation));
 		if (breakingTheUniverse(equation)) {
-			result = 0.0;
+			//Added this to throw error on /0 -Jimmy
+			throw new RuntimeException("Can't divide by zero");
+			
 		} else {
 			result = eval(checkingDots(equation));
 

@@ -1,6 +1,6 @@
 package test;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -10,7 +10,7 @@ import model.User;
 /**
  * JUnit tests
  * 
- * @author Amanda Aldrich
+ * @author Amanda Aldrich, Jimmy Best
  *
  */
 public class UserTest {
@@ -20,6 +20,12 @@ public class UserTest {
 	@Before
 	public void setUp() throws Exception {
 		tester = new User("amanda", "aldrich", "amlaldrich@gmail.com", "qwe123");
+	}
+	
+	@Test
+	public void testId() {
+		User newUser = new User("amanda", "aldrich", "amlaldrich@gmail.com", "qwe123");
+		assertEquals(tester.getId(), newUser.getId());
 	}
 
 	@Test
@@ -38,6 +44,30 @@ public class UserTest {
 	public void testUserEmail() {
 		User newUser = new User("amanda", "aldrich", "amlaldrich@gmail.com", "qwe123");
 		assertEquals(tester.getEmail(), newUser.getEmail());
+	}
+	
+	@Test
+	public void testUserPassword() {
+		User newUser = new User("amanda", "aldrich", "amlaldrich@gmail.com", "qwe123");
+		assertEquals(tester.getPassword(), newUser.getPassword());
+	}
+
+	@Test
+	public void testSetID() {
+		tester.setId(1);
+		assertEquals(tester.getId(), 1);
+	}
+	
+	@Test
+	public void testSetEmail() {
+		tester.setEmail("1");
+		assertEquals(tester.getEmail(), "1");
+	}
+	
+	@Test
+	public void testSetPassword() {
+		tester.setPassword("1");
+		assertEquals(tester.getPassword(), "1");
 	}
 
 	@Test(expected = IllegalArgumentException.class)
@@ -59,5 +89,17 @@ public class UserTest {
 	@Test(expected = IllegalArgumentException.class)
 	public void testException() {
 		User nullUser = new User("James", "Kirk", null, "qwe123");
+		
+	}
+	
+	@Test(expected = IllegalArgumentException.class)
+	public void testSetEmailNull() {
+		tester.setEmail(null);
+		
+	}
+	
+	@Test(expected = IllegalArgumentException.class)
+	public void testSetPasswordNull() {
+		tester.setPassword(null);
 	}
 }

@@ -189,5 +189,17 @@
 2017-06-01 17:08:45,134 [Worker-8] WARN  org.eclipse.jgit.util.FS_Win32 - Exception caught during execution of command '[bash, --login, -c, which git]' in 'C:\Users\Maggie', return code '1', error message 'which: no git in (/usr/local/bin:/usr/bin:/cygdrive/c/Program Files/Java/jre1.8.0_111/bin/server:/cygdrive/c/Program Files/Java/jre1.8.0_111/bin:/cygdrive/c/Program Files/Java/jre1.8.0_111/lib/amd64:/usr/bin:/cygdrive/c/ProgramData/Oracle/Java/javapath:/cygdrive/c/Program Files (x86)/NVIDIA Corporation/PhysX/Common:/cygdrive/c/WINDOWS/system32:/cygdrive/c/WINDOWS:/cygdrive/c/WINDOWS/System32/Wbem:/cygdrive/c/WINDOWS/System32/WindowsPowerShell/v1.0:/cygdrive/c/Program Files (x86)/ATI Technologies/ATI.ACE/Core-Static:/cygdrive/c/Program Files (x86)/Windows Live/Shared:/cygdrive/c/Program Files (x86)/Skype/Phone:/cygdrive/c/Users/Maggie/AppData/Local/Microsoft/WindowsApps:/cygdrive/e/java-neon/eclipse)
 '
 >>>>>>> 22c497f532f83edc9c93f7b07737d916f2d29394
+<<<<<<< HEAD
+2017-06-01 17:24:29,550 [Worker-2] INFO  c.g.t.t.d.PublishedGradleVersions - Gradle version information cache is up-to-date. Trying to read.
+=======
 >>>>>>> 6386569b07e47af6147a45db67b38606091227fc
+<<<<<<< HEAD
 2017-06-01 17:29:28,364 [Worker-0] INFO  c.g.t.t.d.PublishedGradleVersions - Gradle version information cache is up-to-date. Trying to read.
+=======
+>>>>>>> d0ca9384c9fabd43846339defbfcd7fb559ea778
+2017-06-01 21:30:40,963 [Worker-0] INFO  c.g.t.t.d.PublishedGradleVersions - Gradle version information cache is up-to-date. Trying to read.
+2017-06-04 14:01:11,472 [Worker-1] INFO  c.g.t.t.d.PublishedGradleVersions - Gradle version information cache is out-of-date. Trying to update.
+2017-06-04 18:03:35,454 [Worker-3] INFO  c.g.t.t.d.PublishedGradleVersions - Gradle version information cache is up-to-date. Trying to read.
+2017-06-04 18:06:21,353 [Worker-0] INFO  c.g.t.t.d.PublishedGradleVersions - Gradle version information cache is up-to-date. Trying to read.
+2017-06-04 18:29:45,988 [Worker-1] INFO  c.g.t.t.d.PublishedGradleVersions - Gradle version information cache is up-to-date. Trying to read.
+>>>>>>> 7504aa9f92834715508cd4afe0e5bc05082af09f

@@ -68,6 +68,7 @@ public class ProjectWriter { // implements Serializable {
 							.add(new Item(readItem[0], Double.parseDouble(readItem[1]), Integer.parseInt(readItem[2])));
 				}
 			}
+			scanner.close();
 			return readProject;
 		} catch (FileNotFoundException e) {
 			return null;

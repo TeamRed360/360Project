@@ -16,7 +16,10 @@ import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.PasswordField;
@@ -25,6 +28,7 @@ import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundImage;
 import javafx.scene.layout.BackgroundPosition;
@@ -59,13 +63,8 @@ import model.User;
  */
 public class FXMain extends Application {
 
-	/**
-	 * A list of the contributors' names.
-	 */
-	private static final String NAMES[] = { "Stan Hu", "Jimmy Best", "Amanda Aldrich", "Taylor Riccetti",
-			"Joshua Lau" };
-
-	private ArrayList<Project> projects = new ArrayList<Project>();
+	/** A list of the contributors' names. */
+	private final String NAMES[] = { "Stan Hu", "Jimmy Best", "Amanda Aldrich", "Taylor Riccetti", "Joshua Lau" };
 
 	/** The scenes width. */
 	private final int SCENE_WIDTH = 825;
@@ -79,36 +78,63 @@ public class FXMain extends Application {
 	/** A constant for the borders. */
 	private final Border BORDER = new Border(
 			new BorderStroke(Color.DARKGRAY, BorderStrokeStyle.SOLID, new CornerRadii(3), BorderWidths.DEFAULT));
-	private Stage mainScreen;
+
+	/** The tab pane to hold all the tabs. */
 	private final TabPane tabPane = new TabPane();
+
+	/** The home tab to contain all home content. */
 	private final Tab homeTab = new Tab("Home");
+
+	/** The about tab to contain all about content. */
 	private final Tab aboutTab = new Tab("About");
+
+	/** The setting tab to contain all setting content. */
 	private final Tab settingsTab = new Tab("Settings");
 
+	/** A array list of current projects. */
+	private ArrayList<Project> projects = new ArrayList<Project>();
+
+	/**
+	 * A list view of projects that the app is using to visually display the
+	 * projects.
+	 */
+	private ListView<Project> projectList = new ListView<Project>(FXCollections.observableArrayList(projects));
+
+	/** Welcome text. */
 	private Text welcomeText = new Text();
 
+	/** The current user. */
 	private User currentUser = null;
 
+	/** The main screen to hold all the applications GUI features. */
+	private Stage mainScreen;
+
+	/**
+	 * The main method of the gui.
+	 * 
+	 * @param args
+	 * @author Taylor Riccetti
+	 */
 	public static void main(String[] args) {
 		launch(args);
 	}
 
+	/**
+	 * Jump starts the GUI.
+	 * 
+	 * @author Taylor Riccetti
+	 */
 	@Override
 	public void start(Stage screen) {
 		mainScreen = screen;
 		mainScreen.setTitle("Nailed It!");
-
-		// Moved to login, so if offline user can skip login
-		// SQL.connect();
-
 		StackPane root = new StackPane();
 		root.getChildren().add(getTabs());
 		// messing around with css effects
 		// root.getStylesheets().add("gui/GUICss.css");
-
 		mainScreen.setMinHeight(SCENE_HEIGHT);
 		mainScreen.setMinWidth(SCENE_WIDTH);
-		mainScreen.setScene(new Scene(root, SCENE_WIDTH, SCENE_HEIGHT, Color.MISTYROSE));
+		mainScreen.setScene(new Scene(root, SCENE_WIDTH, SCENE_HEIGHT));
 		mainScreen.show();
 	}
 
@@ -126,10 +152,16 @@ public class FXMain extends Application {
 		settingsTab.closableProperty().set(false);
 		aboutTab.closableProperty().set(false);
 
-		// Moved to getLoginPane
-		// Initially all other tabs are disabled until the user logs in.
-		// aboutTab.disableProperty().set(true);
-		// settingsTab.disableProperty().set(true);
+		homeTab.setGraphic(buildIcon("/home.png"));
+		aboutTab.setGraphic(buildIcon("/light-bulb.png"));
+		settingsTab.setGraphic(buildIcon("/settings.png"));
+
+		Text placeHolderText = new Text("This is where your project will live");
+		placeHolderText.setFont(HEADER_FONT);
+
+		projectList.setPlaceholder(placeHolderText);
+		projectList.setMinHeight(SCENE_HEIGHT - 25);
+		projectList.setMinWidth((SCENE_WIDTH - 50) / 2);
 
 		aboutTab.setContent(getAboutContent());
 		settingsTab.setContent(getSettingContent());
@@ -139,6 +171,23 @@ public class FXMain extends Application {
 		tabPane.getTabs().add(aboutTab);
 		return tabPane;
 
+	}
+
+	/**
+	 * Helper method form generating a file path for an icon.
+	 * 
+	 * @param path
+	 * @return ImageView
+	 * @author Taylor Riccetti
+	 */
+	private static ImageView buildIcon(String path) {
+		Image i = new Image(path);
+		ImageView imageView = new ImageView();
+		// You can set width and height
+		imageView.setFitHeight(20);
+		imageView.setFitWidth(20);
+		imageView.setImage(i);
+		return imageView;
 	}
 
 	/**
@@ -165,9 +214,8 @@ public class FXMain extends Application {
 
 		for (int i = 1; i < NAMES.length + 1; i++) {
 			Text currentName = new Text(NAMES[i - 1]);
-			contributorGrid.add(currentName, 1, i); // tried to make the weird
-													// gap leave -Amanda
-		} // fixed it on line 177 -Taylor
+			contributorGrid.add(currentName, 1, i);
+		}
 
 		Text credits = new Text("Credits:");
 		credits.setFont(HEADER_FONT);
@@ -371,18 +419,19 @@ public class FXMain extends Application {
 	 * @return the home pane
 	 * @author Taylor Riccetti
 	 */
-	private StackPane getHomeContent(String welcomeText) {
-		StackPane homePane = new StackPane();
+	private BorderPane getHomeContent(String welcomeText) {
+		BorderPane homePane = new BorderPane();
+		homePane.setPadding(new Insets(25));
+
 		GridPane homeGrid = new GridPane();
-		homeGrid.setAlignment(Pos.CENTER);
-		homeGrid.setVgap(10);
-		homeGrid.setHgap(10);
 		homeGrid.setPadding(new Insets(25));
+		homeGrid.setHgap(10);
+		homeGrid.setVgap(10);
 
 		Text welcome = new Text(welcomeText);
-		welcome.setFont(Font.font("Arial", FontWeight.NORMAL, 20));
+		welcome.setFont(HEADER_FONT);
 		Button projectButton = new Button("Projects");
-		BackgroundImage backgroundImage = new BackgroundImage(new Image("./saw.png"), BackgroundRepeat.NO_REPEAT,
+		BackgroundImage backgroundImage = new BackgroundImage(new Image("/saw.png"), BackgroundRepeat.NO_REPEAT,
 				BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
 		Background background = new Background(backgroundImage);
 		projectButton.setBackground(background);
@@ -396,7 +445,7 @@ public class FXMain extends Application {
 
 		// code and design for import button
 		Button importButton = new Button("Import Projects");
-		BackgroundImage importImage = new BackgroundImage(new Image("./upload.png"), BackgroundRepeat.NO_REPEAT,
+		BackgroundImage importImage = new BackgroundImage(new Image("/upload.png"), BackgroundRepeat.NO_REPEAT,
 				BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
 		Background importBackground = new Background(importImage);
 		importButton.setBackground(importBackground);
@@ -414,8 +463,11 @@ public class FXMain extends Application {
 					Project importedProject = ProjectWriter.importFile(selectedFile, currentUser.getId());
 					if (importedProject != null) {
 						projects.add(importedProject);
+						homeTab.setContent(getProjectView());
 					} else {
-						// error text
+						Alert importError = new Alert(AlertType.ERROR, "Error");
+						importError.setContentText("Project could not be imported.");
+						importError.show();
 					}
 				}
 			}
@@ -423,81 +475,73 @@ public class FXMain extends Application {
 
 		// code and design for export button
 		Button exportButton = new Button("Export Projects");
-		BackgroundImage exportImage = new BackgroundImage(new Image("./save.png"), BackgroundRepeat.NO_REPEAT,
+		BackgroundImage exportImage = new BackgroundImage(new Image("/save.png"), BackgroundRepeat.NO_REPEAT,
 				BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
 		Background exportBackground = new Background(exportImage);
 		exportButton.setBackground(exportBackground);
 		exportButton.setMinSize(128, 128);
+
+		// Export selected projects to a list of projects.
 		exportButton.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
-				// display
-
-				homeTab.setContent(getProjectList());
+				homeTab.setContent(getExportList());
 			}
 		});
 
-		Button signoutButton = new Button("Sign Out");
-		BackgroundImage signoutImage = new BackgroundImage(new Image("./chainsaw.png"), BackgroundRepeat.NO_REPEAT,
+		Button signoutButton = new Button();
+		BackgroundImage signoutImage = new BackgroundImage(new Image("/exit.png"), BackgroundRepeat.NO_REPEAT,
 				BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
 		Background signout = new Background(signoutImage);
 		signoutButton.setBackground(signout);
 		signoutButton.setMinSize(64, 64);
 
+		// Action listener for the signout button.
 		signoutButton.setOnAction(new EventHandler<ActionEvent>() {
-
 			@Override
 			public void handle(ActionEvent event) {
-
-				// should select the tab at index zero.. not working..
-				// user still has to navigate back to the home tab to log back
-				// in
-				currentUser = null;
-				new JOptionPane();
-				// update database if needed
-				int doubleCheck = JOptionPane.showConfirmDialog(null, "Do you want to Log out?", "Log Out?",
-						JOptionPane.YES_NO_OPTION);
-				if (doubleCheck == JOptionPane.YES_OPTION) {
+				Alert signoutAlert = new Alert(AlertType.CONFIRMATION, "Log out confirmation.", ButtonType.YES,
+						ButtonType.NO);
+				signoutAlert.setContentText("Are you sure you want to log out?");
+				if (ButtonType.YES == signoutAlert.showAndWait().get()) {
 					homeTab.setContent(getLoginPane());
 					currentUser = null;
 				}
 			}
-
 		});
 
+		// Adds the components of the home page to the grid.
 		homeGrid.add(welcome, 0, 0, 2, 1);
 		homeGrid.add(projectButton, 1, 1);
 		homeGrid.add(importButton, 1, 2);
 		homeGrid.add(exportButton, 1, 3);
 		homeGrid.add(getCalculatorPane(), 2, 1, 2, 4);
-		homeGrid.add(signoutButton, 5, 3);
-		homePane.getChildren().add(homeGrid);
+		homeGrid.add(signoutButton, 4, 5);
 
 		aboutTab.disableProperty().set(false);
 		settingsTab.disableProperty().set(false);
+		homePane.setCenter(homeGrid);
+		homeGrid.setAlignment(Pos.CENTER);
 		return homePane;
 	}
 
-	protected TilePane getProjectList() {
-		TilePane projectPane = new TilePane();
-		GridPane projectGrid = new GridPane();
+	/**
+	 * A page to have the user select a project to export.
+	 * 
+	 * @return A borderPage
+	 * @author Taylor Riccetti, Amanda Aldrich
+	 */
+	private TilePane getExportList() {
+		TilePane exportPane = new TilePane();
 
-		projectGrid.setAlignment(Pos.TOP_LEFT);
-		projectGrid.setVgap(10);
-		projectGrid.setHgap(10);
-		projectGrid.setPadding(new Insets(25));
-		Text projectMessage = new Text("Pick a project to export.");
-		projectMessage.setFont(Font.font("Arial", FontWeight.NORMAL, 20));
+		GridPane exportGrid = new GridPane();
+		exportGrid.setAlignment(Pos.TOP_LEFT);
+		exportGrid.setVgap(10);
+		exportGrid.setHgap(10);
+		exportGrid.setPadding(new Insets(25));
 
-		Text placeHolderText = new Text("No Projects");
-		placeHolderText.setFont(Font.font("Arial", FontWeight.NORMAL, 20));
-
-		final ObservableList<Project> projectObsList = FXCollections.observableArrayList(projects);
-
-		ListView<Project> projectList = new ListView<Project>(projectObsList);
-		projectList.setPlaceholder(placeHolderText);
-		projectList.setMinHeight(350);
-		projectList.setMinWidth(400);
+		Text exportMessage = new Text("Pick a project to export.");
+		exportMessage.setFont(HEADER_FONT);
 
 		Button exportButton = new Button("Export Project");
 		exportButton.setOnAction(new EventHandler<ActionEvent>() {
@@ -508,19 +552,23 @@ public class FXMain extends Application {
 				Project currentProject = projectList.getSelectionModel().getSelectedItem();
 				if (currentProject == null) {
 					// displays error
-					System.err.println("No project to export.");
-
+					Alert noProject = new Alert(AlertType.ERROR, "No Project.");
+					noProject.setContentText("You did not select a project to export.");
+					noProject.show();
 				} else {
 					int result = ProjectWriter.export(currentProject);
 					if (result > 0) {
 						// success text
-						homeTab.setContent(getHomeContent(welcomeText.getText()));
+						homeTab.setContent(getProjectView());
 					} else {
-						System.err.println("Export Failed");
+						Alert exportFailed = new Alert(AlertType.ERROR, "Export Project Failed.");
+						exportFailed.setContentText("Sorry, there was an error when trying to export the project.");
+						exportFailed.show();
 					}
 				}
 			}
 		});
+
 		exportButton.disableProperty().bind(Bindings.isEmpty(projectList.getItems()));
 
 		Button backButton = new Button("Back");
@@ -529,32 +577,30 @@ public class FXMain extends Application {
 			public void handle(ActionEvent event) {
 				homeTab.setContent(getHomeContent(welcomeText.getText()));
 			}
-
 		});
 
-		projectGrid.add(projectMessage, 0, 0, 2, 1);
-		projectGrid.add(exportButton, 0, 9, 2, 1);
-		projectGrid.add(backButton, 0, 40);
+		exportGrid.add(exportMessage, 0, 0, 2, 1);
+		exportGrid.add(exportButton, 0, 5, 2, 1);
+		exportGrid.add(backButton, 0, 40);
 
-		projectPane.setMaxHeight(SCENE_HEIGHT);
-		projectPane.setMaxWidth(SCENE_WIDTH);
-		projectPane.getChildren().add(projectGrid);
-		projectPane.getChildren().add(projectList);
-		StackPane.setAlignment(projectPane, Pos.CENTER);
-		return projectPane;
+		exportPane.setMaxHeight(SCENE_HEIGHT);
+		exportPane.setMaxWidth(SCENE_WIDTH);
+		exportPane.getChildren().add(exportGrid);
+		exportPane.getChildren().add(projectList);
+		return exportPane;
 	}
 
 	/**
 	 * Returns a pane displaying the calculator.
 	 * 
 	 * @return a grid pane
-	 * @author Taylor Riccetti, eduted by Amanda Aldrich
+	 * @author Taylor Riccetti, Amanda Aldrich
 	 */
 	private GridPane getCalculatorPane() {
 		GridPane calculatorGrid = new GridPane();
 		calculatorGrid.setAlignment(Pos.CENTER);
-		calculatorGrid.setMinHeight(400);
-		calculatorGrid.setMinWidth(275);
+		calculatorGrid.setPrefHeight(400);
+		calculatorGrid.setPrefWidth(275);
 		calculatorGrid.setAlignment(Pos.TOP_LEFT);
 		calculatorGrid.setVgap(10);
 		calculatorGrid.setHgap(10);
@@ -647,14 +693,24 @@ public class FXMain extends Application {
 		});
 		decimalButton.setMinSize(50, 50);
 
+		Text calcErrorText = new Text();
+
 		Button equalButton = new Button("=");
 		equalButton.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
 				// total.setText(total.getText() + ((Button)
 				// event.getSource()).getText());
-				Calculator calc = new Calculator(total.getText());
-				total.setText(calc.getResult() + "");
+
+				// Added try/catch to handle calculator errors - Jimmy
+				try {
+					Calculator calc = new Calculator(total.getText());
+					total.setText(calc.getResult() + "");
+
+				} catch (RuntimeException e) {
+					calcErrorText.setFill(Color.FIREBRICK);
+					calcErrorText.setText("Invalid divisor, try again.");
+				}
 
 			}
 		});
@@ -678,7 +734,7 @@ public class FXMain extends Application {
 		calculatorGrid.add(decimalButton, 2, 4);
 		calculatorGrid.add(equalButton, 2, 5, 2, 1);
 		calculatorGrid.add(clearButton, 0, 5, 2, 1);
-
+		calculatorGrid.add(calcErrorText, 0, 6, 3, 1);
 		calculatorGrid.setBorder(BORDER);
 		return calculatorGrid;
 	}
@@ -698,18 +754,9 @@ public class FXMain extends Application {
 		projectGrid.setVgap(10);
 		projectGrid.setHgap(10);
 		projectGrid.setPadding(new Insets(25));
+
 		Text projectMessage = new Text("Your Projects");
-		projectMessage.setFont(Font.font("Arial", FontWeight.NORMAL, 20));
-
-		Text placeHolderText = new Text("This is where your project will live");
-		placeHolderText.setFont(Font.font("Arial", FontWeight.NORMAL, 20));
-
-		final ObservableList<Project> projectObsList = FXCollections.observableArrayList(projects);
-
-		ListView<Project> projectList = new ListView<Project>(projectObsList);
-		projectList.setPlaceholder(placeHolderText);
-		projectList.setMinHeight(350);
-		projectList.setMinWidth(400);
+		projectMessage.setFont(HEADER_FONT);
 
 		Button addNewButton = new Button("Add New Project");
 		addNewButton.setOnAction(new EventHandler<ActionEvent>() {
@@ -739,13 +786,10 @@ public class FXMain extends Application {
 				projects.remove(myIndex);
 			}
 		});
-
 		removeButton.disableProperty().bind(Bindings.isEmpty(projectList.getItems()));
 
 		Button backButton = new Button("Back");
-
 		backButton.setOnAction(new EventHandler<ActionEvent>() {
-
 			@Override
 			public void handle(ActionEvent event) {
 				homeTab.setContent(getHomeContent(welcomeText.getText()));
@@ -754,7 +798,6 @@ public class FXMain extends Application {
 		});
 
 		projectGrid.add(projectMessage, 0, 0, 2, 1);
-
 		projectGrid.add(addNewButton, 0, 5, 2, 1);
 		projectGrid.add(editButton, 0, 7, 2, 1);
 		projectGrid.add(removeButton, 0, 9, 2, 1);
@@ -764,7 +807,6 @@ public class FXMain extends Application {
 		projectPane.setMaxWidth(SCENE_WIDTH);
 		projectPane.getChildren().add(projectGrid);
 		projectPane.getChildren().add(projectList);
-		StackPane.setAlignment(projectPane, Pos.CENTER);
 		return projectPane;
 	}
 
@@ -870,19 +912,16 @@ public class FXMain extends Application {
 	 * @author Amanda Aldrich
 	 * @return addProjectPane which is the pane we are building on.
 	 */
-	private StackPane addNewProjectView() {
+	private GridPane addNewProjectView() {
 
 		// project gets created to be customized by user
 		Project tempProject = new Project(-1, " ", " ");
 
-		// my pane
-		StackPane addProjectPane = new StackPane();
-
 		// the grid layout
 		GridPane addProjectGrid = new GridPane();
 		TilePane titlePane = new TilePane();
-		titlePane.setHgap(20);
 		titlePane.setVgap(20);
+
 		addProjectGrid.setAlignment(Pos.TOP_LEFT);
 		addProjectGrid.setVgap(10);
 		addProjectGrid.setHgap(10);
@@ -894,13 +933,13 @@ public class FXMain extends Application {
 
 		// project name setup
 		Text projectName = new Text("Project Name:");
-		projectName.setFont(Font.font("Arial", FontWeight.NORMAL, 10));
+		projectName.setFont(HEADER_FONT);
 		TextField projectNameField = new TextField();
 		projectNameField.setAlignment(Pos.BASELINE_LEFT);
 
 		// project desc setup
 		Text projectDesc = new Text("Project Description:");
-		projectDesc.setFont(Font.font("Arial", FontWeight.NORMAL, 10));
+		projectDesc.setFont(HEADER_FONT);
 		TextField projectDescField = new TextField();
 		projectDescField.setAlignment(Pos.BASELINE_LEFT);
 
@@ -916,7 +955,6 @@ public class FXMain extends Application {
 					tempProject.changeName(projectNameField.getText());
 					tempProject.changeDesc(projectDescField.getText());
 					projects.add(tempProject);
-					// System.out.println(projects.indexOf(tempProject));
 					homeTab.setContent(getProjectView());
 				} else {
 					errorSubmitMessage.setText("Please enter a project name.");
@@ -933,43 +971,22 @@ public class FXMain extends Application {
 			}
 		});
 
-		// my add button
-		Button addButton = new Button("Add Row");
-		addButton.setOnAction(new EventHandler<ActionEvent>() {
-
-			@Override
-			public void handle(ActionEvent event) {
-				// addRow(table);
-			}
-
-		});
-
-		addButton.setFocusTraversable(false);
-		BorderPane border = new BorderPane();
-
-		border.setLeft(addProjectGrid);
-		border.setCenter(makingTheList(tempProject));
-		border.setTop(titlePane);
-		// border.setRight();
-
 		titlePane.getChildren().add(addProjectMessage);
+		addProjectGrid.add(titlePane, 0, 0, 2, 1);
+		addProjectGrid.add(projectName, 0, 1);
+		addProjectGrid.add(projectNameField, 0, 2);
 
-		addProjectGrid.add(projectName, 0, 1, 2, 1);
-		addProjectGrid.add(projectNameField, 0, 2, 2, 1);
-
-		addProjectGrid.add(projectDesc, 0, 3, 2, 1);
-		addProjectGrid.add(projectDescField, 0, 4, 2, 1);
+		addProjectGrid.add(projectDesc, 0, 3);
+		addProjectGrid.add(projectDescField, 0, 4);
 
 		addProjectGrid.add(submitButton, 0, 5);
 		addProjectGrid.add(errorSubmitMessage, 0, 6);
-		addProjectGrid.add(backButton, 0, 30);
+		addProjectGrid.add(getItemView(tempProject), 1, 1, 8, 25);
+		addProjectGrid.add(backButton, 0, 25);
 
-		addProjectPane.setMaxHeight(SCENE_HEIGHT);
-		addProjectPane.setMaxWidth(SCENE_WIDTH);
-		addProjectPane.getChildren().add(border);
-		StackPane.setAlignment(border, Pos.CENTER);
-
-		return addProjectPane;
+		addProjectGrid.setMaxHeight(SCENE_HEIGHT);
+		addProjectGrid.setMaxWidth(SCENE_WIDTH);
+		return addProjectGrid;
 
 	}
 
@@ -979,11 +996,7 @@ public class FXMain extends Application {
 	 * @author Amanda Aldrich, edited by Taylor Riccetti
 	 * @return basePlate, the the pane everything was laid out on.
 	 */
-	private TilePane makingTheList(Project tempProject) {
-
-		TilePane basePlate = new TilePane(); // I had legos on the brain
-		basePlate.setHgap(10);
-		basePlate.setVgap(10);
+	private GridPane getItemView(Project tempProject) {
 		GridPane listFormGrid = new GridPane();
 		listFormGrid.setHgap(10);
 		listFormGrid.setVgap(10);
@@ -1017,7 +1030,7 @@ public class FXMain extends Application {
 		itemQtyField.setAlignment(Pos.BASELINE_LEFT);
 
 		Text totalPrice = new Text("Total Price: " + tempProject.getOverallPrice());
-		totalPrice.setFont(Font.font("Arial", FontWeight.NORMAL, 15));
+		totalPrice.setFont(HEADER_FONT);
 
 		Button addButton = new Button("Add Item");
 		addButton.setOnAction(new EventHandler<ActionEvent>() {
@@ -1058,24 +1071,24 @@ public class FXMain extends Application {
 		removeButton.disableProperty().bind(Bindings.isEmpty(listView.getItems()));
 
 		// adding create object form
-		listFormGrid.add(itemName, 0, 1, 2, 1);
-		listFormGrid.add(itemNameField, 0, 2, 2, 1);
+		// col row
+		listFormGrid.add(listView, 0, 0, 4, 20);
 
-		listFormGrid.add(itemPrice, 0, 4, 2, 1);
-		listFormGrid.add(itemPriceField, 0, 5, 2, 1);
+		listFormGrid.add(itemName, 4, 1, 2, 1);
+		listFormGrid.add(itemNameField, 4, 2, 2, 1);
 
-		listFormGrid.add(itemQty, 0, 7, 2, 1);
-		listFormGrid.add(itemQtyField, 0, 8, 2, 1);
+		listFormGrid.add(itemPrice, 4, 4, 2, 1);
+		listFormGrid.add(itemPriceField, 4, 5, 2, 1);
 
-		listFormGrid.add(addButton, 0, 10);
-		listFormGrid.add(removeButton, 1, 10);
+		listFormGrid.add(itemQty, 4, 7, 2, 1);
+		listFormGrid.add(itemQtyField, 4, 8, 2, 1);
 
-		listFormGrid.add(totalPrice, 0, 12, 2, 1);
+		listFormGrid.add(addButton, 4, 10);
+		listFormGrid.add(removeButton, 5, 10);
 
-		basePlate.getChildren().add(listView);
-		basePlate.getChildren().add(listFormGrid);
+		listFormGrid.add(totalPrice, 4, 12, 2, 1);
 
-		return basePlate;
+		return listFormGrid;
 	}
 
 	/**
@@ -1146,7 +1159,7 @@ public class FXMain extends Application {
 		BorderPane border = new BorderPane();
 
 		border.setLeft(editProjectGrid);
-		border.setCenter(makingTheList(tempProject));
+		border.setCenter(getItemView(tempProject));
 		border.setTop(titlePane);
 		// border.setRight();
 
