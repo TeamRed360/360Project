@@ -94,12 +94,6 @@ public class FXMain extends Application {
 	/** A array list of current projects. */
 	private ArrayList<Project> projects = new ArrayList<Project>();
 
-	/**
-	 * A list view of projects that the app is using to visually display the
-	 * projects.
-	 */
-	private ListView<Project> projectList = new ListView<Project>(FXCollections.observableArrayList(projects));
-
 	/** Welcome text. */
 	private Text welcomeText = new Text();
 
@@ -155,13 +149,6 @@ public class FXMain extends Application {
 		homeTab.setGraphic(buildIcon("/home.png"));
 		aboutTab.setGraphic(buildIcon("/light-bulb.png"));
 		settingsTab.setGraphic(buildIcon("/settings.png"));
-
-		Text placeHolderText = new Text("This is where your project will live");
-		placeHolderText.setFont(HEADER_FONT);
-
-		projectList.setPlaceholder(placeHolderText);
-		projectList.setMinHeight(SCENE_HEIGHT - 25);
-		projectList.setMinWidth((SCENE_WIDTH - 50) / 2);
 
 		aboutTab.setContent(getAboutContent());
 		settingsTab.setContent(getSettingContent());
@@ -543,6 +530,8 @@ public class FXMain extends Application {
 		Text exportMessage = new Text("Pick a project to export.");
 		exportMessage.setFont(HEADER_FONT);
 
+		ListView<Project> projectList = projectListComponent();
+
 		Button exportButton = new Button("Export Project");
 		exportButton.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
@@ -767,6 +756,8 @@ public class FXMain extends Application {
 			}
 		});
 
+		ListView<Project> projectList = projectListComponent();
+
 		Button editButton = new Button("Edit Project");
 		editButton.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
@@ -782,8 +773,10 @@ public class FXMain extends Application {
 			@Override
 			public void handle(ActionEvent event) {
 				int myIndex = projectList.getSelectionModel().getSelectedIndex();
-				projectList.getItems().remove(myIndex);
-				projects.remove(myIndex);
+				if (myIndex > 0) { // Makes sure something is selected
+					projectList.getItems().remove(myIndex);
+					projects.remove(myIndex);
+				}
 			}
 		});
 		removeButton.disableProperty().bind(Bindings.isEmpty(projectList.getItems()));
@@ -1181,6 +1174,19 @@ public class FXMain extends Application {
 
 		return editProjectPane;
 
+	}
+
+	private ListView<Project> projectListComponent() {
+		ListView<Project> projectList = new ListView<Project>(FXCollections.observableArrayList(projects));
+
+		Text placeHolderText = new Text("This is where your project will live");
+		placeHolderText.setFont(HEADER_FONT);
+
+		projectList.setPlaceholder(placeHolderText);
+		projectList.setMinHeight(SCENE_HEIGHT - 25);
+		projectList.setMinWidth((SCENE_WIDTH - 50) / 2);
+
+		return projectList;
 	}
 
 }
