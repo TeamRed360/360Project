@@ -691,6 +691,8 @@ public class FXMain extends Application {
 		});
 		decimalButton.setMinSize(50, 50);
 
+		Text calcErrorText = new Text();
+
 		Button equalButton = new Button("=");
 		equalButton.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
@@ -704,7 +706,8 @@ public class FXMain extends Application {
 					total.setText(calc.getResult() + "");
 
 				} catch (RuntimeException e) {
-					JOptionPane.showMessageDialog(null, e.getMessage(), "Oops..", JOptionPane.ERROR_MESSAGE);
+					calcErrorText.setFill(Color.FIREBRICK);
+					calcErrorText.setText("Invalid divisor, try again.");
 				}
 
 			}
@@ -729,7 +732,7 @@ public class FXMain extends Application {
 		calculatorGrid.add(decimalButton, 2, 4);
 		calculatorGrid.add(equalButton, 2, 5, 2, 1);
 		calculatorGrid.add(clearButton, 0, 5, 2, 1);
-
+		calculatorGrid.add(calcErrorText, 0, 6, 3, 1);
 		calculatorGrid.setBorder(BORDER);
 		return calculatorGrid;
 	}
