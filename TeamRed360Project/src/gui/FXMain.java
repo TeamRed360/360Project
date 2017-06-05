@@ -129,6 +129,7 @@ public class FXMain extends Application {
 		mainScreen.setMinHeight(SCENE_HEIGHT);
 		mainScreen.setMinWidth(SCENE_WIDTH);
 		mainScreen.setScene(new Scene(root, SCENE_WIDTH, SCENE_HEIGHT));
+		mainScreen.getIcons().add(buildIcon("/hammer.png").getImage());
 		mainScreen.show();
 	}
 
@@ -476,6 +477,7 @@ public class FXMain extends Application {
 			}
 		});
 
+		// the sign out button to log out the user
 		Button signoutButton = new Button();
 		BackgroundImage signoutImage = new BackgroundImage(new Image("/exit.png"), BackgroundRepeat.NO_REPEAT,
 				BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
@@ -487,6 +489,9 @@ public class FXMain extends Application {
 		signoutButton.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
+
+				// check if online, if they are save all projects to db
+				// and warn that they might loose their projects
 				Alert signoutAlert = new Alert(AlertType.CONFIRMATION, "Log out confirmation.", ButtonType.YES,
 						ButtonType.NO);
 				signoutAlert.setContentText("Are you sure you want to log out?");
@@ -1089,6 +1094,7 @@ public class FXMain extends Application {
 	 * 
 	 * @param tempProject,
 	 * @return the project you want to change
+	 * @author Amanda Aldrich
 	 */
 	private StackPane editProjectView(Project tempProject) {
 
@@ -1176,6 +1182,13 @@ public class FXMain extends Application {
 
 	}
 
+	/**
+	 * A helper method to return a formatted list view of the users current
+	 * projects.
+	 * 
+	 * @return ListView
+	 * @author Taylor Riccetti, and Amanda Aldrich
+	 */
 	private ListView<Project> projectListComponent() {
 		ListView<Project> projectList = new ListView<Project>(FXCollections.observableArrayList(projects));
 

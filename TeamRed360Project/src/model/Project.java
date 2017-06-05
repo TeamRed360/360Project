@@ -6,6 +6,8 @@ import java.util.Set;
 import java.util.TreeSet;
 
 /**
+ * A project contains and Id, userId, name, description, a set of all the items,
+ * and a total price.
  * 
  * @author Taylor, Stan Hu
  */
