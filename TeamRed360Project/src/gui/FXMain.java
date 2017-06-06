@@ -700,10 +700,12 @@ public class FXMain extends Application {
 				try {
 					Calculator calc = new Calculator(total.getText());
 					total.setText(calc.getResult() + "");
+					calcErrorText.setText("");
 
 				} catch (RuntimeException e) {
 					calcErrorText.setFill(Color.FIREBRICK);
-					calcErrorText.setText("Invalid divisor, try again.");
+					calcErrorText.setText(e.getMessage());
+					//calcErrorText.setText("Invalid divisor, try again.");
 				}
 
 			}
