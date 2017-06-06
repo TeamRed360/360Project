@@ -214,3 +214,4 @@
 >>>>>>> 4a8995e6397b1a6da0e1455b528e322b01059711
 2017-06-05 11:47:33,710 [Worker-0] INFO  c.g.t.t.d.PublishedGradleVersions - Gradle version information cache is up-to-date. Trying to read.
 >>>>>>> 64845febd608a34eebfb49db73b583782a843c6e
+2017-06-06 13:20:51,669 [Worker-2] INFO  c.g.t.t.d.PublishedGradleVersions - Gradle version information cache is out-of-date. Trying to update.
