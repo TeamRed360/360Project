@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.text.NumberFormat;
 
 /**
+ * An item contains a project id, id, a name, quantity and a price.
  * 
  * @author Taylor Riccetti, Amanda Aldrich, Stan Hu
  *

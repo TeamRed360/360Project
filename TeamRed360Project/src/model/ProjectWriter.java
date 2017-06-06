@@ -6,7 +6,7 @@ import java.io.FileOutputStream;
 import java.io.PrintWriter;
 import java.util.Scanner;
 
-public class ProjectWriter { // implements Serializable {
+public class ProjectWriter {
 
 	/**
 	 * This function exports
@@ -42,10 +42,11 @@ public class ProjectWriter { // implements Serializable {
 	}
 
 	/**
+	 * Imports a project from the given file name.
 	 * 
 	 * @param theFile
 	 * @param userId
-	 * @return
+	 * @return the project
 	 * @author Taylor Riccetti
 	 */
 	public static Project importFile(File theFile, int userId) {

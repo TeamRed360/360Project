@@ -94,12 +94,6 @@ public class FXMain extends Application {
 	/** A array list of current projects. */
 	private ArrayList<Project> projects = new ArrayList<Project>();
 
-	/**
-	 * A list view of projects that the app is using to visually display the
-	 * projects.
-	 */
-	private ListView<Project> projectList = new ListView<Project>(FXCollections.observableArrayList(projects));
-
 	/** Welcome text. */
 	private Text welcomeText = new Text();
 
@@ -135,6 +129,7 @@ public class FXMain extends Application {
 		mainScreen.setMinHeight(SCENE_HEIGHT);
 		mainScreen.setMinWidth(SCENE_WIDTH);
 		mainScreen.setScene(new Scene(root, SCENE_WIDTH, SCENE_HEIGHT));
+		mainScreen.getIcons().add(buildIcon("/hammer.png").getImage());
 		mainScreen.show();
 	}
 
@@ -155,13 +150,6 @@ public class FXMain extends Application {
 		homeTab.setGraphic(buildIcon("/home.png"));
 		aboutTab.setGraphic(buildIcon("/light-bulb.png"));
 		settingsTab.setGraphic(buildIcon("/settings.png"));
-
-		Text placeHolderText = new Text("This is where your project will live");
-		placeHolderText.setFont(HEADER_FONT);
-
-		projectList.setPlaceholder(placeHolderText);
-		projectList.setMinHeight(SCENE_HEIGHT - 25);
-		projectList.setMinWidth((SCENE_WIDTH - 50) / 2);
 
 		aboutTab.setContent(getAboutContent());
 		settingsTab.setContent(getSettingContent());
@@ -489,6 +477,7 @@ public class FXMain extends Application {
 			}
 		});
 
+		// the sign out button to log out the user
 		Button signoutButton = new Button();
 		BackgroundImage signoutImage = new BackgroundImage(new Image("/exit.png"), BackgroundRepeat.NO_REPEAT,
 				BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
@@ -500,6 +489,9 @@ public class FXMain extends Application {
 		signoutButton.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
+
+				// check if online, if they are save all projects to db
+				// and warn that they might loose their projects
 				Alert signoutAlert = new Alert(AlertType.CONFIRMATION, "Log out confirmation.", ButtonType.YES,
 						ButtonType.NO);
 				signoutAlert.setContentText("Are you sure you want to log out?");
@@ -542,6 +534,8 @@ public class FXMain extends Application {
 
 		Text exportMessage = new Text("Pick a project to export.");
 		exportMessage.setFont(HEADER_FONT);
+
+		ListView<Project> projectList = projectListComponent();
 
 		Button exportButton = new Button("Export Project");
 		exportButton.setOnAction(new EventHandler<ActionEvent>() {
@@ -706,10 +700,12 @@ public class FXMain extends Application {
 				try {
 					Calculator calc = new Calculator(total.getText());
 					total.setText(calc.getResult() + "");
+					calcErrorText.setText("");
 
 				} catch (RuntimeException e) {
 					calcErrorText.setFill(Color.FIREBRICK);
-					calcErrorText.setText("Invalid divisor, try again.");
+					calcErrorText.setText(e.getMessage());
+					//calcErrorText.setText("Invalid divisor, try again.");
 				}
 
 			}
@@ -767,6 +763,8 @@ public class FXMain extends Application {
 			}
 		});
 
+		ListView<Project> projectList = projectListComponent();
+
 		Button editButton = new Button("Edit Project");
 		editButton.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
@@ -782,8 +780,10 @@ public class FXMain extends Application {
 			@Override
 			public void handle(ActionEvent event) {
 				int myIndex = projectList.getSelectionModel().getSelectedIndex();
-				projectList.getItems().remove(myIndex);
-				projects.remove(myIndex);
+				if (myIndex > 0) { // Makes sure something is selected
+					projectList.getItems().remove(myIndex);
+					projects.remove(myIndex);
+				}
 			}
 		});
 		removeButton.disableProperty().bind(Bindings.isEmpty(projectList.getItems()));
@@ -1096,6 +1096,7 @@ public class FXMain extends Application {
 	 * 
 	 * @param tempProject,
 	 * @return the project you want to change
+	 * @author Amanda Aldrich
 	 */
 	private StackPane editProjectView(Project tempProject) {
 
@@ -1181,6 +1182,26 @@ public class FXMain extends Application {
 
 		return editProjectPane;
 
+	}
+
+	/**
+	 * A helper method to return a formatted list view of the users current
+	 * projects.
+	 * 
+	 * @return ListView
+	 * @author Taylor Riccetti, and Amanda Aldrich
+	 */
+	private ListView<Project> projectListComponent() {
+		ListView<Project> projectList = new ListView<Project>(FXCollections.observableArrayList(projects));
+
+		Text placeHolderText = new Text("This is where your project will live");
+		placeHolderText.setFont(HEADER_FONT);
+
+		projectList.setPlaceholder(placeHolderText);
+		projectList.setMinHeight(SCENE_HEIGHT - 25);
+		projectList.setMinWidth((SCENE_WIDTH - 50) / 2);
+
+		return projectList;
 	}
 
 }

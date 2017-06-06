@@ -3,7 +3,8 @@
  */
 package test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -13,13 +14,13 @@ import model.User;
 
 /**
  * JUnit tests for SQL.java for import/export functionality.
+ * 
  * @author Taylor Riccetti
  */
 public class SQLTest {
-	
+
 	private final User testUser = new User("John", "Doe", "jdoe@gmail.com", "123jdoe");
 
-	
 	/**
 	 * Test method for {@link connection.SQL#login(model.User)}.
 	 */
@@ -29,13 +30,13 @@ public class SQLTest {
 		SQL.login(testUser);
 		SQL.updateUser(testUser);
 	}
-	
+
 	/**
 	 * Test method for {@link connection.SQL#connect()}.
 	 */
 	@Test
 	public void testConnect() {
-		SQL.connect(); 
+		SQL.connect();
 	}
 
 	/**
@@ -51,15 +52,14 @@ public class SQLTest {
 	 * Test method for {@link connection.SQL#getLastUser()}.
 	 */
 	@Test
-	public void testGetLastUser() { ;
-		User returnedUser = SQL.getLastUser(); 
+	public void testGetLastUser() {
+		User returnedUser = SQL.getLastUser();
 		assertEquals(returnedUser.getFirstName(), testUser.getFirstName());
 		assertEquals(returnedUser.getLastName(), testUser.getLastName());
 		assertEquals(returnedUser.getEmail(), testUser.getEmail());
 		assertEquals(returnedUser.getPassword(), testUser.getPassword());
 	}
 
-	
 	/**
 	 * Test method for {@link connection.SQL#getAllUsers()}.
 	 */
@@ -67,7 +67,5 @@ public class SQLTest {
 	public void testGetAllUsers() {
 		assertNotNull(SQL.getAllUsers());
 	}
-
-	
 
 }

@@ -16,7 +16,6 @@ import model.User;
 /**
  * A class to handle SQL/database related operations.
  */
-
 public class SQL {
 
 	private static final int[] INFO = { 313, 328, 343, 289, 328, 313, 346, 361, 358, 283, 328, 301, 355, 310, 343 };

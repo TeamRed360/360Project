@@ -1,32 +1,29 @@
 package model;
-/*
- * TCSS 360 - Software Development Team Red
- * User object stores the user's name and email.
- */
+
 /**
+ * TCSS 360 - Software Development Team Red User object stores the user's name
+ * and email.
  * 
- * @version 1.6 
+ * @version 1.6
  */
 public final class User {
-	
+
 	private int id;
 
 	private String myEmail;
-	
+
 	private String myFirstName;
-	
+
 	private String myLastName;
-	
+
 	private String myPassword;
-	
-	//User Constructor
-	public User(final String theFirstName, final String theLastName,
-			final String theEmail, final String thePassword) {
-		if(theFirstName == null || theLastName ==  null
-				|| theEmail == null || thePassword == null) {
+
+	// User Constructor
+	public User(final String theFirstName, final String theLastName, final String theEmail, final String thePassword) {
+		if (theFirstName == null || theLastName == null || theEmail == null || thePassword == null) {
 			throw new IllegalArgumentException("Illegal Parameters!");
 		}
-		id = -1; //this is set later on, needs an SQL response to determine
+		id = -1; // this is set later on, needs an SQL response to determine
 		myFirstName = theFirstName;
 		myLastName = theLastName;
 		myEmail = theEmail;
@@ -35,45 +32,51 @@ public final class User {
 
 	/**
 	 * Sets the ID of the user.
-	 * @param id The id to set to.
+	 * 
+	 * @param id
+	 *            The id to set to.
 	 * @author Stan Hu
 	 */
 	public void setId(final int id) {
 		this.id = id;
 	}
-//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-	//Needs to throw exception - Jimmy
+
+	// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+	// Needs to throw exception - Jimmy
 	public void setEmail(final String email) {
 		myEmail = email;
 	}
-	//Needs to throw exception - Jimmy
+
+	// Needs to throw exception - Jimmy
 	public void setPassword(final String password) {
 		myPassword = password;
 	}
-//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-	
+	// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 	/**
 	 * Returns the ID of the user.
-	 * @param id The id of the user in the database.
+	 * 
+	 * @param id
+	 *            The id of the user in the database.
 	 * @author Stan Hu
 	 */
 	public int getId() {
 		return id;
 	}
-	
-	public String getFirstName(){
+
+	public String getFirstName() {
 		return myFirstName;
 	}
-	
-	public String getLastName(){
+
+	public String getLastName() {
 		return myLastName;
 	}
-	
-	public String getEmail(){
+
+	public String getEmail() {
 		return myEmail;
 	}
-	
-	public String getPassword(){
+
+	public String getPassword() {
 		return myPassword;
 	}
 }
