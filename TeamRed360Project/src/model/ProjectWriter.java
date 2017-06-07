@@ -71,7 +71,7 @@ public class ProjectWriter {
 			}
 			scanner.close();
 			return readProject;
-		} catch (FileNotFoundException e) {
+		} catch (Exception e) { 
 			return null;
 		}
 	}
