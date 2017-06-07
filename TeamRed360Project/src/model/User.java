@@ -41,18 +41,22 @@ public final class User {
 		this.id = theId;
 	}
 
-	// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-	// Needs to throw exception - Jimmy
 	public void setEmail(final String email) {
+		if (email == null) {
+			throw new IllegalArgumentException("Illegal Parameters!");
+			
+		}
 		myEmail = email;
 	}
 
-	// Needs to throw exception - Jimmy
 	public void setPassword(final String password) {
+		if (password == null) {
+			throw new IllegalArgumentException("Illegal Parameters!");
+			
+		}
 		myPassword = password;
 	}
-	// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
+	
 	/**
 	 * Returns the ID of the user.
 	 * 

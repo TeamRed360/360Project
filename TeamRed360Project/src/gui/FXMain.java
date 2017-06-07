@@ -3,8 +3,6 @@ package gui;
 import java.io.File;
 import java.util.ArrayList;
 
-import javax.swing.JOptionPane;
-
 import connection.SQL;
 import javafx.application.Application;
 import javafx.beans.binding.Bindings;
@@ -75,6 +73,9 @@ public class FXMain extends Application {
 	/** A constant for the font of header text. */
 	private final Font HEADER_FONT = Font.font("Century Gothic", FontWeight.NORMAL, 20);
 
+	/** A constant for the font of general text. */
+	private final Font GENERAL_FONT = Font.font("Century Gothic", FontWeight.NORMAL, 15);
+
 	/** A constant for the borders. */
 	private final Border BORDER = new Border(
 			new BorderStroke(Color.DARKGRAY, BorderStrokeStyle.SOLID, new CornerRadii(3), BorderWidths.DEFAULT));
@@ -124,8 +125,6 @@ public class FXMain extends Application {
 		mainScreen.setTitle("Nailed It!");
 		StackPane root = new StackPane();
 		root.getChildren().add(getTabs());
-		// messing around with css effects
-		// root.getStylesheets().add("gui/GUICss.css");
 		mainScreen.setMinHeight(SCENE_HEIGHT);
 		mainScreen.setMinWidth(SCENE_WIDTH);
 		mainScreen.setScene(new Scene(root, SCENE_WIDTH, SCENE_HEIGHT));
@@ -153,7 +152,6 @@ public class FXMain extends Application {
 
 		aboutTab.setContent(getAboutContent());
 		settingsTab.setContent(getSettingContent());
-		// tabPane.getStylesheets().add("gui/GUICss.css");
 		tabPane.getTabs().add(homeTab);
 		tabPane.getTabs().add(settingsTab);
 		tabPane.getTabs().add(aboutTab);
@@ -292,10 +290,10 @@ public class FXMain extends Application {
 				user = SQL.getLastUser();
 				loginActionText.setFill(Color.FIREBRICK);
 				if (code == 0) {
-					int reply = JOptionPane.showConfirmDialog(null,
-							"Email does not exist. Would you like to register instead?", "Register instead?",
-							JOptionPane.YES_NO_OPTION);
-					if (reply == JOptionPane.YES_OPTION) {
+					Alert signUpAlert = new Alert(AlertType.CONFIRMATION, "Sign up confirmation.", ButtonType.YES,
+							ButtonType.NO);
+					signUpAlert.setContentText("Email does not exist. Would you like to register instead?");
+					if (ButtonType.YES == signUpAlert.showAndWait().get()) {
 						email.setText(loginEmail.getText());
 						password.setText(loginPassword.getText());
 						loginActionText.setText("Please use the sign up tab.");
@@ -308,7 +306,7 @@ public class FXMain extends Application {
 				} else if (code == 2) {
 					loginActionText.setText("Incorrect password - try again.");
 				} else {
-					loginActionText.setText("Error - could not access the login server.");
+					loginActionText.setText("Error - Connect to the internet or conintue as guest.");
 				}
 			}
 
@@ -322,7 +320,7 @@ public class FXMain extends Application {
 		login.add(loginPassword, 1, 2);
 		login.add(continueButton, 3, 7);
 		login.add(skipLoginButton, 0, 7);
-		login.add(loginActionText, 3, 6);
+		login.add(loginActionText, 1, 6, 3, 1);
 
 		loginTab.setContent(login);
 		Tab signUpTab = new Tab("Sign Up");
@@ -953,13 +951,13 @@ public class FXMain extends Application {
 
 		// project name setup
 		Text projectName = new Text("Project Name:");
-		projectName.setFont(HEADER_FONT);
+		projectName.setFont(GENERAL_FONT);
 		TextField projectNameField = new TextField();
 		projectNameField.setAlignment(Pos.BASELINE_LEFT);
 
 		// project desc setup
 		Text projectDesc = new Text("Project Description:");
-		projectDesc.setFont(HEADER_FONT);
+		projectDesc.setFont(GENERAL_FONT);
 		TextField projectDescField = new TextField();
 		projectDescField.setAlignment(Pos.BASELINE_LEFT);
 
@@ -1042,19 +1040,19 @@ public class FXMain extends Application {
 
 		// item name setup
 		Text itemName = new Text("Item Name:");
-		itemName.setFont(Font.font("Arial", FontWeight.NORMAL, 10));
+		itemName.setFont(GENERAL_FONT);
 		TextField itemNameField = new TextField();
 		itemNameField.setAlignment(Pos.BASELINE_LEFT);
 
 		// item price setup
 		Text itemPrice = new Text("Item Price:");
-		itemPrice.setFont(Font.font("Arial", FontWeight.NORMAL, 10));
+		itemPrice.setFont(GENERAL_FONT);
 		TextField itemPriceField = new TextField();
 		itemPriceField.setAlignment(Pos.BASELINE_LEFT);
 
 		// item qty setup
 		Text itemQty = new Text("Item Quantity:");
-		itemQty.setFont(Font.font("Arial", FontWeight.NORMAL, 10));
+		itemQty.setFont(GENERAL_FONT);
 		TextField itemQtyField = new TextField();
 		itemQtyField.setAlignment(Pos.BASELINE_LEFT);
 
