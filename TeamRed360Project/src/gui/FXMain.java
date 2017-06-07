@@ -302,6 +302,7 @@ public class FXMain extends Application {
 					}
 				} else if (code == 1) {
 					currentUser = user;
+					projects = SQL.getProjects(currentUser);
 					welcomeText.setText("Welcome back, " + user.getFirstName() + " " + user.getLastName() + "!");
 					homeTab.setContent(getHomeContent(welcomeText.getText()));
 				} else if (code == 2) {
@@ -405,7 +406,7 @@ public class FXMain extends Application {
 	 * 
 	 * @param welcomeText
 	 * @return the home pane
-	 * @author Taylor Riccetti
+	 * @author Taylor Riccetti, Stan Hu
 	 */
 	private BorderPane getHomeContent(String welcomeText) {
 		BorderPane homePane = new BorderPane();
@@ -450,6 +451,11 @@ public class FXMain extends Application {
 				if (selectedFile != null) {
 					Project importedProject = ProjectWriter.importFile(selectedFile, currentUser.getId());
 					if (importedProject != null) {
+						if (SQL.isOnline()) { // if online, get/set the project
+												// id
+							Project temp = SQL.createProject(importedProject);
+							importedProject.setId(temp.getId());
+						}
 						projects.add(importedProject);
 						homeTab.setContent(getProjectView());
 					} else {
@@ -498,6 +504,7 @@ public class FXMain extends Application {
 				if (ButtonType.YES == signoutAlert.showAndWait().get()) {
 					homeTab.setContent(getLoginPane());
 					currentUser = null;
+					projects = new ArrayList<Project>();
 				}
 			}
 		});
@@ -705,7 +712,7 @@ public class FXMain extends Application {
 				} catch (RuntimeException e) {
 					calcErrorText.setFill(Color.FIREBRICK);
 					calcErrorText.setText(e.getMessage());
-					//calcErrorText.setText("Invalid divisor, try again.");
+					// calcErrorText.setText("Invalid divisor, try again.");
 				}
 
 			}
@@ -738,7 +745,8 @@ public class FXMain extends Application {
 	/**
 	 * Builds the Projects overview.
 	 * 
-	 * @author Taylor Riccetti, heavily modified Amanda Aldrich
+	 * @author Taylor Riccetti, heavily modified Amanda Aldrich, Stan Hu added
+	 *         online handling
 	 * @return projectPane, the base the UI is on
 	 */
 	private TilePane getProjectView() {
@@ -769,8 +777,11 @@ public class FXMain extends Application {
 		editButton.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
-				homeTab.setContent(editProjectView(projectList.getSelectionModel().getSelectedItem()));
+				try {
+					homeTab.setContent(editProjectView(projectList.getSelectionModel().getSelectedItem()));
+				} catch (final NullPointerException e) {
 
+				}
 			}
 		});
 		editButton.disableProperty().bind(Bindings.isEmpty(projectList.getItems()));
@@ -780,8 +791,14 @@ public class FXMain extends Application {
 			@Override
 			public void handle(ActionEvent event) {
 				int myIndex = projectList.getSelectionModel().getSelectedIndex();
-				if (myIndex > 0) { // Makes sure something is selected
+				if (myIndex >= 0) { // Makes sure something is selected
 					projectList.getItems().remove(myIndex);
+					Project temp = projects.get(myIndex);
+					if (SQL.isOnline() && temp.getId() != -1) { // remove the
+																// project from
+																// db
+						SQL.deleteProject(temp.getId());
+					}
 					projects.remove(myIndex);
 				}
 			}
@@ -839,9 +856,9 @@ public class FXMain extends Application {
 				if (currPassword.getText().equals(currentUser.getPassword())) {
 					if (newPassword.getText().equals(confirmPassword.getText())) {
 						currentUser.setPassword(newPassword.getText());
+						currentUser.setId(SQL.updateUser(currentUser));
 						changePassText.setFill(Color.LIMEGREEN);
-						changePassText.setText("Password Changed!");
-						SQL.updateUser(currentUser);
+						changePassText.setText("Password successfully changed!");
 					} else {
 						changePassText.setFill(Color.RED);
 						changePassText.setText("Passwords do not match!");
@@ -883,14 +900,17 @@ public class FXMain extends Application {
 			public void handle(ActionEvent event) {
 				if (currEmail.getText().equals(currentUser.getEmail())) {
 					if (!SQL.emailExists(newEmail.getText())) {
-						SQL.updateUser(currentUser, newEmail.getText());
+						currentUser.setId(SQL.updateUser(currentUser, newEmail.getText()));
 						currentUser.setEmail(newEmail.getText());
+						changeEmailText.setFill(Color.LIMEGREEN);
+						changeEmailText.setText("Email successfully changed!");
+					} else {
+						changeEmailText.setFill(Color.LIMEGREEN);
+						changeEmailText.setText("Email already exists, try another one");
 					}
-					changeEmailText.setFill(Color.LIMEGREEN);
-					changeEmailText.setText("E-Mail Changed!");
 				} else {
-					changePassText.setFill(Color.RED);
-					changePassText.setText("Current email is incorrect!");
+					changeEmailText.setFill(Color.RED);
+					changeEmailText.setText("Current email is incorrect!");
 				}
 			}
 		});
@@ -909,7 +929,7 @@ public class FXMain extends Application {
 	/**
 	 * Creates the Create a Project view.
 	 * 
-	 * @author Amanda Aldrich
+	 * @author Amanda Aldrich, Stan Hu
 	 * @return addProjectPane which is the pane we are building on.
 	 */
 	private GridPane addNewProjectView() {
@@ -954,6 +974,15 @@ public class FXMain extends Application {
 				if (projectNameField.getText().length() > 0) {
 					tempProject.changeName(projectNameField.getText());
 					tempProject.changeDesc(projectDescField.getText());
+					if (SQL.isOnline() && currentUser != null) { // if online,
+																	// get/set
+																	// the
+																	// project
+																	// id
+						tempProject.setUserId(currentUser.getId());
+						Project temp = SQL.createProject(tempProject);
+						tempProject.setId(temp.getId());
+					}
 					projects.add(tempProject);
 					homeTab.setContent(getProjectView());
 				} else {
@@ -993,7 +1022,7 @@ public class FXMain extends Application {
 	/**
 	 * This method creates the listview and its buttons
 	 * 
-	 * @author Amanda Aldrich, edited by Taylor Riccetti
+	 * @author Amanda Aldrich, edited by Taylor Riccetti and Stan Hu
 	 * @return basePlate, the the pane everything was laid out on.
 	 */
 	private GridPane getItemView(Project tempProject) {
@@ -1044,7 +1073,12 @@ public class FXMain extends Application {
 
 					strings.add(myItem.toString());
 					totalPrice.setText("Total Price: " + tempProject.getOverallPrice());
-
+					if (SQL.isOnline() && tempProject.getId() != -1) { // add
+																		// the
+																		// item
+																		// to db
+						SQL.createItem(tempProject.getId(), myItem);
+					}
 				} catch (NumberFormatException e) {
 					// does not add empty item
 				}
@@ -1096,7 +1130,7 @@ public class FXMain extends Application {
 	 * 
 	 * @param tempProject,
 	 * @return the project you want to change
-	 * @author Amanda Aldrich
+	 * @author Amanda Aldrich, Stan Hu
 	 */
 	private StackPane editProjectView(Project tempProject) {
 
@@ -1121,7 +1155,7 @@ public class FXMain extends Application {
 		Text projectName = new Text("Project Name:");
 		projectName.setFont(Font.font("Arial", FontWeight.NORMAL, 10));
 		TextField projectNameField = new TextField();
-		if (tempProject.getName() != "") {
+		if (tempProject != null && tempProject.getName() != "") {
 			projectNameField.setText(tempProject.getName());
 		}
 		projectNameField.setAlignment(Pos.BASELINE_LEFT);
@@ -1130,7 +1164,7 @@ public class FXMain extends Application {
 		Text projectDesc = new Text("Project Description:");
 		projectDesc.setFont(Font.font("Arial", FontWeight.NORMAL, 10));
 		TextField projectDescField = new TextField();
-		if (tempProject.getDesc() != "") {
+		if (tempProject != null && tempProject.getDesc() != "") {
 			projectDescField.setText(tempProject.getDesc());
 		}
 		projectDescField.setAlignment(Pos.BASELINE_LEFT);
@@ -1142,6 +1176,10 @@ public class FXMain extends Application {
 			public void handle(ActionEvent event) {
 				tempProject.changeName(projectNameField.getText());
 				tempProject.changeDesc(projectDescField.getText());
+				if (SQL.isOnline() && currentUser != null) {
+					tempProject.setUserId(currentUser.getId());
+					tempProject.setId(SQL.updateProject(tempProject));
+				}
 				homeTab.setContent(getProjectView());
 			}
 		});

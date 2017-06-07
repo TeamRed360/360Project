@@ -37,8 +37,8 @@ public final class User {
 	 *            The id to set to.
 	 * @author Stan Hu
 	 */
-	public void setId(final int id) {
-		this.id = id;
+	public void setId(final int theId) {
+		this.id = theId;
 	}
 
 	// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

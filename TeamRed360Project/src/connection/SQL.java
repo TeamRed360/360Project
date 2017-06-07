@@ -5,6 +5,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.Properties;
 import java.util.Set;
 import java.util.TreeSet;
@@ -42,6 +43,10 @@ public class SQL {
 
 	public static Connection connection = null;
 
+	public static boolean isOnline() {
+		return connection != null;
+	}
+
 	/**
 	 * Establishes a connection with the database. Called from the main method.
 	 * 
@@ -55,6 +60,59 @@ public class SQL {
 			System.out.println("Successfully connected to the database.");
 		} catch (Exception e) {
 			System.out.println("Error connecting to the database: " + e);
+			connection = null;
+		}
+	}
+
+	/**
+	 * Disconnects from the database.
+	 */
+	public static synchronized void disconnect() {
+		connection = null;
+		System.out.println("Disconnected from the database.");
+	}
+
+	/**
+	 * Constructs and returns a list of all projects from the user.
+	 * 
+	 * @param theClient
+	 *            The user to get the projects from
+	 * @return A list of that user's projects
+	 */
+	public static ArrayList<Project> getProjects(final User theClient) {
+		ArrayList<Project> toReturn = new ArrayList<Project>();
+		String query = "SELECT * FROM `projects` WHERE `user_id` = '" + theClient.getId() + "'";
+		Statement statement = null;
+		try {
+			statement = connection.createStatement();
+			ResultSet results = statement.executeQuery(query);
+			while (results.next()) { // loop through all the projects
+				int projectId = results.getInt(1);
+				int userId = results.getInt(2);
+				String name = results.getString(3);
+				String description = results.getString(4);
+				Project newProject = new Project(userId, name, description);
+				newProject.setId(projectId);
+				String subQuery = "SELECT * FROM `items` WHERE `project_id` = '" + projectId + "'";
+				Statement subStatement = connection.createStatement();
+				ResultSet subResults = subStatement.executeQuery(subQuery);
+				while (subResults.next()) { // loop through all the items
+					int itemId = subResults.getInt(1);
+					String itemName = subResults.getString(3);
+					int price = subResults.getInt(4);
+					int quantity = subResults.getInt(5);
+					Item newItem = new Item(itemName, (double) price, quantity);
+					newItem.setProjectId(projectId);
+					newItem.setId(itemId);
+					newProject.add(newItem);
+				}
+				toReturn.add(newProject);
+			}
+			return toReturn;
+		} catch (SQLException e) {
+			System.out.println("Get project error: " + e);
+			disconnect();
+			return toReturn;
 		}
 	}
 
@@ -64,10 +122,14 @@ public class SQL {
 	 * 
 	 * @param theClient
 	 *            The user to be added.
+	 * @return The new user id.
 	 */
-	public static synchronized void updateUser(final User theClient) {
+	public static synchronized int updateUser(final User theClient) {
 		removeFromDB(theClient);
-		addToDB(theClient);
+		int oldId = theClient.getId();
+		int newId = addToDB(theClient);
+		repairProjects(oldId, newId);
+		return newId;
 	}
 
 	/**
@@ -76,11 +138,15 @@ public class SQL {
 	 * 
 	 * @param theClient
 	 *            The user to be added.
+	 * @return The new user id.
 	 */
-	public static synchronized void updateUser(User theClient, String theEmail) {
+	public static synchronized int updateUser(User theClient, String theEmail) {
 		removeFromDB(theClient);
 		theClient.setEmail(theEmail);
-		addToDB(theClient);
+		int oldId = theClient.getId();
+		int newId = addToDB(theClient);
+		repairProjects(oldId, newId);
+		return newId;
 	}
 
 	/**
@@ -90,13 +156,17 @@ public class SQL {
 	 * 
 	 * @param theProject
 	 *            The project to be added.
+	 * @return The new id of the project.
 	 */
-	public static synchronized void updateProject(final Project theProject) {
+	public static synchronized int updateProject(final Project theProject) {
 		if (theProject.getId() == -1) { // it doesn't exist
-			createProject(theProject);
+			return createProject(theProject).getId();
 		} else { // remove, and re-add to update
 			removeFromDB(theProject);
-			addToDB(theProject);
+			int oldId = theProject.getId();
+			int newId = addToDB(theProject);
+			repairItems(oldId, newId);
+			return newId;
 		}
 	}
 
@@ -115,6 +185,19 @@ public class SQL {
 		} else { // remove, and re-add to update
 			removeFromDB(theItem);
 			addToDB(theItem);
+		}
+	}
+
+	/**
+	 * Deletes the project, and any items associated with it.
+	 */
+	public static synchronized void deleteProject(final int projectId) {
+		try {
+			connection.createStatement().execute("DELETE FROM `projects` WHERE `id` = '" + projectId + "'");
+			connection.createStatement().execute("DELETE FROM `items` WHERE `project_id` = '" + projectId + "'");
+		} catch (Exception e) {
+			e.printStackTrace();
+			disconnect();
 		}
 	}
 
@@ -141,7 +224,6 @@ public class SQL {
 			statement = connection.createStatement();
 			ResultSet results = statement.executeQuery(query);
 			while (results.next()) {
-				int id = results.getInt(1);
 				String firstName = results.getString(2);
 				String lastName = results.getString(3);
 				String email = results.getString(4);
@@ -152,6 +234,7 @@ public class SQL {
 			}
 		} catch (SQLException e) {
 			System.out.println("Login error: " + e);
+			disconnect();
 			return ""; // error
 		}
 		return sb.toString();
@@ -170,11 +253,14 @@ public class SQL {
 		try {
 			statement = connection.createStatement();
 			ResultSet results = statement.executeQuery(query);
-			if (results.next())
+			if (results.next()) {
+				System.out.println("email already found");
 				return true;
+			}
 			return false;
 		} catch (SQLException e) {
 			System.out.println("Existing email check error: " + e);
+			disconnect();
 			return false; // error
 		}
 	}
@@ -210,6 +296,7 @@ public class SQL {
 			return 0; // email not found
 		} catch (SQLException e) {
 			System.out.println("Login error: " + e);
+			disconnect();
 			return 3; // error
 		}
 	}
@@ -247,6 +334,7 @@ public class SQL {
 			return toReturn;
 		} catch (SQLException e) {
 			System.out.println("Create project error " + e);
+			disconnect();
 			return null; // error
 		}
 	}
@@ -268,7 +356,7 @@ public class SQL {
 		Item newItem;
 		try {
 			query = "SELECT * FROM `items` ORDER BY id DESC";
-			addToDB(theItem); // add the item to db
+			addToDB(theProjectId, theItem); // add the item to db
 			statement = connection.createStatement(); // now get the item's ID
 			ResultSet results = statement.executeQuery(query);
 			results.next();
@@ -278,7 +366,65 @@ public class SQL {
 			return newItem;
 		} catch (SQLException e) {
 			System.out.println("Create item error " + e);
+			disconnect();
 			return null; // error
+		}
+	}
+
+	/**
+	 * Repairs the projects when the user id is updated.
+	 * 
+	 * @param oldUserId
+	 *            The old user id.
+	 * @param newUserId
+	 *            The new user id.
+	 */
+	private static synchronized void repairProjects(final int oldUserId, final int newUserId) {
+		try {
+			String query = "SELECT * FROM `projects` WHERE `user_id` = '" + oldUserId + "'";
+			Statement statement = connection.createStatement();
+			ResultSet results = statement.executeQuery(query);
+			while (results.next()) {
+				int oldProjectId = results.getInt(1); // we'll need this to
+														// update the items
+				String name = results.getString(3);
+				String description = results.getString(4);
+				Project newProject = new Project(newUserId, name, description);
+				int newProjectId = addToDB(newProject);
+				repairItems(oldProjectId, newProjectId);
+			}
+			connection.createStatement().execute("DELETE FROM `projects` WHERE `user_id` = '" + oldUserId + "'");
+		} catch (Exception e) {
+			e.printStackTrace();
+			disconnect();
+		}
+	}
+
+	/**
+	 * Repairs the items when the project id is updated.
+	 * 
+	 * @param oldProjectId
+	 *            The old id.
+	 * @param newProjectId
+	 *            The new project id.
+	 */
+	private static synchronized void repairItems(final int oldProjectId, final int newProjectId) {
+		try {
+			String query = "SELECT * FROM `items` WHERE `project_id` = '" + oldProjectId + "'";
+			Statement statement = connection.createStatement();
+			ResultSet results = statement.executeQuery(query);
+			while (results.next()) {
+				String name = results.getString(3);
+				int price = results.getInt(4);
+				int quantity = results.getInt(5);
+				Item newItem = new Item(name, (double) price, quantity);
+				newItem.setProjectId(newProjectId);
+				addToDB(newItem);
+			}
+			connection.createStatement().execute("DELETE FROM `items` WHERE `project_id` = '" + oldProjectId + "'");
+		} catch (Exception e) {
+			e.printStackTrace();
+			disconnect();
 		}
 	}
 
@@ -287,12 +433,21 @@ public class SQL {
 	 * 
 	 * @param theClient
 	 *            The user to save.
+	 * @return The new id of the user.
 	 */
-	private static synchronized void addToDB(final User theClient) {
+	private static synchronized int addToDB(final User theClient) {
 		try {
 			connection.createStatement().execute(generateQuery(theClient));
+			String query = "SELECT * FROM `users` ORDER BY id DESC";
+			Statement statement = connection.createStatement(); // now get the
+																// item's ID
+			ResultSet results = statement.executeQuery(query);
+			results.next();
+			return results.getInt(1);
 		} catch (Exception e) {
 			e.printStackTrace();
+			disconnect();
+			return -1;
 		}
 	}
 
@@ -307,6 +462,7 @@ public class SQL {
 			connection.createStatement().execute("DELETE FROM `users` WHERE `email` = '" + theClient.getEmail() + "'");
 		} catch (Exception e) {
 			e.printStackTrace();
+			disconnect();
 		}
 	}
 
@@ -315,12 +471,21 @@ public class SQL {
 	 * 
 	 * @param theProject
 	 *            The project to save.
+	 * @return The new id of the project.
 	 */
-	private static synchronized void addToDB(final Project theProject) {
+	private static synchronized int addToDB(final Project theProject) {
 		try {
 			connection.createStatement().execute(generateQuery(theProject));
+			String query = "SELECT * FROM `projects` ORDER BY id DESC";
+			Statement statement = connection.createStatement(); // now get the
+																// item's ID
+			ResultSet results = statement.executeQuery(query);
+			results.next();
+			return results.getInt(1);
 		} catch (Exception e) {
 			e.printStackTrace();
+			disconnect();
+			return -1;
 		}
 	}
 
@@ -335,6 +500,24 @@ public class SQL {
 			connection.createStatement().execute("DELETE FROM `projects` WHERE `id` = '" + theProject.getId() + "'");
 		} catch (Exception e) {
 			e.printStackTrace();
+			disconnect();
+		}
+	}
+
+	/**
+	 * Saves the given item.
+	 * 
+	 * @param theProjectId
+	 *            The project id to attach (for use when creating a new item)
+	 * @param theItem
+	 *            The item to save.
+	 */
+	private static synchronized void addToDB(final int theProjectId, final Item theItem) {
+		try {
+			connection.createStatement().execute(generateQuery(theProjectId, theItem));
+		} catch (Exception e) {
+			e.printStackTrace();
+			disconnect();
 		}
 	}
 
@@ -349,6 +532,7 @@ public class SQL {
 			connection.createStatement().execute(generateQuery(theItem));
 		} catch (Exception e) {
 			e.printStackTrace();
+			disconnect();
 		}
 	}
 
@@ -363,6 +547,7 @@ public class SQL {
 			connection.createStatement().execute("DELETE FROM `items` WHERE `id` = '" + theItem.getId() + "'");
 		} catch (Exception e) {
 			e.printStackTrace();
+			disconnect();
 		}
 	}
 
@@ -418,6 +603,28 @@ public class SQL {
 		sb.append("'" + theProject.getUserId() + "',");
 		sb.append("'" + theProject.getName() + "',");
 		sb.append("'" + theProject.getDesc() + "')");
+		return sb.toString();
+	}
+
+	/**
+	 * Generates an SQL query based on the properties of an item
+	 * 
+	 * @param theProjectId
+	 *            The project id
+	 * @param theItem
+	 *            The item to save.
+	 */
+	private static String generateQuery(final int theProjectId, final Item theItem) {
+		StringBuilder sb = new StringBuilder();
+		sb.append("INSERT INTO items (");
+		sb.append("project_id, ");
+		sb.append("name, ");
+		sb.append("price, quantity) ");
+		sb.append("VALUES (");
+		sb.append("'" + theProjectId + "',");
+		sb.append("'" + theItem.getName() + "',");
+		sb.append("'" + theItem.getPricePerUnit() + "',");
+		sb.append("'" + theItem.getQuantity() + "')");
 		return sb.toString();
 	}
 

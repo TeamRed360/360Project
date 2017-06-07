@@ -55,8 +55,8 @@ public class Item implements Comparable<Item> {
 	 *            The project id to set to.
 	 * @author Stan Hu
 	 */
-	public void setProjectId(final int id) {
-		this.projectId = id;
+	public void setProjectId(final int theId) {
+		this.projectId = theId;
 	}
 
 	/**
