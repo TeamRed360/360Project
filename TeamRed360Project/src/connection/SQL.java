@@ -180,11 +180,16 @@ public class SQL {
 	 *            The item to be added
 	 */
 	public static synchronized void updateItem(final Project theProject, final Item theItem) {
-		if (theItem.getId() == -1) { // it doesn't exist
-			createItem(theProject.getId(), theItem);
-		} else { // remove, and re-add to update
-			removeFromDB(theItem);
-			addToDB(theItem);
+		try {
+			if (theItem.getId() == -1) { // it doesn't exist
+				createItem(theProject.getId(), theItem);
+			} else { // remove, and re-add to update
+				removeFromDB(theItem);
+				addToDB(theItem);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			disconnect();
 		}
 	}
 
@@ -239,6 +244,7 @@ public class SQL {
 		}
 		return sb.toString();
 	}
+	
 
 	/**
 	 * Checks whether the given email address exists in the DB.
@@ -294,13 +300,43 @@ public class SQL {
 				}
 			}
 			return 0; // email not found
-		} catch (SQLException e) {
+		} catch (Exception e) {
 			System.out.println("Login error: " + e);
 			disconnect();
 			return 3; // error
 		}
 	}
-
+	/**
+	 * Attempts to log in the given client.
+	 * 
+	 * @param theClient
+	 *            The user information that is attempting to log in.
+	 * @return 0 if the email is not found, 1 if successful login, 2 if password
+	 *         doesn't match, and 3 if there is a misc login error.
+	 */
+	public static synchronized User getUser(final User theClient) {
+		String query = "SELECT * FROM `users` WHERE email = \"" + theClient.getEmail() + "\"";
+		Statement statement = null;
+		try {
+			statement = connection.createStatement();
+			ResultSet results = statement.executeQuery(query);
+			while (results.next()) {
+				int id = results.getInt(1);
+				String firstName = results.getString(2);
+				String lastName = results.getString(3);
+				String email = results.getString(4);
+				String password = results.getString(5);
+				User returnuser = new User(firstName, lastName, email, password);
+				returnuser.setId(id);
+				return returnuser;
+			}
+			return null; // email not found
+		} catch (SQLException e) {
+			System.out.println("get user error: " + e);
+			disconnect();
+			return null; // error
+		}
+	}
 	/**
 	 * Attempts to create the given project. Should only be called when a
 	 * project is first created.
@@ -364,7 +400,7 @@ public class SQL {
 			newItem.setId(results.getInt(1));
 			newItem.setProjectId(theProjectId);
 			return newItem;
-		} catch (SQLException e) {
+		} catch (Exception e) {
 			System.out.println("Create item error " + e);
 			disconnect();
 			return null; // error

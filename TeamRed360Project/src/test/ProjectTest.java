@@ -157,4 +157,13 @@ public class ProjectTest {
 
 		assertEquals(expected, tester.toString());
 	}
+	@Test
+	public void testaddToDB() {
+
+		String expected = tester.getName() + ", " + tester.getDesc() + ", Items: " + tester.getListOfItems().length
+				+ ", Total Price: " + tester.getOverallPrice();
+
+		assertEquals(expected, tester.toString());
+	}
+
 }
