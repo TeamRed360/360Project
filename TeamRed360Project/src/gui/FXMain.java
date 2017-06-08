@@ -2,6 +2,8 @@ package gui;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import connection.SQL;
 import javafx.application.Application;
@@ -63,6 +65,10 @@ public class FXMain extends Application {
 
 	/** A list of the contributors' names. */
 	private final String NAMES[] = { "Stan Hu", "Jimmy Best", "Amanda Aldrich", "Taylor Riccetti", "Joshua Lau" };
+
+	/** A regular expression for email addresses */
+	public static final Pattern EMAIL_REGEX = Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$",
+			Pattern.CASE_INSENSITIVE);
 
 	/** The scenes width. */
 	private final int SCENE_WIDTH = 825;
@@ -286,27 +292,31 @@ public class FXMain extends Application {
 				SQL.connect();
 
 				User user = new User("", "", loginEmail.getText(), loginPassword.getText());
-				int code = SQL.login(user);
-				user = SQL.getLastUser();
-				loginActionText.setFill(Color.FIREBRICK);
-				if (code == 0) {
-					Alert signUpAlert = new Alert(AlertType.CONFIRMATION, "Sign up confirmation.", ButtonType.YES,
-							ButtonType.NO);
-					signUpAlert.setContentText("Email does not exist. Would you like to register instead?");
-					if (ButtonType.YES == signUpAlert.showAndWait().get()) {
-						email.setText(loginEmail.getText());
-						password.setText(loginPassword.getText());
-						loginActionText.setText("Please use the sign up tab.");
+				if (validEmail(loginEmail.getText())) {
+					int code = SQL.login(user);
+					user = SQL.getLastUser();
+					loginActionText.setFill(Color.FIREBRICK);
+					if (code == 0) {
+						Alert signUpAlert = new Alert(AlertType.CONFIRMATION, "Sign up confirmation.", ButtonType.YES,
+								ButtonType.NO);
+						signUpAlert.setContentText("Email does not exist. Would you like to register instead?");
+						if (ButtonType.YES == signUpAlert.showAndWait().get()) {
+							email.setText(loginEmail.getText());
+							password.setText(loginPassword.getText());
+							loginActionText.setText("Please use the sign up tab.");
+						}
+					} else if (code == 1) {
+						currentUser = user;
+						projects = SQL.getProjects(currentUser);
+						welcomeText.setText("Welcome back, " + user.getFirstName() + " " + user.getLastName() + "!");
+						homeTab.setContent(getHomeContent(welcomeText.getText()));
+					} else if (code == 2) {
+						loginActionText.setText("Incorrect password - try again.");
+					} else {
+						loginActionText.setText("Error - Connect to the internet or continue as guest.");
 					}
-				} else if (code == 1) {
-					currentUser = user;
-					projects = SQL.getProjects(currentUser);
-					welcomeText.setText("Welcome back, " + user.getFirstName() + " " + user.getLastName() + "!");
-					homeTab.setContent(getHomeContent(welcomeText.getText()));
-				} else if (code == 2) {
-					loginActionText.setText("Incorrect password - try again.");
 				} else {
-					loginActionText.setText("Error - Connect to the internet or conintue as guest.");
+					loginActionText.setText("That is not a valid email address.");
 				}
 			}
 
@@ -348,20 +358,26 @@ public class FXMain extends Application {
 				SQL.connect();
 
 				signUpActionText.setFill(Color.FIREBRICK);
-
-				if (!password.getText().equals(confirmPass.getText())) {
-					signUpActionText.setText("Passwords do not match.");
+				if (!validEmail(email.getText())) {
+					signUpActionText.setText("Invalid email address");
+				} else if (!password.getText().equals(SQL.clean(password.getText()))) {
+					signUpActionText.setText("Invalid characters in password");
 				} else {
-					User user = new User(firstName.getText(), lastName.getText(), email.getText(), password.getText());
-					int code = SQL.login(user);
-					if (code == 0) {
-						SQL.updateUser(user);
-						welcomeText.setText("Welcome, " + firstName.getText() + " " + lastName.getText() + "!");
-						homeTab.setContent(getHomeContent(welcomeText.getText()));
-					} else if (code == 1 | code == 2) {
-						signUpActionText.setText("This email is already registered.");
+					if (!password.getText().equals(confirmPass.getText())) {
+						signUpActionText.setText("Passwords do not match.");
 					} else {
-						signUpActionText.setText("Error - could not access the login server.");
+						User user = new User(firstName.getText(), lastName.getText(), email.getText(),
+								password.getText());
+						int code = SQL.login(user);
+						if (code == 0) {
+							SQL.updateUser(user);
+							welcomeText.setText("Welcome, " + firstName.getText() + " " + lastName.getText() + "!");
+							homeTab.setContent(getHomeContent(welcomeText.getText()));
+						} else if (code == 1 | code == 2) {
+							signUpActionText.setText("This email is already registered.");
+						} else {
+							signUpActionText.setText("Error - could not access the login server.");
+						}
 					}
 				}
 			}
@@ -851,7 +867,10 @@ public class FXMain extends Application {
 		changePassButton.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
-				if (currPassword.getText().equals(currentUser.getPassword())) {
+				if (!newPassword.getText().equals(SQL.clean(newPassword.getText()))) {
+					changePassText.setFill(Color.RED);
+					changePassText.setText("Your new password has invalid characters in it. Please remove them.");
+				} else if (currPassword.getText().equals(currentUser.getPassword())) {
 					if (newPassword.getText().equals(confirmPassword.getText())) {
 						currentUser.setPassword(newPassword.getText());
 						currentUser.setId(SQL.updateUser(currentUser));
@@ -896,19 +915,24 @@ public class FXMain extends Application {
 			// TO-DO action event handler for changing email
 			@Override
 			public void handle(ActionEvent event) {
-				if (currEmail.getText().equals(currentUser.getEmail())) {
-					if (!SQL.emailExists(newEmail.getText())) {
-						currentUser.setId(SQL.updateUser(currentUser, newEmail.getText()));
-						currentUser.setEmail(newEmail.getText());
-						changeEmailText.setFill(Color.LIMEGREEN);
-						changeEmailText.setText("Email successfully changed!");
+				if (validEmail(newEmail.getText())) {
+					if (currEmail.getText().equals(currentUser.getEmail())) {
+						if (!SQL.emailExists(newEmail.getText())) {
+							currentUser.setId(SQL.updateUser(currentUser, newEmail.getText()));
+							currentUser.setEmail(newEmail.getText());
+							changeEmailText.setFill(Color.LIMEGREEN);
+							changeEmailText.setText("Email successfully changed!");
+						} else {
+							changeEmailText.setFill(Color.LIMEGREEN);
+							changeEmailText.setText("Email already exists, try another one");
+						}
 					} else {
-						changeEmailText.setFill(Color.LIMEGREEN);
-						changeEmailText.setText("Email already exists, try another one");
+						changeEmailText.setFill(Color.RED);
+						changeEmailText.setText("Current email is incorrect!");
 					}
 				} else {
 					changeEmailText.setFill(Color.RED);
-					changeEmailText.setText("Current email is incorrect!");
+					changeEmailText.setText("That is an invalid email address.");
 				}
 			}
 		});
@@ -1238,6 +1262,11 @@ public class FXMain extends Application {
 		projectList.setMinWidth((SCENE_WIDTH - 50) / 2);
 
 		return projectList;
+	}
+
+	public static boolean validEmail(String theEmail) {
+		Matcher matcher = EMAIL_REGEX.matcher(theEmail);
+		return matcher.find();
 	}
 
 }

@@ -73,6 +73,19 @@ public class SQL {
 	}
 
 	/**
+	 * Cleans the string to prevent SQL injections.
+	 * 
+	 * @return A cleaned version of the string.
+	 */
+	public static String clean(final String theString) {
+		String toReturn = theString;
+		toReturn = toReturn.replaceAll("\"", "");
+		toReturn = toReturn.replaceAll("'", "");
+		toReturn = toReturn.replaceAll("`", "");
+		return toReturn;
+	}
+
+	/**
 	 * Constructs and returns a list of all projects from the user.
 	 * 
 	 * @param theClient
@@ -244,7 +257,6 @@ public class SQL {
 		}
 		return sb.toString();
 	}
-	
 
 	/**
 	 * Checks whether the given email address exists in the DB.
@@ -306,6 +318,7 @@ public class SQL {
 			return 3; // error
 		}
 	}
+
 	/**
 	 * Attempts to log in the given client.
 	 * 
@@ -337,6 +350,7 @@ public class SQL {
 			return null; // error
 		}
 	}
+
 	/**
 	 * Attempts to create the given project. Should only be called when a
 	 * project is first created.
