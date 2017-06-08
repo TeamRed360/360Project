@@ -1,5 +1,6 @@
 package connection;
 
+import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -112,9 +113,10 @@ public class SQL {
 				while (subResults.next()) { // loop through all the items
 					int itemId = subResults.getInt(1);
 					String itemName = subResults.getString(3);
-					int price = subResults.getInt(4);
+					int price = subResults.getInt(4); // price is stored in
+														// cents
 					int quantity = subResults.getInt(5);
-					Item newItem = new Item(itemName, (double) price, quantity);
+					Item newItem = new Item(itemName, (double) price / 100.0, quantity);
 					newItem.setProjectId(projectId);
 					newItem.setId(itemId);
 					newProject.add(newItem);
@@ -673,7 +675,7 @@ public class SQL {
 		sb.append("VALUES (");
 		sb.append("'" + theProjectId + "',");
 		sb.append("'" + theItem.getName() + "',");
-		sb.append("'" + theItem.getPricePerUnit() + "',");
+		sb.append("'" + theItem.getPricePerUnit().multiply(new BigDecimal(100)) + "',");
 		sb.append("'" + theItem.getQuantity() + "')");
 		return sb.toString();
 	}
@@ -693,7 +695,11 @@ public class SQL {
 		sb.append("VALUES (");
 		sb.append("'" + theItem.getProjectId() + "',");
 		sb.append("'" + theItem.getName() + "',");
-		sb.append("'" + theItem.getPricePerUnit() + "',");
+		sb.append("'" + theItem.getPricePerUnit().multiply(new BigDecimal(100)) + "',"); // price
+																							// is
+																							// stored
+																							// in
+																							// cents
 		sb.append("'" + theItem.getQuantity() + "')");
 		return sb.toString();
 	}
